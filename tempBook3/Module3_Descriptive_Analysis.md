@@ -69,9 +69,6 @@ colors = sns.color_palette("Blues", len(ftable)* 3)[::-3]
 figftable.pie(
     ftable.to_list(), labels=ftable.index.to_list(), 
     autopct='%1.2f%%', colors=colors)
-
-# Save the plot as an SVG vector image
-plt.savefig("Table_3_1_Frequency_Table_Figure.svg", format="svg", dpi=1500)
 ```
 
 ![Variable ‘Shape’ in the mammographic dataset](./Data/Fig3_1.png) <p>
@@ -130,7 +127,76 @@ Common distribution shapes include:
 
 Understanding shape helps guide the choice of summary statistics and models.
 
----
+### Python Code
+Code 3.2 presents a script to calculate and print the frequency table for a numeric variable (quantitative data) using the method Series() in Pandas. The script allows setting the number of bins (nbins), the inferior and superior limits of the histogram, and then builds and plots the dataframe with the bins and their respective frequencies.
+
+```python
+# CODE 3.2
+# Determining the frequency distribution, frequency table and histogram
+# of continuous variables in the Forest Fires dataset
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from ucimlrepo import fetch_ucirepo
+
+# fetch dataset (https://archive.ics.uci.edu/ml/datasets/forest+fires)
+dforest = fetch_ucirepo(id=162)["data"]["original"]
+
+var = "temp"  # Choose the target variable
+SShape = pd.Series(dforest[var]) 
+nbins = 10; inflimit = 0; suplimit = max(SShape)
+ampl = (suplimit - inflimit) / nbins
+
+# Define the range of the variable and bin size
+fbins = np.arange(0, suplimit + ampl, ampl)
+
+# The pandas.cut function groups data into bins and counts frequency
+ftable = pd.cut(SShape, fbins).value_counts()  # Absolute frequency
+rftable = ftable / len(SShape) * 100  # Relative frequency
+cftable = ftable.cumsum() / len(SShape) * 100  # Cumulative frequency
+df = pd.DataFrame({"Bins": ftable.index.to_list(),
+                   "Frequency": ftable.to_list(),
+                   "Relative Frequency": rftable.to_list(),
+                   "Cumulative Frequency": cftable.to_list(),})
+print(df)
+plt.xticks(fbins)
+sns.histplot(dforest, x=var, bins=fbins, kde=True)
+```
+
+### Prompt — Frequency Distribution, Frequency Table, and Histogram (Forest Fires Dataset)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository, generate the **frequency distribution**, **frequency table**, and **histogram** for a continuous variable (default: `temp`) following the exact logic below.
+
+#### Tasks
+
+1. Load the **Forest Fires dataset** in its original form.
+2. Select a continuous target variable named **`temp`** (use `temp` unless otherwise specified).
+3. Create a frequency distribution using **equal-width bins** with the following settings:
+   - Number of bins: `nbins = 10`
+   - Lower limit: `inflimit = 0`
+   - Upper limit: `suplimit = max(temp)`
+4. Use binning (equivalent to `pandas.cut`) to compute:
+   - Absolute frequency per bin  
+   - Relative frequency per bin (percentage of total observations)  
+   - Cumulative relative frequency (percentage)
+5. Build and display a **frequency table** with the columns:
+   - `Bins` (interval labels)
+   - `Frequency`
+   - `Relative Frequency`
+   - `Cumulative Frequency`
+6. Generate a **histogram** of the chosen variable using the same bin edges (`fbins`) and:
+   - Display the x-axis ticks at the bin edges
+   - Overlay a **KDE curve** (kernel density estimate)
+7. Output:
+   - The frequency table
+   - The histogram with KDE overlay
+   - A brief interpretation describing the distribution (concentration, spread, skewness, and any unusual patterns)
+```
+
 
 ### 3.1.2 Contingency Tables
 
