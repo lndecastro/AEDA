@@ -2,9 +2,7 @@
 
 Before any meaningful exploratory analysis, visualization, or AI-supported insight generation can occur, data must be **understood, described, and prepared**. This module introduces the conceptual and practical foundations required to transform raw data into analyzable data.
 
-Module 2 builds directly on Module 1 by moving from the analytical process flow to the first operational stage of AEDA: understanding what the data is, how it is structured, and how it should be prepared for analysis.
-
----
+This module builds directly on Module 1 by moving from the analytical process flow to the first operational stage of AEDA: understanding what the data is, how it is structured, and how it should be prepared for analysis.
 
 ## Learning Objectives
 
@@ -17,35 +15,52 @@ By the end of this module, students will be able to:
 5. Identify common data quality problems in raw datasets.
 6. Apply fundamental data preparation techniques such as sampling, missing-value handling, and normalization.
 
----
-
 ## 2.1 Tabular and Mathematical Representations
+
+### Data, Information, Knowledge
+
+**Data** can be understood as any element that can be stored, transferred, processed, or transformed to convey meaning, including numbers, words, images, sounds, and graphs. From a computational perspective, anything that can be digitally stored or manipulated qualifies as data. On its own, data has no inherent meaning; it becomes **information** only when placed within a context. When this information is interpreted, analyzed, and applied to support decisions or generate insights, it evolves into **knowledge**.
+
+![Data, Information, Knowledge](./Data/DIKnowledge.png) <p>
+**Figure:** From data to information to knowledge.
 
 ### Tabular Representation
 
 The **tabular representation** is the most common way to organize data in exploratory data analysis.
 
-- Rows represent objects, records, or observations.
+- Rows represent objects, instances, patterns, records, or observations.
 - Columns represent variables, attributes, or features.
 - Each cell contains the value of a variable for a given object.
 
 Tabular data structures are the foundation of spreadsheets, relational databases, BI tools, and data science libraries.
 
+**Table:** First four objects of the Car Evaluation Dataset available at UCI.<p>
+| Car ID | Buying | Maintenance | Doors | Persons | Lug_boot | Safety | Class |
+|--------|--------|-------------|-------|---------|----------|--------|-------|
+| 1      | vhigh  | vhigh       | 2     | 2       | small    | low    | unacc |
+| 2      | vhigh  | vhigh       | 2     | 2       | small    | med    | unacc |
+| 3      | vhigh  | vhigh       | 2     | 2       | small    | high   | unacc |
+| 4      | vhigh  | vhigh       | 2     | 2       | med      | low    | unacc |
+
+
 ### Mathematical Representation
 
 Mathematically, a dataset can be represented as a matrix:
 
-\[
-X \in \mathbb{R}^{n \times p}
-\]
+$S = {x_i \mid i = 1, \ldots, N},$
+
+where each object \(x_i\) is an \(m\)-dimensional vector given by
+
+$\mathbf{x^i} = \big[ x_j^i \big]_{j = 1, \ldots, m}.\$
 
 where:
-- \( n \) is the number of objects
-- \( p \) is the number of variables
+- $N$ is the number of objects
+- $m$ is the number of variables
 
 This representation supports statistical analysis, linear algebra operations, optimization, and machine learning algorithms.
 
----
+![Graph for Variables](./Data/Figure_2_1_Graph_for_variables.jpg) <p>
+**Figure:** Graph for variables ‘safety’ vs ‘lug_boot’ of the four objects in the previous table.
 
 ## 2.2 Data Dictionary
 
@@ -66,9 +81,17 @@ Data dictionaries:
 - Support collaboration across teams
 - Provide essential context for automated analysis and AI-assisted workflows
 
-In AEDA, data dictionaries are a key component of **context engineering**.
-
----
+**Table:** Example of a simple data dictionary for the Car Evaluation Dataset
+| Variable name | Definition (meaning)                  | Domain                         |
+|---------------|---------------------------------------|--------------------------------|
+| Car ID        | ID number of each car in the dataset  | Integer number                 |
+| Buying        | Buying price                          | {v-high, high, med, low}       |
+| Maintenance   | Price of the maintenance              | {v-high, high, med, low}       |
+| Doors         | Number of doors                       | {2, 3, 4, 5-more}              |
+| Persons       | Number of persons accommodated        | {2, 4, more}                   |
+| Lug-boot      | Trunk size                            | {small, med, big}              |
+| Safety        | Level of safety                       | {low, med, high}               |
+| Class         | Car acceptability                     | {unacc, acc, good, vgood}      |
 
 ## 2.3 Classifying Data
 
