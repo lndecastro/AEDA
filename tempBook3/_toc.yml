@@ -6,3 +6,5 @@ root: intro
 chapters:
   - file: Module1_Introduction_to_AEDA.md
     title: "Module 1: Introduction to AEDA"
+  - file: Module2_DataDescription.md
+    title: "Module 2: Data Description and Preparation"
