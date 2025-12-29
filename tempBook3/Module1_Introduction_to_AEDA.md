@@ -76,7 +76,7 @@ You are strongly encouraged to have a look at our **AI Literacy** program, which
 
 > In this course, GenAI is treated as a **co-pilot for exploratory work**, not a replacement for statistical reasoning and visualization literacy.
 
-## Reflection
+## 1.2 Reflection
 
 Understanding the historical evolution of Artificial Intelligence provides important perspective for students of Advanced Exploratory Data Analysis. Many of the successes and failures in AI history were driven not only by algorithmic limitations, but also by constraints related to data availability, data quality, computational power, and analytical understanding. Reflecting on this history reinforces a central message of this course: reliable insights and effective AI systems depend on rigorous exploratory analysis. As you progress through AEDA, consider how descriptive statistics, visualization, and data characterization shape modeling decisions, expose hidden assumptions, and support ethical and responsible use of AI. Also reflect on the role of Generative AI as an analytical co-pilot—powerful when guided by sound data reasoning, but limited without proper context and human judgment.
 
