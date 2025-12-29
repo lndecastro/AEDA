@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: "Temp Book 3" # Change this to new repo name
+title: Advanced Exploratory Data Analysis 
 author: Leandro Nunes de Castro, Ph.D.
 logo: dendritic_logo.png
 
@@ -21,7 +21,7 @@ bibtex_bibfiles:
 
 # Information about where the book exists on the web
 repository:
-  url: https://github.com/lndecastro/tempBook2 # Online location of your book ( Change this to new repo name )
+  url: https://github.com/lndecastro/AEDA # Online location of your book ( Change this to new repo name )
   path_to_book: docs # Optional path to your book, relative to the repository root
   branch: master # Which branch of the repository should be used when creating links (optional)
 
