@@ -4,5 +4,5 @@
 format: jb-book
 root: intro
 chapters:
-  - file: Module 1: Introduction to AEDA.md
+  - file: Module1_Introduction_to_AEDA.md
     title: "Module 1: Introduction to AEDA"
