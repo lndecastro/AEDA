@@ -2,7 +2,7 @@
 # Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
-root: intro
+root: intro.md
 chapters:
   - file: Module1_Introduction_to_AEDA.md
     title: "Module 1: Introduction to AEDA"
