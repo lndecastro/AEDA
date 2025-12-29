@@ -165,6 +165,9 @@ plt.xticks(fbins)
 sns.histplot(dforest, x=var, bins=fbins, kde=True)
 ```
 
+![Histogram for variable temp](./Data/Fig3_2.png) <p>
+**Figure:** Histogram for the variable ‘temp’ of the Forest Fires dataset.
+
 ### Prompt — Frequency Distribution, Frequency Table, and Histogram (Forest Fires Dataset)
 ```
 You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
@@ -196,7 +199,6 @@ Using the **Forest Fires dataset** from the UCI Machine Learning Repository, gen
    - The histogram with KDE overlay
    - A brief interpretation describing the distribution (concentration, spread, skewness, and any unusual patterns)
 ```
-
 
 ### 3.1.2 Contingency Tables
 
