@@ -113,19 +113,7 @@ Using the **Mammographic Mass dataset** from the UCI Machine Learning Repository
 Ensure that all results follow standard **descriptive statistics** and **exploratory data analysis** conventions.
 ```
 
-### 3.1.1 Shapes of Distributions
-
-Common distribution shapes include:
-
-- **Unimodal**: one peak
-- **Bimodal**: two peaks
-- **Multimodal**: more than two peaks
-- **Symmetric**: balanced around the center
-- **Right-skewed (positive skew)**: long tail to the right
-- **Left-skewed (negative skew)**: long tail to the left
-- **Uniform**: values evenly distributed
-
-Understanding shape helps guide the choice of summary statistics and models.
+To illustrate how to build the frequency table of numeric variables (quantitative data), consider variable temperature (‘temp’) of the Forest Fires dataset.
 
 ### Python Code
 Code 3.2 presents a script to calculate and print the frequency table for a numeric variable (quantitative data) using the method Series() in Pandas. The script allows setting the number of bins (nbins), the inferior and superior limits of the histogram, and then builds and plots the dataframe with the bins and their respective frequencies.
@@ -200,6 +188,73 @@ Using the **Forest Fires dataset** from the UCI Machine Learning Repository, gen
    - A brief interpretation describing the distribution (concentration, spread, skewness, and any unusual patterns)
 ```
 
+### 3.1.1 Shapes of Distributions
+
+Common distribution shapes include:
+
+- **Unimodal**: one peak
+- **Bimodal**: two peaks
+- **Multimodal**: more than two peaks
+- **Symmetric**: balanced around the center
+- **Right-skewed (positive skew)**: long tail to the right
+- **Left-skewed (negative skew)**: long tail to the left
+- **Uniform**: values evenly distributed
+
+Understanding shape helps guide the choice of summary statistics and models.
+
+```python
+# CODE 3.3
+# Plot distributions with different shapes
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+from ucimlrepo import fetch_ucirepo
+
+# fetch dataset (https://archive.ics.uci.edu/ml/datasets/forest+fires)
+dforest = fetch_ucirepo(id=162)["data"]["original"]
+
+# Set up the x-labels for each Plot Distribution
+x_labels = ["month", "day", "FFMC", "DMC", "DC", "ISI", "RH", "wind"]
+
+# Set up sub-plots layout
+fig, axes = plt.subplots(4, 2, figsize=(13, 18), layout="constrained")
+
+for idx, x_label in enumerate(x_labels):
+    # Flatten the axes array for easy iteration
+    ax = axes.flat[idx]
+    sns.histplot(dforest, x=x_label, bins="auto", kde=True, ax=ax)
+```
+
+![Histograms](./Data/Figure_3_2_Histograms.jpg)
+
+### Prompt — Plot Distributions with Different Shapes (Forest Fires Dataset)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, generate a single multi-panel figure that visualizes **distributions with different shapes** for selected variables.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. Define the following list of variables to be analyzed, preserving this exact order:
+
+   ["month", "day", "FFMC", "DMC", "DC", "ISI", "RH", "wind"]
+
+3. Create a figure composed of **4 rows and 2 columns of subplots**, with an overall figure size close to **(13, 18)** and a layout that prevents overlapping elements.
+4. For each variable in the list:
+   - Select the corresponding subplot
+   - Plot a **histogram** of the variable
+   - Use an **automatic binning strategy** equivalent to `bins="auto"`
+   - Overlay a **kernel density estimate (KDE)** curve on top of the histogram
+   - Label the x-axis with the variable name
+5. Ensure that all eight subplots are displayed within a single figure and share a consistent visual style.
+
+#### Output
+
+- A single multi-panel figure containing histograms with KDE overlays for all specified variables
+- A short written interpretation describing how the distribution shapes differ across variables (e.g., skewness, spread, modality)
+```
+
 ### 3.1.2 Contingency Tables
 
 A **contingency table** (or cross-tabulation) summarizes the relationship between two categorical variables.
@@ -209,6 +264,59 @@ A **contingency table** (or cross-tabulation) summarizes the relationship betwee
 - Cell values represent frequencies or proportions
 
 Contingency tables are fundamental for analyzing categorical associations.
+
+```python
+# CODE 3.4
+# Generate Contingency Tables for the Mammographic Dataset
+
+import pandas as pd
+from ucimlrepo import fetch_ucirepo
+
+# fetch dataset (https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass)
+dmammo = fetch_ucirepo(id=161)["data"]["original"]
+
+# Remove rows with missing values
+dmammo.dropna(inplace=True)
+
+# Print the contingency tables
+var = ["Shape", "Margin", "Density"]
+print("**Contingency Tables**")
+for i in var:
+    CT = pd.crosstab(dmammo[i], dmammo["Severity"])
+    print("Variables", i, "and Severity:\n", CT)
+```
+
+![Contingency Table](./Data/Code3_4_Output.png)
+
+### Prompt — Contingency Tables for the Mammographic Mass Dataset
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Mammographic Mass dataset** from the UCI Machine Learning Repository in its original form, generate **contingency tables** to analyze the relationship between selected categorical variables and the target variable **`Severity`**.
+
+#### Tasks
+
+1. Load the Mammographic Mass dataset in its original form.
+2. Remove all rows containing **missing values** so that the analysis is performed only on complete cases.
+3. Define the following list of explanatory variables:
+
+   ["Shape", "Margin", "Density"]
+
+4. For each variable in the list:
+   - Construct a **contingency table** (cross-tabulation) between the selected variable and the variable **`Severity`**
+   - Use the selected variable as rows and `Severity` as columns
+   - Count the absolute frequencies of observations in each cell
+5. Display each contingency table clearly, indicating the pair of variables being analyzed.
+
+#### Output
+
+- A set of contingency tables showing the joint frequency distributions between:
+  - `Shape` and `Severity`
+  - `Margin` and `Severity`
+  - `Density` and `Severity`
+
+Ensure that the contingency tables are computed using standard cross-tabulation logic (equivalent to `pandas.crosstab`) and follow established **exploratory data analysis** conventions.
+```
 
 ---
 
