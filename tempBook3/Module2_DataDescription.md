@@ -81,7 +81,7 @@ Data dictionaries:
 - Support collaboration across teams
 - Provide essential context for automated analysis and AI-assisted workflows
 
-**Table:** Example of a simple data dictionary for the Car Evaluation Dataset
+**Table:** Example of a simple data dictionary for the Car Evaluation Dataset.
 | Variable name | Definition (meaning)                  | Domain                         |
 |---------------|---------------------------------------|--------------------------------|
 | Car ID        | ID number of each car in the dataset  | Integer number                 |
@@ -96,6 +96,9 @@ Data dictionaries:
 ## 2.3 Classifying Data
 
 Data can be classified along multiple dimensions. These classifications guide analytical decisions, visualization choices, and preparation strategies.
+
+![Data Characteristics and Classification](./Data/DCClassification.png) <p>
+**Figure:** Different forms of classifying data.
 
 ### 2.3.1 Structure
 
@@ -128,25 +131,21 @@ Data can be classified along multiple dimensions. These classifications guide an
 - **Public data**: Freely available datasets
 - **Private data**: Restricted or proprietary datasets
 
----
-
 ## 2.4 Datasets Used in the Course
 
 The following datasets are used throughout the course to illustrate AEDA concepts:
 
-- Mammographic Dataset
-- Forest Fires Dataset
-- Iris Dataset of Fisher
-- Auto MPG Dataset
-- Gapminder Dataset
+- Mammographic Dataset (https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass)
+- Forest Fires Dataset (https://archive.ics.uci.edu/ml/datasets/forest+fires)
+- Iris Dataset of Fisher (https://archive.ics.uci.edu/ml/datasets/iris)
+- Auto MPG Dataset (https://archive.ics.uci.edu/ml/datasets/auto+mpg)
+- Gapminder Dataset (https://www.kaggle.com/datasets/albertovidalrod/gapminder-dataset)
 - NaturalEarth Low Resolution Dataset
-- Daily Delhi Climate Train Dataset
-- IMDb Movie Reviews Dataset
-- Zachary’s Karate Club Dataset
+- Daily Delhi Climate Train Dataset (https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data)
+- IMDb Movie Reviews Dataset (https://www.imdb.com/)
+- Zachary’s Karate Club Dataset (https://networkrepository.com/ucidata-zachary.php)
 
 These datasets span different domains, data types, and analytical challenges.
-
----
 
 ## 2.5 Data Preparation
 
@@ -155,58 +154,58 @@ These datasets span different domains, data types, and analytical challenges.
 **Raw data** is data in its original form, collected directly from sources such as sensors, surveys, databases, or logs. Raw data is rarely suitable for immediate analysis.
 
 Common problems include:
-- Data overload
-- Missing values
-- Inconsistencies
-- Noise
+- *Data overload*: Occurs when the dataset contains an excessive number of observations or variables, making analysis computationally expensive and cognitively difficult without proper reduction techniques.
+- *Missing values*: Arise when some data entries are absent, which can bias results or prevent certain analyses if not properly handled.
+- *Inconsistencies*: Happen when data contains contradictions, format mismatches, or violations of expected rules and domains.
+- *Noise*: Refers to random errors or variations in the data that obscure underlying patterns and signals.
 
 Data preparation addresses these issues and ensures data quality and usability.
-
----
 
 ### 2.5.1 Sampling
 
 Sampling reduces data volume while preserving representativeness.
 
 Common sampling strategies include:
-- Random sampling with replacement
-- Random sampling without replacement
-- Systematic sampling
-- Group sampling
-- Stratified sampling
+- *Random sampling with replacement*: Each object is selected randomly and may be chosen more than once, ensuring independence between selections.
+- *Random sampling without replacement*: Each object is selected randomly but can be chosen only once, preserving uniqueness within the sample.
+- *Systematic sampling*: Objects are selected at regular intervals from an ordered dataset after a random starting point.
+- *Group sampling*: Entire predefined groups of objects are selected instead of individual objects.
+- *Stratified sampling*: The dataset is divided into homogeneous subgroups (strata), and samples are drawn from each stratum to ensure representative coverage.
 
 Sampling is essential for scalability and efficient exploratory analysis.
-
----
 
 ### 2.5.2 Missing Values
 
 Missing data may result from sensor failures, human error, or integration issues.
 
 Common strategies include:
-- Removing affected objects
-- Manual imputation
-- Global constant substitution
-- Hot-deck imputation
-- Central tendency imputation (mean, median, mode)
-- Class-conditional imputation
+- *Removing affected objects*: Eliminates records with missing values, which simplifies analysis but may reduce sample size or introduce bias.
+- *Manual imputation*: Replaces missing values based on expert knowledge or external information.
+- *Global constant substitution*: Fills missing values with a fixed constant (e.g., zero or “unknown”) to preserve dataset size.
+- *Hot-deck imputation*: Replaces missing values with observed values from similar objects within the dataset.
+- *Central tendency imputation (mean, median, mode)*: Substitutes missing values using a typical value of the variable to maintain overall distribution.
+- *Class-conditional imputation*: Imputes missing values using statistics computed within the same class or group, preserving class-specific patterns.
 
 The choice of strategy depends on data type, context, and analytical goals.
-
----
 
 ### 2.5.3 Normalization
 
 Normalization transforms numerical variables to a common scale.
 
 Common techniques include:
-- Min–max normalization
-- Z-score standardization
-- Scaling by maximum value
+- *Min–max normalization*: Rescales values to a fixed interval, typically [0,1], by linearly transforming them based on their minimum and maximum. <p>
+$x_i' = \frac{x_i - \min(x)}{\max(x) - \min(x)}(nmax - nmin) + nmin, \quad i = 1, \ldots, N$ <p>
+where $x_i$ is the original value, $x_i'$ is the normalized value, and $\min(x)$ and $\max(x)$ are the minimum and maximum values of the variable.
+
+- *Z-score standardization*: Transforms values so they have zero mean and unit variance, expressing each value in terms of standard deviations from the mean. <p>
+$z_i = \frac{x_i - \bar{x}}{s}, \quad i = 1, \ldots, N$ <p>
+where $x_i$ is the original value, $\bar{x}$ is the mean of the variable, and $s$ is the standard deviation.
+
+- *Scaling by maximum value*: Normalizes data by dividing each value by the maximum observed value, constraining the range relative to the largest magnitude. <p>
+$x_i' = \frac{x_i}{\max(x)}, \quad i = 1, \ldots, N$ <p>
+where $x_i$ is the original value, $x_i'$ is the scaled value, and $\max(x)$ is the maximum observed value of the variable.
 
 Normalization improves interpretability, visualization, and the performance of distance-based and learning-based methods.
-
----
 
 ## Reflection
 
@@ -214,14 +213,8 @@ Normalization improves interpretability, visualization, and the performance of d
 - What risks arise from inadequate data preparation?
 - How does data preparation support responsible and effective AI-assisted analysis?
 
----
-
 ## Further Reading
 
 Refer to the course syllabus bibliography, particularly:
 
 **De Castro, L. N. (2026). _Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design_. CRC Press.**
-
----
-
-*End of Module 2*
