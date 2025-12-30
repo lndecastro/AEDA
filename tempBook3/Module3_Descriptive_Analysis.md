@@ -545,18 +545,14 @@ Different variability measures respond differently to outliers:
 Relative position indicates how a value compares to others.
 
 - **Z-score**:
-\[
-z_i = \frac{x_i - \bar{x}}{s}
-\]
+$z_i = \frac{x_i - \bar{x}}{s}$
 
 - **Quantiles**:
-  - \( Q_1 \): 25th percentile
-  - \( Q_2 \): 50th percentile (median)
-  - \( Q_3 \): 75th percentile
+  - $Q_1$: 25th percentile
+  - $Q_2$: 50th percentile (median)
+  - $Q_3$: 75th percentile
 
 Z-scores express distance from the mean in standard deviation units.
-
----
 
 ### 3.2.6 The `describe()` Method from Pandas
 
@@ -570,8 +566,6 @@ The `describe()` method in Pandas provides a quick summary including:
 
 This method is a practical computational counterpart to descriptive statistics.
 
----
-
 ### 3.2.7 Measures of Shape
 
 Shape measures describe the **form of a distribution**.
@@ -584,16 +578,212 @@ Shape measures describe the **form of a distribution**.
 
 Shape measures help diagnose distribution behavior beyond central tendency and variability.
 
----
+The code snippet below was used to generate the data, calculate the central tendency measures and the **skewness** using the Fischer-Pearson and the First Skewness coefficients, and plot the results.
+
+```python
+# CODE 3.11 - Skewness and Skewed Distributions
+# Comparing right-skewed and left-skewed distributions
+
+import statistics as st
+import numpy as np
+from scipy.stats import skew
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Generate random data
+data_right = np.random.beta(a=1, b=5, size=1000)  # Right-skewed
+data_left = np.random.beta(a=5, b=1, size=1000)   # Left-skewed
+
+# Calculate statistics for both distributions
+datasets = [("Right-Skewed", data_right), ("Left-Skewed", data_left)]
+
+for name, data in datasets:
+    mean = st.mean(data)
+    median = st.median(data)
+    midpoint = (max(data) + min(data)) / 2
+    print(f"\n{name} Distribution:")
+    print(f"  Mean, median, and midpoint: {mean:.2f} {median:.2f} {midpoint:.2f}")
+    print(f"  Skewness (Fischer-Pearson Coefficient): {skew(data):.2f}")
+    print(f"  Skewness (First Skewness Coefficient): {(mean - midpoint) / np.std(data):.2f}")
+
+# Create side-by-side plots
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+for ax, (name, data) in zip(axes, datasets):
+    mean = st.mean(data)
+    median = st.median(data)
+    midpoint = (max(data) + min(data)) / 2
+    
+    sns.histplot(data, bins="auto", kde=True, ax=ax)
+    ax.axvline(x=mean, color="r", linestyle="--", label="Mean")
+    ax.axvline(x=median, color="g", linestyle="-", label="Median")
+    ax.axvline(x=midpoint, color="b", linestyle=":", label="Midpoint")
+    ax.set_title(f"{name} Distribution")
+    ax.legend()
+
+plt.tight_layout()
+plt.show()
+```
+
+![Skewness](./Data/Code3_11_Output.png)
+
+### Prompt — Skewness and Skewed Distributions (Right-Skewed vs. Left-Skewed)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **simulate, analyze, and compare right-skewed and left-skewed distributions**, reproducing both the **numerical analysis** and the **visual comparison** described below.
+
+#### Tasks
+
+1. Generate two synthetic datasets of equal size:
+   - A **right-skewed distribution** generated from a Beta distribution with parameters $a = 1$, $b = 5$
+   - A **left-skewed distribution** generated from a Beta distribution with parameters $a = 5$, $b = 1$
+   - Use a sample size of **1000 observations** for each dataset.
+
+2. For **each distribution**, compute the following statistics:
+   - **Mean**
+   - **Median**
+   - **Midpoint**
+   - **Skewness (Fisher–Pearson coefficient)** using a standard skewness definition
+   - **Skewness (First skewness coefficient)** 
+
+3. Display the numerical results for each distribution in a clear, labeled textual format, including:
+   - Mean, median, and midpoint
+   - Both skewness coefficients
+
+4. Create a **side-by-side visualization** consisting of **two subplots (1 row × 2 columns)**:
+   - One subplot for the right-skewed distribution
+   - One subplot for the left-skewed distribution
+
+5. For each subplot:
+   - Plot a **histogram** using an automatic binning strategy
+   - Overlay a **kernel density estimate (KDE)** curve
+   - Draw vertical reference lines for:
+     - Mean (dashed line)
+     - Median (solid line)
+     - Midpoint (dotted line)
+   - Include a legend and an informative title indicating the distribution type
+
+6. Ensure the layout is clean, well-labeled, and suitable for instructional use.
+
+#### Output
+
+- Numerical summaries for both right-skewed and left-skewed distributions, including central tendency measures and skewness coefficients
+- A single figure with two side-by-side plots comparing the shapes of the distributions
+
+Ensure that all computations and visualizations follow standard **descriptive statistics** and **exploratory data analysis** conventions and clearly illustrate the concept of skewness.
+```
+
+The code below describes how to generate data distributions to explore different levels of **kurtosis**.
+
+```python
+# CODE 12
+# Kurtosis: mesokurtic, platykurtic and leptokurtic distributions
+
+import numpy as np
+from scipy.stats import norm, laplace, semicircular, kurtosis
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Set up sub-plots layout
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(13, 13), layout="constrained")
+
+# Store names and kurtosis values for printing
+kurtosis_info = []
+
+# Normal distribution (Mesokurtic)
+dnorm = norm.rvs(size=10000)
+knorm = kurtosis(dnorm)
+kurtosis_info.append(("Normal", knorm))
+sns.histplot(dnorm, bins="auto", kde=2, ax=ax1)
+# ax1.set_title(f"Normal Distribution - Kurtosis: {knorm:.2f}")
+
+# Uniform distribution (Platykurtic)
+dunif = np.random.uniform(0.01, 0.10, 10000)
+kunif = kurtosis(dunif)
+kurtosis_info.append(("Uniform", kunif))
+sns.histplot(dunif, bins="auto", kde=2, ax=ax2)
+# ax2.set_title(f"Uniform Distribution - Kurtosis: {kunif:.2f}")
+
+# Laplace distribution (Leptokurtic)
+dlap = laplace.rvs(loc=0, scale=1, size=10000)
+klap = kurtosis(dlap)
+kurtosis_info.append(("Laplace", klap))
+sns.histplot(dlap, bins="auto", kde=2, ax=ax3)
+# ax3.set_title(f"Laplace Distribution - Kurtosis: {klap:.2f}")
+
+# Wigner semicircle distribution
+dwigner = semicircular.rvs(size=10000)
+kwigner = kurtosis(dwigner)
+kurtosis_info.append(("Wigner Semicircle", kwigner))
+sns.histplot(dwigner, bins="auto", kde=2, ax=ax4)
+# ax4.set_title(f"Wigner Semicircle Distribution - Kurtosis: {kwigner:.2f}")
+
+# Hide axis labels and ticks
+for ax in [ax1, ax2, ax3, ax4]:
+    ax.set_xlabel("")
+    ax.set_ylabel("")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+# Print summary to console
+print("\nKurtosis Summary:")
+for name, k in kurtosis_info:
+    print(f"{name}: {k:.2f}")
+```
+
+![Kurtosis](./Data/Figure_3_6_Kurtosis.jpg)
+
+### Prompt — Kurtosis and Distribution Shapes (Mesokurtic, Platykurtic, and Leptokurtic)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **simulate, analyze, and visually compare distributions with different kurtosis characteristics**, reproducing both the **numerical analysis** and the **multi-panel visualization** described below.
+
+#### Tasks
+
+1. Generate four synthetic datasets, each with **10,000 observations**, corresponding to different distribution types:
+   - **Normal distribution** (mesokurtic)
+   - **Uniform distribution** (platykurtic)
+   - **Laplace distribution** (leptokurtic)
+   - **Wigner semicircle distribution**
+
+2. For each distribution:
+   - Compute the **kurtosis** using the standard excess kurtosis definition
+   - Store the distribution name and its kurtosis value for reporting
+
+3. Create a **2 × 2 grid of subplots** with an overall figure size close to **(13, 13)** and a layout that avoids overlap between plots.
+
+4. In each subplot:
+   - Plot a **histogram** using an automatic binning strategy
+   - Overlay a **kernel density estimate (KDE)** curve
+   - Do not display axis labels, tick marks, or grid lines
+   - Each subplot should correspond to one of the four distributions
+
+5. Ensure all four plots share a consistent visual style and are suitable for instructional comparison of kurtosis effects.
+
+6. After generating the plots, print a **console-style summary** listing:
+   - The name of each distribution
+   - Its corresponding kurtosis value, rounded to **two decimal places**
+
+#### Output
+
+- A single figure with four subplots illustrating:
+  - Mesokurtic behavior (normal distribution)
+  - Platykurtic behavior (uniform distribution)
+  - Leptokurtic behavior (Laplace distribution)
+  - A comparison case using the Wigner semicircle distribution
+- A textual summary reporting the kurtosis values for each distribution
+
+Ensure that the numerical computations and visualizations follow standard **descriptive statistics** and **exploratory data analysis** conventions and clearly illustrate differences in kurtosis.
+```
 
 ## 3.3 The Normal Distribution
 
-The **normal distribution** is a symmetric, bell-shaped distribution defined by its mean \( \mu \) and standard deviation \( \sigma \).
+The **normal distribution** is a symmetric, bell-shaped distribution defined by its mean $\mu$ and standard deviation $\sigma$.
 
 Probability density function:
-\[
-f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}
-\]
+$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}$
 
 Key properties:
 - Mean = median = mode
@@ -601,7 +791,7 @@ Key properties:
 
 The normal distribution is central to statistical reasoning and modeling.
 
----
+![Normal Distribution](./Data/Figure_3_7ab_Normal_Distributions.jpg)
 
 ## 3.4 Measures of Association
 
