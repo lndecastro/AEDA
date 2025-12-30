@@ -338,7 +338,75 @@ $\text{Midpoint} = \frac{x_{\min} + x_{\max}}{2}$
 - **Weighted mean**:
 $\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}$
 
----
+The code snippet below contains the script to calculate the mean, median, and midpoint of numeric variables ‘FFMC’ and ‘temp’, and the mode of the nominal variables ‘month’ and ‘day’ of the Forest Fires dataset.
+
+```python
+# CODE 3.5
+# Calculating the mean and mode one by one using the Statistics library
+# Numeric variables
+
+import statistics as st
+
+print('**Forest Fires Dataset**')
+print('\n*Numeric Variable FFMC*')
+print('Mean of variable FFMC: {:.2f}'.format(st.mean(dforest['FFMC'])))
+print('Median of variable FFMC: {:.2f}'.format(st.median(dforest['FFMC'])))
+midpoint = (max(dforest['FFMC'])+min(dforest['FFMC']))/2
+print('Midpoint of variable FFMC: {:.2f}'.format(midpoint))
+
+print('\n*Numeric Variable temp*')
+print('Mean of variable temp: {:.2f}'.format(st.mean(dforest['temp'])))
+print('Median of variable temp: {:.2f}'.format(st.median(dforest['temp'])))
+midpoint = (max(dforest['temp'])+min(dforest['temp']))/2
+print('Midpoint of variable temp: {:.2f}'.format(midpoint))
+
+# Nominal variables
+print('\n*Categorical Variables*')
+print('Mode of nominal variable month: {v1}'
+      .format(v1=st.mode(dforest['month'])))
+print('Mode of nominal variable day: {v1}'
+      .format(v1=st.mode(dforest['day'])))
+```
+
+![Central Tendency Measures](./Data/Code3_5_Output.png)
+
+### Prompt — Central Tendency Measures for Numeric and Categorical Variables (Forest Fires Dataset)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, compute and report **central tendency measures** for selected numeric and categorical variables, following the exact logic described below.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. For the **numeric variable `FFMC`**:
+   - Compute the **mean**
+   - Compute the **median**
+   - Compute the **midpoint**
+   - Report all values rounded to **two decimal places**
+3. For the **numeric variable `temp`**:
+   - Compute the **mean**
+   - Compute the **median**
+   - Compute the **midpoint**
+   - Report all values rounded to **two decimal places**
+4. For the **categorical (nominal) variables**:
+   - Determine the **mode** of the variable `month`
+   - Determine the **mode** of the variable `day`
+5. Present the results in a clear, labeled textual format that distinguishes:
+   - Numeric variables
+   - Categorical variables
+
+#### Output
+
+- Mean, median, and midpoint for:
+  - `FFMC`
+  - `temp`
+- Mode for:
+  - `month`
+  - `day`
+
+Ensure that all computations follow standard definitions of **central tendency measures** and that the presentation mirrors a step-by-step descriptive analysis suitable for an AEDA course.
+```
 
 ### 3.2.2 Comparing the Central Tendency Measures
 
@@ -353,38 +421,103 @@ For example:
 - Right-skewed distributions: mean > median
 - Left-skewed distributions: mean < median
 
----
+**Table:** Comparison of the different central tendency measures. <p>
+| Measure          | Sensitivity to Outliers | Computation      | Existence               | When to Use                                                                 |
+|------------------|-------------------------|------------------|-------------------------|-----------------------------------------------------------------------------|
+| Mean             | High                    | All values       | Always                  | Normal distributions; variation measures are needed; there are no extreme values |
+| Median           | No                      | All values       | Always                  | Skewed distributions; there are extreme values                              |
+| Mode             | No                      | Some values      | Not always or multiple  | Categorical data; when the most frequent value is of interest               |
+| Midpoint         | High                    | Extreme values   | Always                  | When the middle point of the range is desired                                |
+| Weighted Mean    | High                    | All values       | Always                  | When different values have different importance in the average              |
+| Geometric Mean   | Low                     | All values       | Always                  | Skewed distributions; extreme values; average rates of change or growth over time (percentages or ratios) |
+| Harmonic Mean    | Low                     | All values       | Always                  | Extreme values present; averaging rates, ratios, or proportions              |
+| Trimmed Mean     | No                      | Some values      | Always                  | Extreme values present; skewed distributions                                 |
 
 ### 3.2.3 Variability Measures
 
 Variability measures quantify **how spread out** the data is.
 
 - **Range**:
-\[
-R = x_{\max} - x_{\min}
-\]
+$R = x_{\max} - x_{\min}$
 
 - **Interquartile range (IQR)**:
-\[
-IQR = Q_3 - Q_1
-\]
+$IQR = Q_3 - Q_1$
 
 - **Variance**:
-\[
-s^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2
-\]
+$s^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2$
 
 - **Standard deviation**:
-\[
-s = \sqrt{s^2}
-\]
+$s = \sqrt{s^2}$
 
 - **Coefficient of variation**:
-\[
-CV = \frac{s}{\bar{x}}
-\]
+$CV = \frac{s}{\bar{x}}$
 
----
+The code snippet below presents a script to calculate the variability measures and applies it to the ‘FFMC’ var-iable of the Forest Fires dataset.
+
+```python
+# CODE 3.9
+# Calculate the variability measures range (Eq. 3.9),
+# IQR (Eq. 3.10), sIQR (Eq. 3.11), variance (Eq. 3.12),
+# std (Eq. 3.14), and CV (Eq. 3.16) using Numpy
+
+import numpy as np
+from ucimlrepo import fetch_ucirepo
+
+# fetch dataset
+# https://archive.ics.uci.edu/ml/datasets/forest+fires
+dforest = fetch_ucirepo(id=162)["data"]["original"]
+
+var = "FFMC"
+drange = np.max(dforest[var]) - np.min(dforest[var])
+Q1, Q3 = np.percentile(dforest[var], [25, 75])
+IQR = Q3 - Q1
+sIQR = IQR / 2
+dvar = np.var(dforest[var])
+dstd = np.std(dforest[var])
+CV = dstd / np.mean(dforest[var]) * 100
+
+print("*Variability Measures*")
+print(f"Range of variable FFMC: {drange:.2f}")
+print(f"IQR of variable FFMC: {IQR:.2f}")
+print(f"sIQR of variable FFMC: sIQR{sIQR:.2f}")
+print(f"Variance of variable FFMC: {dvar:.2f}")
+print(f"Standard deviation of variable FFMC: {dstd:.2f}")
+print(f"Variation coefficient of variable FFMC: {CV:.2f}")
+```
+
+![Variability Measures](./Data/Code3_9_Output.png)
+
+### Prompt — Variability Measures for a Numeric Variable (Forest Fires Dataset)
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, compute and report a set of **variability measures** for a selected numeric variable, following the exact logic described below.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. Select the numeric variable **`FFMC`** as the target variable.
+3. Compute the following variability measures using standard numerical definitions (equivalent to NumPy-based calculations):
+   - **Range**:
+   - **Interquartile Range (IQR)**:
+   - **Semi-Interquartile Range (sIQR)**:
+   - **Variance**:
+   - **Standard Deviation**:
+   - **Coefficient of Variation (CV)**:
+4. Report all numerical results rounded to **two decimal places**.
+5. Present the results in a clearly labeled, step-by-step textual format that distinguishes each variability measure.
+
+#### Output
+
+- Range of `FFMC`
+- IQR of `FFMC`
+- sIQR of `FFMC`
+- Variance of `FFMC`
+- Standard deviation of `FFMC`
+- Coefficient of variation of `FFMC`
+
+Ensure that all computations follow standard **descriptive statistics** definitions and are consistent with numerical implementations commonly used in exploratory data analysis.
+```
 
 ### 3.2.4 Comparing the Variability Measures
 
@@ -394,6 +527,16 @@ Different variability measures respond differently to outliers:
 - IQR is robust to outliers
 - Variance and standard deviation emphasize large deviations
 - CV enables comparison across variables with different scales
+
+**Table:** Comparison of the different variability measures. <p>
+| Measure                    | Sensitivity to Outliers | Computation    | Comments                                                                 |
+|----------------------------|-------------------------|----------------|--------------------------------------------------------------------------|
+| Range                      | Yes                     | Extreme values | Sensitive to extreme values and does not take into account the data distribution |
+| IQR                        | No                      | Some values    | Not sensitive to extreme values and is suitable for skewed data           |
+| sIQR                       | No                      | Some values    | Not sensitive to extreme values and is suitable for skewed data           |
+| Variance                   | Yes                     | All values     | Sensitive to extreme values and measured in squared units of the variable |
+| Standard Deviation         | Yes                     | All values     | Sensitive to extreme values and measured in the same unit as the variable |
+| Coefficient of Variation   | Yes                     | All values     | Sensitive to extreme values and suitable for data with a mean close to zero |
 
 ---
 
