@@ -797,37 +797,26 @@ The normal distribution is central to statistical reasoning and modeling.
 
 Association measures quantify **relationships between variables**.
 
----
-
 ### 3.4.1 Covariance
 
 Covariance measures joint variability:
+$\text{cov}(X, Y) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})$
 
-\[
-\text{cov}(X, Y) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})
-\]
-
-- Positive covariance: variables increase together
-- Negative covariance: one increases as the other decreases
+- Positive covariance: variables increase or decrease together
+- Negative covariance: one increases as the other decreases, or vice-versa
 - Magnitude depends on scale
-
----
 
 ### 3.4.2 Correlation
 
 Correlation standardizes covariance:
 
 - **Pearson correlation coefficient**:
-\[
-r = \frac{\text{cov}(X, Y)}{s_x s_y}
-\]
+$r = \frac{\text{cov}(X, Y)}{s_x s_y}$
 
 Properties:
-- \( -1 \le r \le 1 \)
+- $-1 \le r \le 1$
 - Direction indicates sign
 - Magnitude indicates strength
-
----
 
 ### 3.4.3 Comparing the Correlation Measures
 
@@ -839,27 +828,32 @@ Different correlation measures address different assumptions:
 
 Choice depends on data type and relationship structure.
 
----
+**Table:** Comparison of different correlation measures. <p>
+| Measure | Parametric | Range   | Types of Variables        | When to Use                                                                 |
+|--------:|------------|---------|---------------------------|-----------------------------------------------------------------------------|
+| PCC     | Yes        | [-1, 1] | Continuous                | Normally distributed data; linearly related variables; interval or ratio scale variables |
+| SRCC    | No         | [-1, 1] | Ordinal or Continuous     | Monotonic but not necessarily linear relationships; variables not normally distributed |
+| KRCC    | No         | [-1, 1] | Ordinal                   | When distances between variables cannot be measured; ranked variables not necessarily normal |
 
 ## 3.5 Linear Regression
 
-Linear regression models the relationship between a dependent variable \( y \) and an independent variable \( x \):
+Linear regression models the relationship between a dependent variable $y$ and an independent variable $x$:
 
-\[
-y = \beta_0 + \beta_1 x + \varepsilon
-\]
+$y = \beta_0 + \beta_1 x + \varepsilon$
 
 where:
-- \( \beta_0 \) is the intercept
-- \( \beta_1 \) is the slope
-- \( \varepsilon \) is the error term
+- $\beta_0$ is the intercept
+- $\beta_1$ is the slope
+- $\varepsilon$ is the error term
 
 Linear regression supports:
 - Trend analysis
 - Prediction
 - Interpretation of associations
 
----
+The figure below shows scatterplots with the respective linear regressors included. Note that the regressors are the lines that better approximate the data distributions and their slope indicates the type of correlation between the variables.
+
+![Linear Regression](./Data/Figure_3_9_Scatterplot_Regression.jpg)
 
 ## Reflection
 
@@ -867,14 +861,9 @@ Linear regression supports:
 - When do summary measures fail to capture important structure?
 - How do association measures support exploratory insights?
 
----
-
 ## Further Reading
 
 Refer to the course syllabus bibliography, particularly:
 
 **De Castro, L. N. (2026). _Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design_. CRC Press.**
 
----
-
-*End of Module 3*
