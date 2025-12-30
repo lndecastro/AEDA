@@ -318,35 +318,25 @@ Using the **Mammographic Mass dataset** from the UCI Machine Learning Repository
 Ensure that the contingency tables are computed using standard cross-tabulation logic (equivalent to `pandas.crosstab`) and follow established **exploratory data analysis** conventions.
 ```
 
----
-
 ## 3.2 Summary Measures
 
 Summary measures provide **numerical descriptions** of datasets, capturing central tendency, dispersion, position, and shape.
-
----
 
 ### 3.2.1 Central Tendency Measures
 
 Central tendency describes the **typical value** of a variable.
 
 - **Mean**:
-\[
-\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
-\]
+$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$
 
 - **Median**: middle value of the ordered data
 - **Mode**: most frequent value
 - **Midpoint**:
-\[
-\text{Midpoint} = \frac{x_{\min} + x_{\max}}{2}
-\]
+$\text{Midpoint} = \frac{x_{\min} + x_{\max}}{2}$
 
 - **Trimmed mean**: mean after removing extreme values
 - **Weighted mean**:
-\[
-\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}
-\]
+$\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}$
 
 ---
 
