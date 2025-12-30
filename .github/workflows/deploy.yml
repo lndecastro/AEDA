@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r requirements-jb.txt
 
       - name: Build Jupyter Book # Change this to new repo name
         run: |
