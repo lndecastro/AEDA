@@ -535,12 +535,19 @@ Effective visualizations intentionally leverage these principles to encode relat
 
 The figures below show the seven Gestalt principles discussed here.
 
+**1. Principle of continuity**<p>
 ![Gestalt principle](./Data/Figure_4_16_GP_Continuity.jpg)
+**2. Principle of closure**<p>
 ![Gestalt principle](./Data/Figure_4_17_GP_Closure.jpg)
+**3. Principle of proximity**<p>
 ![Gestalt principle](./Data/Figure_4_18_GP_Proximity.jpg)
+**4. Principle of similarity**<p>
 ![Gestalt principle](./Data/Figure_4_19_GP_Similarity.jpg)
+**5. Principle of symmetry**<p>
 ![Gestalt principle](./Data/Figure_4_20_GP_Symmetry.jpg)
+**6. Principle of figure-ground**<p>
 ![Gestalt principle](./Data/Figure_4_21_GP_Figure_Ground.jpg)
+**7. Principle of common-fate**<p>
 ![Gestalt principle](./Data/Figure_4_22_GP_Common_Fate.jpg)
 
 The table below summarizes the Gestalt principles and how each one of them enables us to encode relationships.without explicit anotation
@@ -630,6 +637,21 @@ Common graph categories include:
 
 **Design implication:**
 The same dataset can produce radically different interpretations depending on the chosen visualization.
+
+### 4.2.3 When to Use Tables and Graphs
+
+In general, the information carried by tables an graph is complementary, and the choice of one over another may depend on many factors, including the availability of space in the document, the target audience, and the story to be told.
+
+**Table:** Comparison of the suitability of tables and graphs for data visualization based on selected characteristics** <p>
+| Characteristic | Tables | Graphs |
+|----------------|--------|--------|
+| Accuracy in identifying values | Yes | No |
+| Easier identification of trends in data | No | Yes |
+| Look-up and one-to-one comparisons | Yes | No |
+| Comparison over multiple characteristics simultaneously | Yes | No |
+| Display of unit and summary information | Yes | No |
+| Large volumes of data | No | Yes |
+| Fast identification of patterns, trends, and outliers | No | Yes |
 
 ## Reflection
 
