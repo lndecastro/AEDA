@@ -337,8 +337,6 @@ The emphasis should be on **conceptual understanding of variable association and
 
 ### 5.2.2 Bubble Chart
 
-### 5.2.2 Bubble Chart
-
 **Purpose:**  
 To visualize the relationship between **two quantitative variables**, while incorporating an additional quantitative dimension through **bubble size** (and optionally a categorical or quantitative dimension through color).
 
@@ -444,58 +442,168 @@ The emphasis should be on **conceptual understanding of multivariate visualizati
 **Purpose:**  
 To visualize pairwise relationships among multiple variables.
 
+**Common type of data:**
+Multiple continuous quantitative variables (numeric features). Optionally, one categorical variable used for color grouping (e.g., class/species)
+
+**Interpretation:**
+- Pairwise association patterns across all variable pairs
+- Direction (positive, negative, none) and strength of relationships
+- Clusters and group separation when color encodes categories
+- Outliers and unusual observations that appear across multiple projections
+- Redundancy or collinearity between variables (highly similar patterns across plots)
+
 #### Python Code — Pair plot (Iris example)
 
 ```python
-# CODE 5.6
-# Scatterplot matrix (pair plot) for multivariate association inspection
+# CODE 5.4
+# Scatterplot matrix for the Iris dataset
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
 
-iris = sns.load_dataset("iris")
+# Load the Iris dataset from scikit-learn
+iris = load_iris()
 
-g = sns.pairplot(iris, hue="species", diag_kind="hist")
-g.fig.suptitle("Pair Plot (Scatterplot Matrix): Iris", y=1.02)
+# Convert the dataset to a Pandas DataFrame
+diris = sns.load_dataset('iris')
 
-# Save placeholder (note: pairplot is a figure-level object)
-g.fig.savefig("./Data/Fig5_6.png", dpi=300, bbox_inches="tight")
+# Pairplot
+sns.set_style("white")
+grid1 = sns.pairplot(diris) # Distributions
+grid2 = sns.pairplot(diris, hue='species') # Kernel density estimate (KDE)
 plt.show()
 ```
 
-![Fig5_6 — Scatterplot Matrix](./Data/Fig5_6.png)
+![Scatterplot Matrix](./Data/Figure_5_8a_Scatterplot_Matrix.jpg)
+![Scatterplot Matrix](./Data/Figure_5_8b_Scatterplot_Matrix.jpg)
 
----
+#### Prompt — Pair plot (Iris example)
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **explore and communicate multivariate relationships using scatterplot matrices (pair plots)** for a well-known benchmark dataset.
+
+## High-Level Objectives
+
+1. Use a multivariate dataset containing **multiple continuous variables** and a **categorical class label**.
+2. Create a **scatterplot matrix** that displays all pairwise relationships among the continuous variables.
+3. Generate two complementary views:
+   - A scatterplot matrix showing **univariate distributions on the diagonal** and **pairwise scatter plots off the diagonal**.
+   - A scatterplot matrix enhanced with **color-coded groups** to distinguish categories and reveal class structure.
+4. Ensure the visualizations support interpretation by:
+   - Making it easy to compare relationships across many variable pairs,
+   - Highlighting patterns of association, redundancy, and separation between groups,
+   - Revealing clusters, overlaps, and outliers across multiple projections.
+
+## Expected Outcome
+
+Produce visualizations that:
+- Present a **complete pairwise overview** of relationships among all numeric variables,
+- Show how adding a categorical grouping variable (via color) changes interpretation,
+- Allow students to identify:
+  - Direction and strength of pairwise associations,
+  - Variable pairs that best separate groups,
+  - Potential multicollinearity or redundancy among features.
+
+The emphasis should be on **multivariate exploratory insight and visual reasoning**, not on implementation details or plotting mechanics.
+```
 
 ### 5.2.4 Heatmaps and Correlograms
 
 **Purpose:**  
 To visualize magnitude (often correlation) using color intensity.
 
+**Common type of data:**
+A matrix of numerical values, typically derived from multiple quantitative variables (especially for correlograms).
+
+**Interpretation:**
+- Strength (and sign, when applicable) of relationships between variable pairs
+- Groups of variables that behave similarly (blocks or clusters in the matrix)
+- Redundancy / multicollinearity (strong correlations among predictors)
+- Weak or near-zero relationships that suggest independence
+- Potential anomalies or unusual patterns in structured data matrices
+
 #### Python Code — Correlation heatmap (Iris example)
 
 ```python
-# CODE 5.7
-# Heatmap for correlation matrix (Correlogram)
+# CODE 5.5
+# Correlation heatmaps (correlograms) for the Iris and Forest Fires datasets
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+import pandas as pd
+import numpy as np
+from ucimlrepo import fetch_ucirepo
 
-iris = sns.load_dataset("iris")
-corr = iris.drop(columns=["species"]).corr()
+# Load the Iris dataset from scikit-learn
+iris = load_iris()
+diris = sns.load_dataset('iris')
+diris = diris.drop(columns=['species'])
 
-plt.figure(figsize=(7, 5))
-sns.heatmap(corr, annot=True, cmap="coolwarm", center=0)
-plt.title("Correlation Heatmap (Iris)")
-plt.tight_layout()
+# Load the Forest Fires dataset
+# https://archive.ics.uci.edu/ml/datasets/forest+fires
+dforest = fetch_ucirepo(id=162)["data"]["original"]
+dforest = dforest.drop(columns=["month", "day"])
 
-plt.savefig("./Data/Fig5_7.png", dpi=300)
+# Create a subplot grid with 2 rows and 1 column
+fig, axs = plt.subplots(2, 1, figsize=(8, 12))
+        
+# Correlation heatmap for Iris dataset
+corr_iris = diris.corr()
+cmap_inverted = sns.color_palette("coolwarm", as_cmap=True)
+cmap_inverted = cmap_inverted.reversed()
+sns.heatmap(corr_iris, annot=True, cmap=cmap_inverted, ax=axs[0])
+axs[0].set_title('Iris Correlation Heatmap', fontsize=16)
+
+# Correlation heatmap for the Forest Fires dataset
+corr_forest = dforest.corr()
+sns.heatmap(corr_forest, annot=True, cmap=cmap_inverted, ax=axs[1])
+axs[1].set_title('Forest Fires Correlation Heatmap', fontsize=16)
+
+# Set tick labels font size & rotation
+for ax in axs:
+    ax.tick_params(axis='y', labelrotation=0.0)
+    ax.tick_params(labelsize=11)
+    
 plt.show()
 ```
 
-![Fig5_7 — Heatmap / Correlogram](./Data/Fig5_7.png)
+![Heatmap / Correlogram](./Data/Figure_5_9a_Heatmap.jpg)
+![Heatmap / Correlogram](./Data/Figure_5_9b_Heatmap.jpg)
 
----
+#### Prompt — Correlation heatmap (Iris example)
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze and compare correlation structures across multiple datasets** using heatmaps (correlograms).
+
+## High-Level Objectives
+
+1. Use **two real-world multivariate datasets** containing multiple numerical variables from different domains.
+2. For each dataset, compute the **pairwise relationships among numeric variables** and represent them in a matrix form.
+3. Create a **single figure composed of two vertically stacked correlation heatmaps**, one for each dataset, to facilitate comparison.
+4. Encode the strength and direction of relationships using **color intensity**, ensuring:
+   - Positive and negative relationships are visually distinguishable,
+   - Strong and weak associations are easy to identify.
+5. Enhance interpretability by:
+   - Including numeric annotations for correlation values,
+   - Using consistent color scales across both heatmaps,
+   - Adding clear titles and readable axis labels.
+
+## Expected Outcome
+
+Produce a single, well-organized figure that:
+- Displays a **correlation heatmap (correlogram)** for the first dataset,
+- Displays a second **correlation heatmap** for a different dataset,
+- Allows students to visually compare:
+  - Strength and sign of correlations within each dataset,
+  - Structural differences in variable relationships across datasets,
+  - Patterns of redundancy, independence, and potential multicollinearity.
+
+The emphasis should be on **conceptual understanding of correlation structure and visual interpretation**, not on implementation details or plotting mechanics.
+```
 
 ## 5.3 Amounts
 
@@ -504,76 +612,186 @@ Amount plots compare **absolute magnitudes across categories**.
 ### 5.3.1 Bar Chart
 
 **Purpose:**  
-To compare quantities across discrete categories.
+To compare quantities (amounts) across **discrete categories**.
 
-#### Python Code — Bar chart (Forest Fires: counts by month)
+**Common type of data:**  
+- x-axis: categorical or discrete variable (groups, labels, bins)  
+- y-axis: quantitative variable (count, sum, mean, rate, etc.)  
+
+**Interpretation:**  
+- Which categories have the largest or smallest values  
+- Magnitude differences between categories (gaps and rankings)  
+- Overall pattern of variation across categories (e.g., dominance, balance)  
+- Potential outliers or unusually large/small categories  
+
+#### Python Code — Bar chart 
 
 ```python
-# CODE 5.8
-# Bar chart for counts across categories
+# CODE 5.6
+# Create the bar charts for Severity and Shape vs Severity 
+# of the mammographic dataset
 
 import pandas as pd
 import matplotlib.pyplot as plt
 from ucimlrepo import fetch_ucirepo
 
-dforest = fetch_ucirepo(id=162)["data"]["original"]
+# fetch dataset
+# https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass
+dmammo = fetch_ucirepo(id=161)["data"]["original"]
+# replace placeholders with labels
+dmammo['Severity'] = dmammo['Severity'].map({0:'Benign', 1:'Malignant'})
+dmammo['Shape'] = dmammo['Shape'].map({1.0:'Round', 2.0:'Oval', 3.0:'Lobular', 4.0:'Irregular'})
 
-counts = dforest["month"].value_counts().sort_index()
+# 1. Calculate and plot the bar chart for 'Severity'
+counts = dmammo['Severity'].value_counts().sort_index()
+plt.bar(counts.index, counts.values) # Plot the bar chart
+plt.title('Bar chart: Severity count')
+plt.ylabel('Count'); plt.xlabel('Shape')
+# Save and show the plot
+plt.savefig("Figure_5_10a_Bar_Charts.svg", format="svg", dpi=1500, bbox_inches='tight')
+plt.show()
 
-plt.figure(figsize=(10, 5))
-plt.bar(counts.index, counts.values)
-plt.title("Bar Chart: Number of Records by Month (Forest Fires)")
-plt.xlabel("Month")
-plt.ylabel("Count")
-plt.tight_layout()
+# 2. Plot a bar chart for 'Shape' in relation to 'Severity'
+dmammo.groupby(['Shape', 'Severity']).size().unstack().plot(kind='bar', rot=0)
+plt.title('Grouped bar chart: Shape vs Severity', fontsize=16)
+plt.ylabel('Count'); plt.xlabel('Shape')
+# Save and show the plot
+plt.savefig("Figure_5_10b_Bar_Charts.svg", format="svg", dpi=1500, bbox_inches='tight')
+plt.show()
 
-plt.savefig("./Data/Fig5_8.png", dpi=300)
+# 3. Calculate and plot the bar chart for 'Shape'&'Severity' vs 'Count'
+counts = dmammo.groupby(['Shape', 'Severity']).size().reset_index(name='count')
+plt.bar(range(len(counts)), counts['count'])  # Plot the bar chart
+plt.title('Bar chart: (Shape & Severity) vs Count')
+plt.xlabel('Shape & Severity'); plt.ylabel('Count')
+
+# Format and rotate the ticks
+plt.xticks(range(len(counts)), [', '.join(map(str, tpl)) for tpl in 
+                                counts[['Shape','Severity']].to_records(index=False)], rotation=90)
+
 plt.show()
 ```
 
-![Fig5_8 — Bar Chart](./Data/Fig5_8.png)
+![Fig5_8 — Bar Chart](./Data/Figure_5_10_Bar_Charts.jpg)
 
----
+#### Prompt — Bar chart 
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze and compare categorical amounts using bar charts** based on a real-world medical dataset containing diagnostic attributes.
+
+## High-Level Objectives
+
+1. Use a dataset composed of **categorical variables** related to medical diagnosis.
+2. Focus on two categorical attributes:
+   - A primary outcome variable representing **diagnostic severity**,
+   - A descriptive categorical variable representing **mass shape**.
+3. Generate a sequence of **bar chart visualizations** that progressively increase in complexity:
+   - A **simple bar chart** showing the distribution (counts) of diagnostic severity.
+   - A **grouped bar chart** comparing the distribution of severity across different shape categories.
+   - A **combined categorical bar chart** showing counts for each unique combination of shape and severity.
+4. Ensure all charts clearly communicate:
+   - Category labels and counts,
+   - Differences and contrasts between groups,
+   - How categorical aggregation affects interpretation.
+
+## Expected Outcome
+
+Produce a set of bar chart figures that:
+- Show the overall frequency of diagnostic severity categories,
+- Compare severity outcomes across different shape categories using grouped bars,
+- Display counts for combined categorical conditions in a single chart,
+- Allow students to visually assess:
+  - Dominant categories,
+  - Group-level differences,
+  - How categorical relationships can be explored through aggregation.
+
+The emphasis should be on **conceptual understanding of categorical comparison and aggregation**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.3.2 Radar Chart
 
 **Purpose:**  
-To compare multiple variables for one or more entities.
+To compare **multiple variables** (dimensions) for one or more entities using a radial layout.
+
+**Common type of data:**  
+- Multiple quantitative variables measured on the same scale (or normalized to a common scale)  
+- One or more entities/records to compare (e.g., products, models, individuals, regions)
+
+**Interpretation:**  
+- Relative strengths and weaknesses across variables (profile shape)  
+- Similarity or differences between entities by comparing polygon shapes  
+- Variables where an entity performs unusually high or low  
+- Overall balance or imbalance across dimensions (e.g., “spiky” vs. “rounded” profiles)  
 
 > Radar charts should be used with care. They can be useful for a quick “profile” view, but they are not ideal for precise comparisons.
 
-#### Python Code — Radar chart (simple example)
+#### Python Code — Radar chart 
 
 ```python
-# CODE 5.9
-# Radar chart (profile comparison) using Plotly
+# CODE 5.7
+# Radar Chart for the Iris dataset available at the Scikitlearn library
 
-import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.datasets import load_iris
 
-df = pd.DataFrame({
-    "Metric": ["Accuracy", "Speed", "Cost", "Interpretability", "Robustness"],
-    "Model A": [0.85, 0.70, 0.60, 0.75, 0.80],
-    "Model B": [0.80, 0.85, 0.55, 0.60, 0.78],
-})
+# Load the Iris dataset from Scikitlearn and setup the radar chart
+diris = load_iris()
+fig = plt.figure(figsize=(10, 5))
+axs = fig.add_subplot(polar=True)
+angles = np.linspace(0, 2*np.pi, len(diris.feature_names), endpoint=False)
+angles = np.concatenate((angles,[angles[0]]))
+line = ['-','--','-.']
 
-df_long = df.melt(id_vars="Metric", var_name="Model", value_name="Score")
+# For each Iris class, plot the mean values of its features as a line 
+for i in range(3):
+    values = diris.data[diris.target == i].mean(axis=0)
+    values = np.concatenate((values, [values[0]]))
+    axs.plot(angles, values, label=diris.target_names[i], ls=line[i])
+axs.set_xticks(angles[:-1])
+axs.set_xticklabels(diris.feature_names)
 
-fig = px.line_polar(
-    df_long,
-    r="Score",
-    theta="Metric",
-    color="Model",
-    line_close=True,
-    title="Radar Chart: Profile Comparison (Example)"
-)
-fig.write_image("./Data/Fig5_9.png", scale=2)
-fig.show()
+
+axs.legend(bbox_to_anchor=(1.2, 1.05))
+axs.set_title('Radar Chart for the Iris Dataset')
+plt.show()
 ```
 
-![Fig5_9 — Radar Chart](./Data/Fig5_9.png)
+![Radar Chart](./Data/Figure_5_11_Radar_Chart.jpg)
 
----
+#### Prompt — Radar chart 
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **compare multivariate profiles across multiple groups** using a radar (spider) chart.
+
+## High-Level Objectives
+
+1. Use a well-known multivariate dataset containing:
+   - Several **continuous quantitative variables**, and
+   - A **categorical grouping variable** defining multiple classes.
+2. For each group, compute a **representative summary profile** (e.g., average values) across all quantitative variables.
+3. Create a **single radar chart** where:
+   - Each axis represents one quantitative variable,
+   - Each group is represented by a distinct polygon or line.
+4. Ensure the visualization supports comparison by:
+   - Using a common scale across all variables,
+   - Clearly distinguishing groups through line style or visual encoding,
+   - Labeling all variables and groups clearly.
+
+## Expected Outcome
+
+Produce a single radar chart that:
+- Displays the multivariate profile of each group in a radial layout,
+- Allows students to visually compare:
+  - Relative strengths and weaknesses across variables,
+  - Similarities and differences between group profiles,
+  - Overall balance or imbalance across dimensions.
+- Reinforces how radar charts provide a **compact summary view** of multiple variables for comparative exploratory analysis.
+
+The emphasis should be on **conceptual understanding of profile comparison and multivariate visualization**, not on implementation details or low-level plotting mechanics.
+```
 
 ## 5.4 Proportions
 
@@ -582,68 +800,204 @@ Proportion plots show **how a whole is divided into parts**.
 ### 5.4.1 Pie Chart
 
 **Purpose:**  
-To visualize proportions of a whole (best with few categories).
+To show how a **whole** is divided into **parts**, where each slice represents a category’s proportion of the total.
 
-#### Python Code — Pie chart (Mammographic: distribution of Shape, including missing)
+**Common type of data:**  
+- One categorical variable with a small number of categories  
+- A quantitative measure that represents **counts** or **shares** per category (often frequencies)
+
+**Interpretation:**  
+- Relative contribution of each category to the total (largest vs. smallest slices)  
+- Dominant categories and whether the distribution is balanced or concentrated  
+- Whether small categories are negligible or meaningful (if visible/labeled)  
+
+#### Python Code — Pie chart and Bar Chart
 
 ```python
-# CODE 5.10
-# Pie chart for proportions (few categories)
+# CODE 5.8
+# Pie Chart and Grouped Bar Chart for variables 'Margin' of the Mammographic dataset, and 
+# 'Day' of the Forest Fires dataset - Code with percentage values for the grouped bar chart
 
 import pandas as pd
 import matplotlib.pyplot as plt
 from ucimlrepo import fetch_ucirepo
 
+# fetch datasets
+# https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass
 dmammo = fetch_ucirepo(id=161)["data"]["original"]
+# https://archive.ics.uci.edu/ml/datasets/forest+fires
+dforest = fetch_ucirepo(id=162)["data"]["original"]
 
-# Include missing values
-shape = dmammo["Shape"].astype("object").fillna("?")
-counts = shape.value_counts(dropna=False)
+# Create a figure with two subplots in each row
+fig, ((pie1, bar1), (pie2, bar2)) = plt.subplots(nrows=2, ncols=2, figsize=(12, 12))
 
-plt.figure(figsize=(7, 7))
-plt.pie(counts.values, labels=counts.index.astype(str), autopct="%1.1f%%")
-plt.title("Pie Chart: Shape Distribution (Mammographic Mass)")
-plt.tight_layout()
+# replace placeholders with labels
+mm_labeled = dmammo['Margin'].map({1:'Circumscribed', 2:'Microlobulated', 3:'Obscured', 4:'Ill-Defined', 5:'Spiculated'})
 
-plt.savefig("./Data/Fig5_10.png", dpi=300)
+# Mammographic dataset - Pie chart
+mm = mm_labeled.value_counts()
+axes = mm.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=pie1)
+## Format Pie Chart
+pie1.set_title('Margin'); pie1.set_ylabel('')
+
+# Mammographic dataset - Grouped bar chart
+mm = mm_labeled.value_counts(normalize=True) * 100
+mm.plot(kind='bar', ax=bar1, color='#1f77b4')
+## Format Bar Chart
+bar1.grid(False); bar1.legend().remove()
+bar1.set_ylabel('Percentage'); bar1.set_xlabel('')
+
+# Forest Fires dataset - Pie chart
+ff = dforest['day'].value_counts()
+ff_ordered = ff[['sun', 'sat', 'fri', 'thu', 'wed', 'tue', 'mon']]
+axes = ff_ordered.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=pie2)
+## Format Pie Chart
+pie2.set_title('Day'); pie2.set_ylabel('')
+
+# Forest Fires dataset - Grouped bar chart
+ff = dforest['day'].value_counts(normalize=True) * 100
+ff_ordered = ff[['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']]
+ff_ordered.plot(kind='bar', ax=bar2, color='#1f77b4')
+## Format Bar Chart
+bar2.grid(False); bar2.legend().remove()
+bar2.set_ylabel('Percentage'); bar2.set_xlabel('')
+
 plt.show()
 ```
 
-![Fig5_10 — Pie Chart](./Data/Fig5_10.png)
+![Pie Chart](./Data/Figure_5_12_Pie_Chart.jpg)
 
----
+#### Prompt — Pie chart and Bar Chart
+
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze and compare categorical proportions using complementary visualizations** across two real-world datasets from different application domains.
+
+## High-Level Objectives
+
+1. Use **two datasets** containing categorical variables that represent meaningful groupings:
+   - One related to **medical diagnostic attributes**,
+   - One related to **environmental or temporal conditions**.
+2. For each dataset, focus on **one categorical variable** and examine how its categories are distributed.
+3. Create a **single figure organized as a 2 × 2 grid** of plots, where each row corresponds to one dataset:
+   - A **pie chart** to visualize the relative proportions of categories as parts of a whole,
+   - A **bar chart** to display the same information using percentages for easier comparison.
+4. Ensure consistency between paired plots by:
+   - Using the same underlying data for the pie chart and the bar chart,
+   - Expressing bar chart values as **percentages**,
+   - Ordering categories meaningfully to support interpretation.
+5. Clearly label all plots with informative titles and axis annotations so that students can easily understand:
+   - What variable is being visualized,
+   - How categories contribute to the total,
+   - How different visualization types affect interpretability.
+
+## Expected Outcome
+
+Produce a single, well-structured figure that:
+- Displays **pie charts** showing the proportional breakdown of categories for each dataset,
+- Displays corresponding **bar charts** showing the same proportions using percentages,
+- Enables students to compare:
+  - Pie charts versus bar charts for representing proportions,
+  - Distribution patterns across different datasets,
+  - The advantages and limitations of each visualization type for proportion data.
+
+The emphasis should be on **conceptual understanding of proportion-based visualizations and comparative interpretation**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.4.2 Doughnut Chart
 
 **Purpose:**  
-A variation of the pie chart with a hollow center.
+A variation of the pie chart that shows proportions of a whole, but with a **hollow center** that can be used for labels or summary information.
 
-#### Python Code — Doughnut chart (Matplotlib)
+**Common type of data:**  
+- One categorical variable with a small number of categories  
+- A quantitative measure representing **counts** or **shares** per category (often frequencies)
+
+**Interpretation:**  
+- Relative contribution of each category to the total (largest vs. smallest segments)  
+- Overall balance or concentration of the distribution  
+- Optional center label can reinforce a key total or KPI (e.g., total count, overall rate)  
+
+#### Python Code — Doughnut chart
 
 ```python
-# CODE 5.11
-# Doughnut chart using Matplotlib
+# CODE 5.9
+# Doughnut chart for variables 'Margin' of the Mammographic dataset, and 'Day' of the 
+# Forest Fires dataset - Code with percentage values for the grouped bar chart
 
+import pandas as pd
 import matplotlib.pyplot as plt
+from ucimlrepo import fetch_ucirepo
 
-labels = ["A", "B", "C", "D"]
-values = [40, 30, 20, 10]
+# fetch datasets
+# https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass
+dmammo = fetch_ucirepo(id=161)["data"]["original"]
+# https://archive.ics.uci.edu/ml/datasets/forest+fires
+dforest = fetch_ucirepo(id=162)["data"]["original"]
 
-fig, ax = plt.subplots(figsize=(7, 7))
-wedges, texts, autotexts = ax.pie(values, labels=labels, autopct="%1.1f%%", startangle=90)
-centre_circle = plt.Circle((0, 0), 0.60, fc="white")
-fig.gca().add_artist(centre_circle)
+# Create a figure with two subplots in each row
+fig, (dnut1, dnut2) = plt.subplots(nrows=1, ncols=2, figsize=(12, 10))
 
-ax.set_title("Doughnut Chart (Example)")
-plt.tight_layout()
+# Mammographic dataset - Doughnut chart
+## Replace placeholders with labels
+mm = dmammo['Margin'].map({1:'Circumscribed', 2:'Microlobulated', 3:'Obscured', 4:'Ill-Defined', 5:'Spiculated'}).value_counts()
+mm.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=dnut1, 
+        wedgeprops={'width': 0.3}, fontsize=14, colormap=plt.cm.Blues)
+dnut1.set_title('Margin', fontsize=16); dnut1.set_ylabel('')
+for ax in dnut1.texts[1::2]:
+    ax.set_bbox(dict(fc='white', ec='black', alpha=0.875, boxstyle='Round'))
+### Slightly adjust overlapping text
+x, y = dnut1.texts[1::2][3].get_position()
+dnut1.texts[1::2][3].set_position((x + 0.1, y - 0.05))
 
-plt.savefig("./Data/Fig5_11.png", dpi=300)
+# Forest Fires dataset - Doughnut chart
+ff = dforest['day'].value_counts()
+ff.plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=dnut2, 
+        wedgeprops={'width': 0.5}, fontsize=14, colormap=plt.cm.Blues)
+dnut2.set_title('Day', fontsize=16); dnut2.set_ylabel('')
+for ax in dnut2.texts[1::2]:
+    ax.set_bbox(dict(fc='white', ec='black', alpha=0.875, boxstyle='Round'))
+
 plt.show()
 ```
 
-![Fig5_11 — Doughnut Chart](./Data/Fig5_11.png)
+![Doughnut Chart](./Data/Figure_5_13_Doughnut_Chart.jpg)
 
----
+#### Prompt — Doughnut chart
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze and communicate categorical proportions using doughnut charts** for two real-world datasets from different application domains.
+
+## High-Level Objectives
+
+1. Use **two datasets** containing categorical variables that represent meaningful groupings:
+   - One related to **medical diagnostic characteristics**,
+   - One related to **environmental or temporal conditions**.
+2. For each dataset, select **one categorical variable** and examine how its categories contribute to the whole.
+3. Create a **single figure with two side-by-side doughnut charts**, one for each dataset, to support visual comparison.
+4. Ensure each doughnut chart:
+   - Represents category proportions using **angular segments**,
+   - Displays **percentage values** directly on the chart,
+   - Uses a hollow center to improve readability and visual balance.
+5. Enhance interpretability by:
+   - Clearly labeling each chart with an informative title,
+   - Using consistent color schemes,
+   - Making category proportions easy to distinguish at a glance.
+
+## Expected Outcome
+
+Produce a single, well-organized figure that:
+- Displays a **doughnut chart** showing the proportional distribution of categories for the first dataset,
+- Displays a second **doughnut chart** for a different dataset,
+- Allows students to:
+  - Identify dominant and minor categories,
+  - Compare proportional structures across datasets,
+  - Understand how doughnut charts relate to (and differ from) traditional pie charts.
+
+The emphasis should be on **conceptual understanding of proportion-based visualization and comparative interpretation**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.4.3 Treemap
 
