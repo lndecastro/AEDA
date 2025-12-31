@@ -497,22 +497,68 @@ Create a 1×4 figure demonstrating different markers on a line plot:
 - `marks = ['+', 's', 'x', 'o']`
 ```
 
+The table below summarizes the preattentive features and how each one of them enables us to identify and differentiate visual elements.
+
+**Table:** Summary of the preattentive features reviewed and their descriptions.
+| Preattentive Feature | Description |
+|---------------------|-------------|
+| Shape | Enables effortless and automatic detection of similarities and differences based on form. |
+| Line Width | Allows the rapid identification of variations in thickness within a group of similar lines. |
+| Color | Utilizes encoding to convey data, including categories, magnitude, visual hierarchy, and emotions. |
+| Size | Facilitates quick and automatic detection of differences in items, similar to the effect of line width. |
+| Markings | Allows swift detection of differences and similarities, such as the identification of repeating patterns among random shapes. |
+| Orientation | Assists in item differentiation and extraction of information from data points, lines, objects, etc. |
+| Position | Allows swift detection of location changes, such as the displacement of an item or object. |
+| 3D | Enables the perception of depth and spatial relationships without focused attention. |
+| Length | Creates visual contrast, differences, importance, and proportions. |
+| Curvature | Allows the rapid detection of changes in shape curvature, bending, or angularity. |
+| Density | Utilized in visual communication for contrast and emphasis on importance or relevance. |
+| Closure | Relates to our ability to mentally complete an incomplete object or shape. |
+| Texture | Pertains to the visual quality of objects, including roughness, pattern, and smoothness, enabling fast distinction among them. |
+
 ### 4.1.3 Gestalt Principles and Data Visualization Methods
 
 Gestalt psychology explains how humans naturally group visual elements. These principles are critical in visualization design.
 
 Key Gestalt principles include:
 
-* **Proximity**: Elements close to each other are perceived as related.
-* **Similarity**: Elements sharing color, shape, or size are grouped together.
-* **Continuity**: The eye follows smooth paths and trends.
-* **Closure**: Incomplete shapes are perceived as complete.
-* **Figure–ground**: Objects are distinguished from their background.
+- **Continuity**: The eye follows smooth paths and trends.
+- **Closure**: Incomplete shapes are perceived as complete.
+- **Proximity**: Elements close to each other are perceived as related.
+- **Similarity**: Elements sharing color, shape, or size are grouped together.
+- **Symmetry**: Symmetric objects tend to be perceived as a group or pattern.
+- **Figure–ground**: Objects are distinguished from their background.
+- **Common Fate**: Objects that move together or change in a similar way tend to be perceived as a group or a pattern.
 
 **Design implication:**
 Effective visualizations intentionally leverage these principles to encode relationships without explicit annotation.
 
----
+The figures below show the seven Gestalt principles discussed here.
+
+![Gestalt principle](./Data/Figure_4_16_GP_Continuity.jpg)
+![Gestalt principle](./Data/Figure_4_17_GP_Closure.jpg)
+![Gestalt principle](./Data/Figure_4_18_GP_Proximity.jpg)
+![Gestalt principle](./Data/Figure_4_19_GP_Similarity.jpg)
+![Gestalt principle](./Data/Figure_4_20_GP_Symmetry.jpg)
+![Gestalt principle](./Data/Figure_4_21_GP_Figure_Ground.jpg)
+![Gestalt principle](./Data/Figure_4_22_GP_Common_Fate.jpg)
+
+The table below summarizes the Gestalt principles and how each one of them enables us to encode relationships.without explicit anotation
+
+**Table:** Summary of the gestalt principles reviewed and their descriptions.
+| Gestalt Principle | Description |
+|-------------------|-------------|
+| Continuity | Objects that are arranged in a smooth, continuous way are more likely to be perceived as a single object, even if their pattern is interrupted. |
+| Closure | Incomplete objects are perceived as complete because our brain tends to fill the gaps to create the complete image. |
+| Proximity | Objects that are close to one another tend to be perceived as a group or a pattern. |
+| Similarity | Objects that share similar characteristics, such as color or form, tend to be perceived as a group or a pattern. |
+| Symmetry | Objects that are symmetrical, or that have a balanced appearance, tend to be perceived as a group or a pattern. |
+| Figure–Ground | Objects are perceived as either being in the foreground or the background. |
+| Common Fate | Objects that move together or change in a similar way tend to be perceived as a group or a pattern. |
+
+#### Exercise 2: Generate Python scripts to illustrate each of the seven Gestalt principles reviewd.
+
+#### Exercise 3: For each Python script create a prompt to illustrate the same principle using a general-purpose LLM.
 
 ## 4.2 Design Principles for Data Visualization
 
