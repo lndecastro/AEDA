@@ -111,11 +111,7 @@ For each dataset, perform the following steps independently:
    - Standard deviation of `x`
    - Standard deviation of `y`
    - Pearson correlation coefficient between `x` and `y`
-4. Fit a **simple linear regression model** of the form:
-
-   $y = \beta_0 + \beta_1 x$
-
-   using **ordinary least squares (OLS)**.
+4. Fit a **simple linear regression model** using **ordinary least squares (OLS)**.
 5. Report the regression equation using the estimated coefficients.
 6. Present all results in a clear, labeled, and readable textual format.
 
@@ -139,7 +135,63 @@ For each dataset, perform the following steps independently:
   - Clearly show both data points and regression lines
 ```
 
----
+An example similar to the **Anscombe’s Quartet** is the **Datasaurus Dozen**, a dataset consisting of 13 distinct datasets, each with a different shape, but with practically the same summary measures. The code snippet below is similar to the previous one, but reads the Datasaurus Dozen dataset from a CSV file with semicolon delimiter using the Pandas library. 
+
+```python
+# CODE 4.2
+# Print the Datasaurus Dozen table with the summary measures (mean, std, corr, linear 
+# regression) and plot the scatterplots of each dataset
+
+import pandas as pd
+import numpy as np
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset using Pandas
+dsaurus = pd.read_csv("datasaurus_dozen.csv", delimiter=';')
+pd.options.display.float_format = "{:.2f}".format
+
+# Print the data and summary measures for each dataset
+for dataset in dsaurus.dataset.unique():
+    print(f"Summary Measures for Dataset {dataset}:")
+    df_subset = dsaurus[dsaurus.dataset == dataset]
+    print(f"Mean of x: {np.mean(df_subset.x):.2f}")
+    print(f"Mean of y: {np.mean(df_subset.y):.2f}")
+    print(f"Std of x: {np.std(df_subset.x):.2f}")
+    print(f"Std of y: {np.std(df_subset.y):.2f}")
+    print(f"Correlation between x and y: {np.corrcoef(df_subset.x, df_subset.y)[0, 1]:.2f}")
+    model = sm.OLS(df_subset.y, sm.add_constant(df_subset.x)).fit()
+    print(f"Linear regression model: y = {model.params.iloc[0]:.2f} + {model.params.iloc[1]:.2f}x\n")
+
+# Plot the scatterplots for each dataset
+fig, axes = plt.subplots(5, 3, figsize=(14, 18))
+
+for i, dataset in enumerate(dsaurus.dataset.unique()):
+    ax = axes.flatten()[i]
+    df_subset = dsaurus[dsaurus.dataset == dataset]
+    x = df_subset.x; y = df_subset.y
+    sns.scatterplot(x=x, y=y, ax=ax)
+    ax.set_title(f"Dataset {dataset}", fontsize=16)
+    
+for i in range(len(dsaurus.dataset.unique()), len(axes.flatten())):
+    fig.delaxes(axes.flatten()[i])  # Remove unused subplots
+
+# Save & Show the plot
+plt.savefig("Figure_4_2_Datasaurus_Dozen.svg", format="svg", dpi=1500)
+plt.show()
+```
+
+Summary Measures for Dataset dino:  <br>
+Mean of x: 54.26 <br>
+Mean of y: 47.83  <br>
+Std of x: 16.71  <br>
+Std of y: 26.84  <br>
+Correlation between x and y: -0.06 <br>
+Linear regression model: y = 53.45 + -0.10x. <p>
+
+![Datasauros Dozen](./Data/Figure_4_2_Datasaurus_Dozen.jpg) <p>
+**Figure:** Scatterplots of the 13 datasets available in the Datasaurus Dozen.
 
 ### 4.1.2 Preattentive Processing
 
