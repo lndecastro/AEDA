@@ -83,6 +83,90 @@ plt.savefig("Figure_4_1_Anscombe_Quartet.svg", format="svg", dpi=1500)
 plt.show()
 ```
 
+Dataset  I <br>
+   dataset     x     y <br>
+0        I 10.00  8.04 <br>
+1        I  8.00  6.95 <br>
+2        I 13.00  7.58 <br>
+3        I  9.00  8.81 <br>
+4        I 11.00  8.33 <br>
+5        I 14.00  9.96 <br>
+6        I  6.00  7.24 <br>
+7        I  4.00  4.26 <br>
+8        I 12.00 10.84 <br>
+9        I  7.00  4.82 <br>
+10       I  5.00  5.68 <br>
+Summary Measures for Dataset I: <br>
+Mean of x: 9.00 <br>
+Mean of y: 7.50 <br>
+Std of x: 3.16 <br>
+Std of y: 1.94 <br>
+Correlation between x and y: 0.82 <br>
+Linear regression model: y = 3.00 + 0.50x <p>
+
+Dataset  II <br>
+   dataset     x    y <br>
+11      II 10.00 9.14 <br>
+12      II  8.00 8.14 <br>
+13      II 13.00 8.74 <br>
+14      II  9.00 8.77 <br>
+15      II 11.00 9.26 <br>
+16      II 14.00 8.10 <br>
+17      II  6.00 6.13 <br>
+18      II  4.00 3.10 <br>
+19      II 12.00 9.13 <br>
+20      II  7.00 7.26 <br>
+21      II  5.00 4.74 <br>
+Summary Measures for Dataset II: <br>
+Mean of x: 9.00 <br>
+Mean of y: 7.50 <br>
+Std of x: 3.16 <br>
+Std of y: 1.94 <br>
+Correlation between x and y: 0.82 <br>
+Linear regression model: y = 3.00 + 0.50x <p>
+
+Dataset  III <br>
+   dataset     x     y <br>
+22     III 10.00  7.46 <br>
+23     III  8.00  6.77 <br>
+24     III 13.00 12.74 <br>
+25     III  9.00  7.11 <br>
+26     III 11.00  7.81 <br>
+27     III 14.00  8.84 <br>
+28     III  6.00  6.08 <br>
+29     III  4.00  5.39 <br>
+30     III 12.00  8.15 <br>
+31     III  7.00  6.42 <br>
+32     III  5.00  5.73 <br>
+Summary Measures for Dataset III:  <br>
+Mean of x: 9.00 <br>
+Mean of y: 7.50 <br>
+Std of x: 3.16 <br>
+Std of y: 1.94 <br>
+Correlation between x and y: 0.82 <br>
+Linear regression model: y = 3.00 + 0.50x <p>
+
+Dataset  IV <br>
+   dataset     x     y <br>
+33      IV  8.00  6.58 <br>
+34      IV  8.00  5.76 <br>
+35      IV  8.00  7.71 <br>
+36      IV  8.00  8.84 <br>
+37      IV  8.00  8.47 <br>
+38      IV  8.00  7.04 <br>
+39      IV  8.00  5.25 <br>
+40      IV 19.00 12.50 <br>
+41      IV  8.00  5.56 <br>
+42      IV  8.00  7.91 <br>
+43      IV  8.00  6.89 <br>
+Summary Measures for Dataset IV: <br>
+Mean of x: 9.00 <br>
+Mean of y: 7.50 <br>
+Std of x: 3.16 <br>
+Std of y: 1.94 <br>
+Correlation between x and y: 0.82 <br>
+Linear regression model: y = 3.00 + 0.50x <p>
+
 ![Anscombe's Quartet](./Data/Figure_4_1_Anscombe_Quartet.jpg)
 
 ### Prompt — Anscombe's Quartet Table with Summary Measures
@@ -193,6 +277,8 @@ Linear regression model: y = 53.45 + -0.10x. <p>
 ![Datasauros Dozen](./Data/Figure_4_2_Datasaurus_Dozen.jpg) <p>
 **Figure:** Scatterplots of the 13 datasets available in the Datasaurus Dozen.
 
+#### Exercise 1: Create the prompt to plot the summary measures and scatterplots of the Datasauros Dozen.
+
 ### 4.1.2 Preattentive Processing
 
 **Preattentive processing** refers to the ability of the human visual system to rapidly and automatically detect certain visual features *before conscious attention is engaged*.
@@ -216,7 +302,200 @@ For example:
 **Design implication:**
 Key variables should be mapped to preattentive attributes when rapid detection is desired.
 
----
+The code snippet below illustrate various preattentive features: Shape, line width, color, size, markings, orientation, position, 3d, length, curvature, density, closure, and texture.
+
+```python
+# CODE SNIPPETS for Section 4.1.2
+# Preattemptive Processing
+# Code to generate illustrations of the following preattemptive processing:
+# Shape, line width, color, size, markings, orientation, position, 3d,  
+# length, curvature, density, closure, and texture
+
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches 
+from mpl_toolkits.mplot3d import Axes3D
+
+# Shape
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+shapes = ['circle', 'square', 'star', 'triangle']
+for i, ax in enumerate(axs):
+    shape = shapes[i]
+    # Create shapes using patches
+    if shape == 'circle':
+        shape_obj = patches.Circle((0.5, 0.5), radius=0.4, fill=False)
+    elif shape == 'square':
+        shape_obj = patches.Rectangle((0.1, 0.1), 0.8, 0.8, fill=False)
+    elif shape == 'star':
+        x = [0.5, 0.61, 0.9, 0.66, 0.75, 0.5, 0.25, 0.34, 0.1, 0.39]
+        y = [0.05, 0.4, 0.4, 0.55, 0.9, 0.7, 0.9, 0.55, 0.4, 0.4]
+        shape_obj = patches.Polygon(np.column_stack((x, y)), closed=True, fill=False)
+    elif shape == 'triangle':
+        x = [0.1, 0.5, 0.9, 0.1]
+        y = [0.1, 0.9, 0.1, 0.1]
+        shape_obj = patches.Polygon(np.column_stack((x, y)), closed=True, fill=False)
+    # Add the shape to the plot
+    ax.add_patch(shape_obj)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Line Width
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+line_widths = [1, 2, 3, 4]
+x = np.arange(10)
+y = np.random.rand(10)
+for ax, lw in zip(axs, line_widths):
+    ax.plot(x, y, linewidth=lw)
+    ax.set_xticks([]); ax.set_yticks([])
+    #ax.set_title(f'Line width {lw}')
+
+# Color
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+colors = [[1, 0, 0], [0, 1, 0], [0, 0, 1], [1, 1, 0]]
+x = np.arange(10)
+y = np.random.rand(10)
+for ax, c in zip(axs, colors):
+    ax.plot(x, y, color=c)
+    ax.set_xticks([]); ax.set_yticks([])
+    #ax.set_title(f'Color {c}')
+
+# Size
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+sizes = [10, 30, 50, 80]
+for ax, s in zip(axs, sizes):
+    ax.scatter(np.random.rand(10), np.random.rand(10), s=s)
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Markings
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+marks = ['+', 's', 'x', 'o']
+x = np.arange(10)
+y = np.random.rand(10)
+for ax, mark in zip(axs, marks):
+    ax.plot(x, y, marker=mark)
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Orientation
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+orientations = [0, 45, 135, 0]
+for ax, o in zip(axs, orientations):
+    angle = np.deg2rad(o)
+    x = np.array([0, np.cos(angle)])
+    y = np.array([0, np.sin(angle)])
+    ax.plot(x, y)
+    ax.set_xticks([]); ax.set_yticks([])
+    ax.set_title(f'{o}°')
+
+# Position
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+for ax in axs:
+    ax.scatter(np.random.rand(10), np.random.rand(10))
+    ax.set_xticks([]); ax.set_yticks([])
+
+# 3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter(np.random.rand(10), np.random.rand(10), np.random.rand(10))
+ax.set_xticks([]); ax.set_yticks([]); ax.set_zticks([])
+
+# Length
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+lengths = [0.2, 0.4, 0.6, 0.8]
+for ax, l in zip(axs, lengths):
+    ax.plot([0, l], [0.5, 0.5], linewidth=2)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Curvature
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+curvatures = [0.2, 0.4, 0.6, 0.8]
+x = np.linspace(0, 1, 100)
+for ax, c in zip(axs, curvatures):
+    y = np.sin(2 * np.pi * c * x) * 0.3 + 0.5  # Adjust curvature
+    ax.plot(x, y, linewidth=2)
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Density
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+densities = [10, 50, 100, 500]
+for ax, d in zip(axs, densities):
+    x = np.random.rand(d)
+    y = np.random.rand(d)
+    ax.scatter(x, y, alpha=0.5)
+    ax.set_xticks([]); ax.set_yticks([])
+    #ax.set_title(f'Density {d}')
+
+# Closure
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+for i, ax in enumerate(axs):
+    x = [0, 1, 1, 0, 0][:i+2]
+    y = [0, 0, 1, 1, 0][:i+2]
+    ax.plot(x, y, '-o')
+    # adjust scale of plot
+    ax.set_xlim([-0.25, 1.25]), ax.set_ylim([-0.25, 1.25])
+    ax.set_xticks([]); ax.set_yticks([])
+
+# Texture
+fig, axs = plt.subplots(1, 4, figsize=(8, 2), constrained_layout=True)
+lins = ['-', '--', ':', '-.']
+x = np.arange(10)
+y = np.random.rand(10)
+for ax, lin in zip(axs, lins):
+    ax.plot(x, y, linestyle=lin)
+    ax.set_xticks([]); ax.set_yticks([])
+plt.show()
+```
+
+The figures below show the thirteen preattentive features discussed here followed by the portions of the code snippets that generated them. The code to generated all of them at once was presented above.
+
+![Preattentive features](./Data/Figure_4_3_PAF_Shape.jpg)
+![Preattentive features](./Data/Figure_4_4_PAF_Line_Width.jpg)
+![Preattentive features](./Data/Figure_4_5_PAF_Color.jpg)
+![Preattentive features](./Data/Figure_4_6_PAF_Size.jpg)
+![Preattentive features](./Data/Figure_4_7_PAF_Markings.jpg)
+![Preattentive features](./Data/Figure_4_8_PAF_Orientation.jpg)
+![Preattentive features](./Data/Figure_4_9_PAF_Position.jpg)
+![Preattentive features](./Data/Figure_4_10_PAF_3D.jpg)
+![Preattentive features](./Data/Figure_4_11_PAF_Length.jpg)
+![Preattentive features](./Data/Figure_4_12_PAF_Curvature.jpg)
+![Preattentive features](./Data/Figure_4_13_PAF_Density.jpg)
+![Preattentive features](./Data/Figure_4_14_Closure.jpg)
+![Preattentive features](./Data/Figure_4_15_PAF_Texture.jpg)
+
+### Prompt — Preattentive Processing Features
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your goal is to generate a complete set of **Python illustrations of preattentive processing attributes**. The output must consist of multiple figures (mostly 1×4 subplot layouts) demonstrating how different visual encodings are perceived preattentively.
+
+## Tasks — Generate Figures for Preattentive Attributes
+
+Create the figures below each as a separate figure.
+
+### 1) Shape (patch-based)
+Create a 1×4 figure showing, in order:
+- Circle, Square, Star, Triangle
+
+### 2) Line Width
+Create a 1×4 figure demonstrating different line widths:
+- `line_widths = [1, 2, 3, 4]`
+
+### 3) Color
+Create a 1×4 figure demonstrating different line colors:
+- `colors = [[1,0,0], [0,1,0], [0,0,1], [1,1,0]]`
+
+### 4) Size
+Create a 1×4 figure demonstrating marker size in scatterplots:
+- `sizes = [10, 30, 50, 80]`
+
+### 5) Markings
+Create a 1×4 figure demonstrating different markers on a line plot:
+- `marks = ['+', 's', 'x', 'o']`
+```
 
 ### 4.1.3 Gestalt Principles and Data Visualization Methods
 
