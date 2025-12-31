@@ -1314,7 +1314,7 @@ fig.show()
 
 ![Gantt Chart](./Data/Figure_5_18_Gantt_Chart.jpg)
 
-#### Python Code — Gantt chart
+#### Prompt — Gantt chart
 ```
 You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
@@ -1354,71 +1354,181 @@ Geospatial plots visualize **data linked to geographic locations**.
 ### 5.6.1 Choropleth Map
 
 **Purpose:**  
-To visualize spatial variation of a variable aggregated by region (e.g., country, state, county).
+To visualize **spatial variation** of a variable aggregated by region (e.g., country, state, county) using color intensity.
 
-#### Python Code — Choropleth (Natural Earth + Plotly Express)
+**Common type of data:**  
+- Geographic regions (polygons) with identifiers (e.g., ISO codes, state names, county IDs)  
+- One quantitative variable aggregated at the region level (rate, index, average, percentage, density, etc.)  
+- Optional: time dimension (maps across multiple years) or categorical grouping for faceting
+
+**Interpretation:**  
+- Which regions have higher or lower values (spatial highs/lows)  
+- Regional patterns such as clusters, gradients, or geographic disparities  
+- Outlier regions that differ strongly from neighbors  
+- Broad geographic trends (e.g., coastal vs inland, north vs south)  
+
+#### Python Code — Choropleth 
 
 ```python
-# CODE 5.16
-# Choropleth map (country-level) using Plotly + Natural Earth
+# CODE 5.14
+# Choropleth map and its variations for Geopandas with naturalearth_lowres dataset
 
-import plotly.express as px
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import numpy as np  # Needed for infinity in breaks
 
-df = px.data.gapminder().query("year == 2007")
+# Load the dataset
+world = gpd.read_file('https://naciscdn.org/naturalearth/110m/cultural/ne_110m_admin_0_countries.zip')
 
-fig = px.choropleth(
-    df,
-    locations="iso_alpha",
-    color="lifeExp",
-    hover_name="country",
-    title="Choropleth: Life Expectancy by Country (2007)",
-    color_continuous_scale="Viridis"
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
+
+# Plot a choropleth map for population estimate
+world.plot(column='POP_EST', cmap='Reds', legend=True, ax=ax1, edgecolor='black')
+ax1.set_title("Unclassed Population Estimate")
+
+# Define breaks for population estimate data
+breaks = [0, 20000000, 50000000, 100000000, 250000000, 1000000000, np.inf] 
+# Extract labels from breaks (excluding infinity & Dividing by 1 million)
+labels = [f"{int(b/1e6)}M" for b in breaks[:-1]]  
+
+# Assign each country to a class based on its population estimate
+world['pop_class'] = pd.cut(world['POP_EST'], bins=breaks, labels=labels, include_lowest=True, right=False)
+
+# Plot a choropleth map with classed data
+world.plot(column='pop_class', cmap='OrRd', legend=True, ax=ax2, 
+edgecolor='black', legend_kwds= {'title': "Population Class", 'loc': 'upper left',     'bbox_to_anchor': (1, 1)}
 )
-fig.write_image("./Data/Fig5_16.png", scale=2)
-fig.show()
+ax2.set_title("Classed Population Estimate")
+
+plt.show()
 ```
 
-![Fig5_16 — Choropleth Map](./Data/Fig5_16.png)
+![Choropleth Map](./Data/Figure_5_19_Choropleth_Map.jpg)
 
----
+#### Prompt — Choropleth 
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **explore and compare spatial variation using choropleth maps**, highlighting how different classification choices affect interpretation.
+
+## High-Level Objectives
+
+1. Use a **global geospatial dataset** containing country-level boundaries and an aggregated quantitative attribute.
+2. Select a **single numeric variable aggregated by region** (e.g., population estimate).
+3. Create a **single figure with two vertically stacked choropleth maps**:
+   - An **unclassed choropleth**, where color intensity represents the raw magnitude of the variable.
+   - A **classed choropleth**, where values are grouped into meaningful intervals and displayed using categorical color classes.
+4. Ensure both maps:
+   - Use consistent geographic boundaries,
+   - Clearly differentiate regions using color,
+   - Include legends that explain how values or classes are encoded.
+5. Emphasize how visualization choices influence interpretation by:
+   - Comparing continuous vs. classed representations,
+   - Highlighting regional contrasts, dominant areas, and extremes,
+   - Showing how classification thresholds can simplify or alter perceived spatial patterns.
+
+## Expected Outcome
+
+Produce a figure that:
+- Displays **two choropleth maps** of the same variable using different encoding strategies,
+- Allows students to visually compare:
+  - Raw magnitude versus categorized representation,
+  - Subtle gradients versus simplified classes,
+  - Strengths and limitations of each approach.
+- Demonstrates best practices for **geospatial visualization and map interpretation** in exploratory data analysis.
+
+The emphasis should be on **conceptual understanding of spatial aggregation, classification, and visual perception**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.6.2 Bubble Map
 
 **Purpose:**  
-To represent quantities at geographic locations using circles sized by magnitude.
+To represent quantities at geographic locations using **circles sized by magnitude**, enabling comparison of values across space.
 
-#### Python Code — Bubble map (Plotly Express)
+**Common type of data:**  
+- Geographic locations (points) given by coordinates (latitude/longitude) or place identifiers  
+- One quantitative variable encoded by **bubble size** (count, volume, rate, etc.)  
+- Optional: a categorical variable encoded by color, or a time variable for animation/faceting
+
+**Interpretation:**  
+- Where the largest or smallest values occur (spatial concentration)  
+- Geographic clusters of high or low magnitude  
+- Outlier locations with unusually large or small values  
+- Broad spatial patterns that emerge from point-wise variation (e.g., regional hotspots)  
+
+#### Python Code — Bubble map
 
 ```python
-# CODE 5.17
-# Bubble map using Plotly Express (scatter_geo)
+# CODE 5.16
+# Bubble chart for the Gapminder dataset
 
+import pandas as pd
+import geopandas as gpd
+import matplotlib.pyplot as plt
 import plotly.express as px
 
-df = px.data.gapminder().query("year == 2007")
+# Load the Gapminder dataset
+dgapminder = pd.read_csv('gapminder.csv')
+dgapminder['gdp'] = dgapminder['gdp'].fillna(0)
+# Filter dataset for year 1998
+dgapminder = dgapminder[dgapminder['year'] == 1998]
 
-fig = px.scatter_geo(
-    df,
-    locations="iso_alpha",
-    size="pop",
-    color="continent",
-    hover_name="country",
-    projection="natural earth",
-    title="Bubble Map: Population by Country (2007)"
-)
-fig.write_image("./Data/Fig5_17.png", scale=2)
+# Plot a Bubble map
+fig = px.scatter_geo(dgapminder, locations='country', locationmode='country names', 
+                     size='gdp', color='continent', 
+                     hover_name='country', projection='natural earth')
+fig.update_layout(title={
+    'text': 'Bubble Map of GDP by Country and Continent',
+    'font': {'size': 16}})
+
 fig.show()
 ```
 
-![Fig5_17 — Bubble Map](./Data/Fig5_17.png)
+![Bubble Map](./Data/Figure_5_21a_Bubble_Map.jpg)
 
----
+#### Prompt — Bubble map
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **visualize geographic variation in quantitative data using a bubble map**, combining spatial location with magnitude and categorical grouping.
+
+## High-Level Objectives
+
+1. Use a **global dataset** containing country-level observations, including:
+   - Geographic identifiers,
+   - A quantitative variable representing magnitude,
+   - A categorical variable representing groups or regions.
+2. Focus on a **single snapshot in time** to simplify interpretation and emphasize spatial comparison.
+3. Create a **bubble map** where:
+   - Each country is positioned according to its geographic location,
+   - Bubble size represents the magnitude of the selected quantitative variable,
+   - Bubble color distinguishes categories such as regions or continents.
+4. Ensure the visualization clearly communicates:
+   - Where large and small values are geographically concentrated,
+   - Regional patterns and contrasts,
+   - How magnitude and category interact across space.
+5. Include clear titles and interactive cues (e.g., hover information) so that the map can be easily interpreted.
+
+## Expected Outcome
+
+Produce a single bubble map that:
+- Displays **country-level quantities** using circles scaled by magnitude,
+- Uses color to group countries into broader regions,
+- Allows students to visually assess:
+  - Spatial concentration of high and low values,
+  - Geographic disparities across regions,
+  - The added value of combining maps with bubble-size encoding.
+
+The emphasis should be on **conceptual understanding of geospatial magnitude visualization and spatial interpretation**, not on implementation details or low-level plotting mechanics.
+```
 
 ## Reflection
 
-Visualization methods are not interchangeable. Each method answers specific analytical questions and carries assumptions about data type and structure. Reflect on how choosing an inappropriate visualization can distort interpretation and mislead decision-making. Also reflect on how visual methods complement (and sometimes outperform) summary statistics when the goal is to understand structure, patterns, and anomalies.
-
----
+- How does the choice of visualization method affect the insights you can extract from the same dataset?
+- When do visualizations reveal patterns or anomalies that summary statistics fail to show?
+- How can different visual encodings (position, length, area, color) influence interpretation accuracy?
+- In what situations might a visualization mislead rather than clarify the underlying data?
+- What factors should guide your decision when selecting a visualization method for exploratory analysis?
 
 ## Further Reading
 
