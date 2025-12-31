@@ -366,19 +366,13 @@ Typical objectives include:
 
 ### 6.2.2 Text Structuring
 
-To analyze text computationally, it must be transformed into structured representations. Common choices include:
+One way to analyze text computationally is to transform it into structured representations. Common choices include:
 - **Lexical statistics** (counts of characters/words/sentences)
 - **Bag-of-words / document-term matrix (DTM)**
 - **TF–IDF** weighting
 - **N-grams** and co-occurrence structures
 
-
-**Figure placeholder — IMDb dataset example and text structuring pipeline**
-
-![IMDb text data](./Data/Figure_6_06_IMDb_Text_Data.jpg)
-
-
-**Python Code — Code to structure texts using Lexical Representations (Part 1)**
+#### Python Code — Structure texts using Lexical Representations (Part 1)
 
 ```python
 # CODE 6.4a
@@ -418,7 +412,57 @@ stemmed_docs = [" ".join([stemmer.stem(word) for word in word_tokenize(doc)])
                 for doc in filtered_docs]
 ```
 
-**Python Code — Create the data matrix using different methods (Part 2)**
+Stopwords contained in the stopwords file in NLTK:
+{'she', 'themselves', 'doesn', 'such', 'at', "doesn't", 'so', 'when', "shan't", 'no', "hadn't", 'is', 'these', 'was', 'be', "wasn't", "i'll", 'it', 'ourselves', 'to', "should've", "shouldn't", 'couldn', 'or', "we'll", 'if', 'wouldn', "he'll", 'himself', 'each', 'has', 'aren', 'only', "it's", "didn't", 'who', 'through', 'while', 'weren', 'been', 'same', 'its', 'for', 'hadn', 'shan', 'under', 'with', 'y', 'hasn', 'had', 'what', 'hers', 'against', 'me', 'they', 'more', "mustn't", 've', 'does', 'ours', 'between', 'my', 'out', 'those', 'too', 'will', 'wasn', 'very', "aren't", 'until', 'are', 'didn', 'itself', "i'm", "he'd", 'both', 'mustn', "they've", 'now', 'doing', 'their', 'during', 'the', 'don', "that'll", 'an', 'here', 'him', 'herself', 'theirs', "she's", 'd', 'isn', 'up', "hasn't", 'down', "they'll", "she'd", 'myself', 'all', 'again', 'that', 'being', 'you', "isn't", 'then', 'there', 'her', 'our', 'as', 'any', 'of', "we're", 're', 'after', 'whom', "you're", "it'll", 'about', 'yours', "he's", 'ma', 'but', 'did', "you've", "couldn't", 'he', 'won', 'from', 'some', 'am', 'few', 'before', 'yourself', 'his', "it'd", 'nor', "needn't", 'own', 'll', 'off', 's', 'do', 'just', 'than', 'other', 'above', 'over', 'we', 'on', 'which', 'can', "she'll", "they're", 'why', "we've", 'by', "mightn't", 'i', "i've", 'ain', 'below', 'your', 'once', "you'll", 'further', "i'd", 'them', 'because', "they'd", 'where', 'o', 'this', 'into', 'should', 'most', 'having', 'shouldn', "you'd", 'mightn', 'a', "weren't", "don't", 'and', 'were', 't', 'in', 'have', "we'd", 'needn', 'not', 'yourselves', 'haven', "won't", "wouldn't", 'm', "haven't", 'how'}
+
+#### Prompt — Structure texts using Lexical Representations (Part 1)
+
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **exploratorily structure a large collection of text documents** in preparation for descriptive analysis and visualization.
+
+## Dataset Context
+- The dataset consists of **movie review texts** written in natural language.
+- Each document represents a full review and is associated with a sentiment category.
+- The raw data is **unstructured text**, requiring transformation before analysis.
+
+## High-Level Objectives
+
+1. **Transform raw text into analyzable form**
+   - Convert each document from free-form text into a structured representation suitable for quantitative analysis.
+   - Treat documents as collections of words rather than continuous prose.
+
+2. **Apply fundamental text preprocessing steps**
+   - Tokenize documents into individual terms.
+   - Normalize text by handling capitalization and non-alphabetic tokens.
+   - Remove common stopwords that do not contribute meaningful information.
+   - Reduce words to their base or root form to consolidate lexical variants.
+
+3. **Prepare lexical representations**
+   - Structure the processed documents so they can be used with:
+     - Frequency-based lexical representations (e.g., term counts).
+     - Weighted lexical representations that emphasize informative terms.
+   - Ensure the output is compatible with document–term matrix construction.
+
+4. **Support exploratory text analysis**
+   - Enable subsequent tasks such as:
+     - Term frequency analysis,
+     - Vocabulary inspection,
+     - Comparative analysis across document categories,
+     - Visualization of prominent terms and patterns.
+
+## Expected Outcome
+
+The result should be a **cleaned and structured corpus of documents** where:
+- Noise and irrelevant terms are minimized,
+- Linguistic variability is reduced,
+- Text data is ready for descriptive analysis and visualization.
+
+The emphasis should be on **conceptual understanding of text structuring for exploratory analysis**, not on implementation details or low-level programming mechanics.
+```
+
+#### Python Code — Create the data matrix using different methods (Part 2)
 
 ```python
 # CODE 6.4b
@@ -455,17 +499,46 @@ print("\nTF-IDF Data Matrix:")
 print(data_matrix_tfidf[:5, :20].toarray())
 ```
 
+Feature names (words) for the Data Matrix: <br>
+['aa' 'aaa' 'aaaaaaaaah' 'aaaaaaaahhhh' 'aaaaaah' 'aaaahhh' 'aah' <br>
+ 'aaliyah' 'aalyah' 'aamir' 'aardman' 'aaron' 'aatish' 'ab' 'aback' <br>
+ 'abandon' 'abat' 'abb' 'abba' 'abber'] <br>
+
+Binary Data Matrix: <br>
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]] <br>
+
+Absolute Frequency Data Matrix: <br>
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]] <br>
+
+Relative Frequency (Term-Frequency) Data Matrix: <br>
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] <br>
+ [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]] <br>
+
+TF-IDF Data Matrix: <br>
+[[0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] <br>
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] <br>
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] <br>
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.] <br>
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]] <br>
+
+#### Exercise 1: Generate the prompt to create the data matrix using different methods, as described in the code above.
+
 ### 6.2.3 Text and Document Descriptive Analysis
 
 Useful descriptive statistics for a corpus include word count, unique word count, vocabulary size, most common words, sentence count, and stop-word count. Readability and part-of-speech distributions provide additional insight into linguistic complexity and style.
 
-
-**Figure placeholder — Text descriptive statistics (counts, distributions, readability)**
-
-![Text descriptive statistics](./Data/Figure_6_07_Text_Descriptive_Statistics.jpg)
-
-
-**Python Code — Code to generate simple descriptive statistics for text data**
+#### Python Code — Code to generate simple descriptive statistics for text data
 
 ```python
 # CODE 6.5
@@ -522,8 +595,63 @@ print("Average Sentence Length:", sentence_length_sum / sentence_count)
 print("Number of Stopwords:", stopwords_count)
 ```
 
+Descriptive Statistics for the IMDb Dataset: <br>
+Word Count: 1,274,165 <br>
+Unique Word Count: 38,107 <br>
+Vocabulary Size: 38,107 <br>
+Average Word Length: 4.540951917530304 <br>
+Most Common Words: [('the', 76276), ('a', 37995), ('and', 35404), ('of', 33972), ('to', 31772), ('is', 26054), ('in', 21611), ('it', 16059), ('that', 15912), ('as', 11349)] <br>
+Sentence Count: 65,258 <br>
+Average Sentence Length: 23.369119494927826 <br>
+Number of Stop words : 595,438 <br>
 
-**Python Code — Code to generate simple descriptive statistics for text data**
+#### Prompt — Code to generate simple descriptive statistics for text data
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **perform a descriptive exploratory analysis of a large text corpus** in order to characterize its linguistic structure and basic statistical properties.
+
+## Dataset Context
+- The dataset consists of a collection of **movie review documents** written in natural language.
+- Each document is unstructured text, potentially spanning multiple sentences and paragraphs.
+- The goal is not sentiment modeling, but **descriptive understanding of the text data itself**.
+
+## High-Level Objectives
+
+1. **Characterize the corpus size and richness**
+   - Determine the overall **number of words** in the corpus.
+   - Measure **vocabulary size**, defined as the number of unique words.
+   - Assess lexical diversity through unique-word counts.
+
+2. **Analyze word-level properties**
+   - Compute the **average word length** across the corpus.
+   - Identify the **most frequent words** to understand dominant lexical patterns.
+   - Quantify the presence of **stopwords** to evaluate the proportion of non-informative terms.
+
+3. **Analyze sentence-level structure**
+   - Count the total number of sentences in the corpus.
+   - Compute the **average sentence length** in terms of words per sentence.
+   - Use these measures to assess writing style and structural complexity.
+
+4. **Support exploratory insight**
+   - Provide numerical summaries that help answer questions such as:
+     - How large and diverse is the vocabulary?
+     - Is the text dominated by short or long words?
+     - Are sentences generally short and simple or long and complex?
+     - How much of the text is composed of common stopwords?
+
+## Expected Outcome
+
+The output should consist of a concise set of **descriptive statistics** summarizing:
+- Corpus size and vocabulary characteristics,
+- Word frequency patterns,
+- Sentence structure and length,
+- Relative prevalence of stopwords.
+
+The emphasis should be on **exploratory understanding of text data**, not on predictive modeling, classification, or implementation details.
+```
+
+**Python Code — Code to generate simple descriptive statistics for text data
 
 ```python
 # CODE 6.6
@@ -579,6 +707,23 @@ print("Sentence Count:", sentence_count)
 print("Average Sentence Length:", sentence_length_sum / sentence_count)
 print("Number of Stopwords:", stopwords_count)
 ```
+Part-of-Speech Distribution: <br>
+Counter({'NN': 278642, 'IN': 155028, 'DT': 148777, 'JJ': 129582, 'RB': 82371, ',': 77717, '.': 71360, 'VBZ': 68920, 'NNS': 65134, 'VB': 50532, 'PRP': 50382, 'CC': 48199, 'TO': 31825, 'VBN': 27849, 'VBP': 27691, 'VBG': 27422, 'PRP$': 21769, 'VBD': 21158, '``': 18112, 'CD': 13958, 'MD': 13435, ')': 11782, '(': 11665, 'POS': 11514, 'WP': 9205, ':': 8370, 'WDT': 7612, 'WRB': 7195, 'RP': 6795, 'JJS': 4429, 'JJR': 4058, 'EX': 3316, 'RBR': 2448, 'RBS': 1319, 'PDT': 1272, 'NNP': 996, 'FW': 887, "''": 861, 'UH': 530, 'WP$': 435, '$': 334, 'SYM': 72, '#': 55, 'NNPS': 8, 'LS': 1})
+
+Flesch-Kincaid Grade Level: 8.7 
+
+Automated Readability Index: 11.2
+
+Co-occurrence Matrix: <br>
+[[0. 0. 0. ... 0. 0. 0.] <br>
+ [0. 0. 0. ... 0. 0. 0.] <br>
+ [0. 0. 0. ... 0. 0. 0.] <br>
+ ... <br>
+ [0. 0. 0. ... 0. 0. 0.] <br>
+ [0. 0. 0. ... 0. 0. 0.] <br>
+ [0. 0. 0. ... 0. 0. 0.]]
+
+#### Exercise 2: Generate the prompt to perform simple descriptive statistics for text data, as described in the code above.
 
 ### 6.2.4 Text and Document Visualization
 
@@ -588,10 +733,6 @@ Common text visualizations include:
 - **Co-occurrence networks** (relationships among terms)
 - **Parse trees / dependency graphs** (syntactic structure)
 
-
-**Figure placeholder — Word cloud and frequency distribution**
-
-![Word cloud and frequency](./Data/Figure_6_08_WordCloud_Frequency.jpg)
 
 
 **Python Code — Code to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus**
