@@ -12,3 +12,5 @@ chapters:
     title: "Module 3: Descriptive Analysis"
   - file: Module4_Principles_of_Visualization.md
     title: "Module 4: Principles of Visualization"
+  - file: Module5_Visualization_Methods.md
+    title: "Module 5: Data Visualization Methods"
