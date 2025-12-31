@@ -651,80 +651,6 @@ The output should consist of a concise set of **descriptive statistics** summari
 The emphasis should be on **exploratory understanding of text data**, not on predictive modeling, classification, or implementation details.
 ```
 
-**Python Code — Code to generate simple descriptive statistics for text data
-
-```python
-# CODE 6.6
-# Code to generate simple descriptive statistics for text data
-
-import nltk
-from nltk.corpus import movie_reviews
-from nltk.tokenize import word_tokenize, sent_tokenize
-from nltk.corpus import stopwords
-import string
-from collections import Counter
-
-# Download the IMDb dataset and stopwords corpus
-nltk.download('movie_reviews'); nltk.download('stopwords')
-# Load the movie reviews dataset
-documents = [(movie_reviews.raw(fileid), category)
-             for category in movie_reviews.categories()
-             for fileid in movie_reviews.fileids(category)]
-
-# Initialize variables for descriptive statistics
-word_count = word_length_sum = sentence_count = sentence_length_sum = stopwords_count = 0
-unique_words = set()
-word_frequencies = Counter()
-
-for document, _ in documents:
-    # Tokenization and lowercase
-    tokens = word_tokenize(document.lower())
-    # Remove punctuation and digits
-    tokens = [token for token in tokens if token.isalpha()]
-    # Update word count and unique words
-    word_count += len(tokens)
-    unique_words.update(tokens)
-    # Update word length sum
-    word_length_sum += sum(len(word) for word in tokens)
-    # Update word frequencies
-    word_frequencies.update(tokens)
-    # Sentence tokenization
-    sentences = sent_tokenize(document)
-    # Update sentence count and sentence length sum
-    sentence_count += len(sentences)
-    sentence_length_sum += sum(len(word_tokenize(sentence)) for sentence in sentences)
-    # Count stopwords
-    stopwords_count += sum(1 for token in tokens if token in stopwords.words('english'))
-
-# Calculate descriptive statistics and print the results
-print("Descriptive Statistics for the IMDb Dataset:")
-print("Word Count:", word_count)
-print("Unique Word Count:", len(unique_words))
-print("Vocabulary Size:", len(unique_words))
-print("Average Word Length:", word_length_sum / word_count)
-print("Most Common Words:", word_frequencies.most_common(10))
-print("Sentence Count:", sentence_count)
-print("Average Sentence Length:", sentence_length_sum / sentence_count)
-print("Number of Stopwords:", stopwords_count)
-```
-Part-of-Speech Distribution: <br>
-Counter({'NN': 278642, 'IN': 155028, 'DT': 148777, 'JJ': 129582, 'RB': 82371, ',': 77717, '.': 71360, 'VBZ': 68920, 'NNS': 65134, 'VB': 50532, 'PRP': 50382, 'CC': 48199, 'TO': 31825, 'VBN': 27849, 'VBP': 27691, 'VBG': 27422, 'PRP$': 21769, 'VBD': 21158, '``': 18112, 'CD': 13958, 'MD': 13435, ')': 11782, '(': 11665, 'POS': 11514, 'WP': 9205, ':': 8370, 'WDT': 7612, 'WRB': 7195, 'RP': 6795, 'JJS': 4429, 'JJR': 4058, 'EX': 3316, 'RBR': 2448, 'RBS': 1319, 'PDT': 1272, 'NNP': 996, 'FW': 887, "''": 861, 'UH': 530, 'WP$': 435, '$': 334, 'SYM': 72, '#': 55, 'NNPS': 8, 'LS': 1})
-
-Flesch-Kincaid Grade Level: 8.7 
-
-Automated Readability Index: 11.2
-
-Co-occurrence Matrix: <br>
-[[0. 0. 0. ... 0. 0. 0.] <br>
- [0. 0. 0. ... 0. 0. 0.] <br>
- [0. 0. 0. ... 0. 0. 0.] <br>
- ... <br>
- [0. 0. 0. ... 0. 0. 0.] <br>
- [0. 0. 0. ... 0. 0. 0.] <br>
- [0. 0. 0. ... 0. 0. 0.]]
-
-#### Exercise 2: Generate the prompt to perform simple descriptive statistics for text data, as described in the code above.
-
 ### 6.2.4 Text and Document Visualization
 
 Common text visualizations include:
@@ -733,9 +659,7 @@ Common text visualizations include:
 - **Co-occurrence networks** (relationships among terms)
 - **Parse trees / dependency graphs** (syntactic structure)
 
-
-
-**Python Code — Code to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus**
+#### Python Code — Code to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus
 
 ```python
 # CODE 6.7
@@ -780,8 +704,6 @@ plt.figure(figsize=(10, 5))
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis('off')
 plt.title('Tag Cloud for IMDb Dataset', fontsize=16)
-# Save and display the plot
-plt.savefig("Figure_6_7a_TagCloud_IMDb.svg", format="svg", dpi=1500, bbox_inches='tight')
 plt.show()
 ```
 
