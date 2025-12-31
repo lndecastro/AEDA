@@ -572,8 +572,6 @@ Core principles include:
 * Integrity of scales
 * Appropriate encoding
 
----
-
 ### 4.2.1 Tables
 
 Tables are precise but cognitively demanding. They are best suited for:
@@ -584,15 +582,25 @@ Tables are precise but cognitively demanding. They are best suited for:
 
 **Design guidelines for tables:**
 
-* Align numbers by decimal place
-* Use consistent units
-* Avoid unnecessary gridlines
-* Use whitespace to separate logical groups
-* Order rows and columns meaningfully
+1.	Use lines only as table frames and to separate the title row
+2.	Offset the headers from body 
+3.	Use subtle dividers instead of heavy gridlines
+4.	Right-align numbers
+5.	Left-align text
+6.	Center-align columns with single characters or binary variables
+7.	Align the headers with their data
+8.	Select the appropriate level of precision
+9.	Guide the reader with space between rows and columns 
+10.	Remove unit repetition
+11.	Highlight specific values
+12.	Group similar data and detach them
 
 Tables should support comparison *only when visual alternatives are insufficient*.
 
----
+To illustrate the relevance of these design principles, consider the three versions of the same table presented in the figure below.
+
+![Design principles for tables](./Data/Table_Chapter4.png)
+**Figure:** Three versions of a table stressing the importance of some of the guiding principles for table design.
 
 ### 4.2.2 Graphs
 
@@ -613,10 +621,15 @@ Common graph categories include:
 * Composition (pie charts, treemaps)
 * Temporal evolution (line charts)
 
+**Design guidelines for graphs:**
+1.	Show the data
+2.	Reduce the clutter
+3.	Integrate the graphics and text
+4.	Avoid the spaghetti chart
+5.	Start with gray
+
 **Design implication:**
 The same dataset can produce radically different interpretations depending on the chosen visualization.
-
----
 
 ## Reflection
 
@@ -624,8 +637,6 @@ The same dataset can produce radically different interpretations depending on th
 * Which preattentive attributes are most effective for highlighting anomalies?
 * When should tables be preferred over graphs?
 * How can Gestalt principles reduce the need for explicit explanation?
-
----
 
 ## Further Reading
 
