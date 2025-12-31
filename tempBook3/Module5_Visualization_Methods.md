@@ -65,6 +65,26 @@ The histogram divides the data range into bins and displays the frequency (absol
 - Spread
 - Presence of gaps and outliers
 
+### 5.1.2 Boxplot (Box-and-Whisker Plot)
+
+**Purpose:**  
+To visualize and compare distributions using the **five-number summary**.
+
+**Common type of data:**  
+Continuous quantitative data.
+
+**Five-number summary:**  
+- Minimum  
+- First quartile $Q_1$  
+- Median $Q_2$  
+- Third quartile $Q_3$  
+- Maximum  
+
+**Outlier detection:**  
+Values are often considered outliers if <p>
+$x < Q_1 - \gamma \cdot IQR \quad \text{or} \quad x > Q_3 + \gamma \cdot IQR$ <p>
+where $IQR = Q_3 - Q_1$ and typically $\gamma = 1.5$.
+
 #### Python Code — Boxplot and Histogram
 
 ```python
@@ -105,8 +125,7 @@ plt.title(f"Kurtosis: {k:.2f},  Skewness: {s: .2f}")
 plt.show()
 ```
 
-![Boxplot and Histogram](./Data/Figure_5_3a_Histograms_Boxplots.jpg)
-![Boxplot and Histogram](./Data/Figure_5_3b_Histograms_Boxplots.jpg)
+![Boxplot and Histogram](./Data/Figure_5_2.jpg)
 
 #### Prompt — Boxplot and Histogram
 ```
@@ -141,63 +160,13 @@ Produce a single figure with:
 The emphasis should be on **conceptual clarity and interpretability**, not on implementation details or low-level plotting mechanics.
 ```
 
+
 > **Note:** In this module we are going to use a different style of prompts when compared with the prompts developed in the previous module. This is to illustrate that although we keep the general structure of the prompt, it is possible to create them in different ways and obtain similar (equivalent) results.
 
-### 5.1.2 Boxplot (Box-and-Whisker Plot)
-
-**Purpose:**  
-To visualize and compare distributions using the **five-number summary**.
-
-**Common type of data:**  
-Continuous quantitative data.
-
-**Five-number summary:**  
-- Minimum  
-- First quartile \(Q_1\)  
-- Median \(Q_2\)  
-- Third quartile \(Q_3\)  
-- Maximum  
-
-**Outlier detection:**  
-Values are often considered outliers if
-
-\[
-x < Q_1 - \gamma \cdot IQR \quad \text{or} \quad x > Q_3 + \gamma \cdot IQR
-\]
-
-where
-
-\[
-IQR = Q_3 - Q_1
-\]
-
-and typically \(\gamma = 1.5\).
-
-#### Python Code — Boxplot (Iris dataset example)
-
-```python
-# CODE 5.2
-# Boxplot to compare distributions across categories
-
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-# Load dataset (Seaborn: Iris)
-iris = sns.load_dataset("iris")
-
-plt.figure(figsize=(10, 5))
-sns.boxplot(data=iris, x="species", y="sepal_length")
-plt.title("Boxplot of Sepal Length by Species (Iris)")
-plt.xlabel("Species")
-plt.ylabel("Sepal length")
-plt.tight_layout()
-
-plt.savefig("./Data/Fig5_2.png", dpi=300)
-plt.show()
-```
-
-![Fig5_2 — Boxplot](./Data/Fig5_2.png)
-
+<!--
+![Boxplot and Histogram](./Data/Figure_5_3a_Histograms_Boxplots.jpg)
+![Boxplot and Histogram](./Data/Figure_5_3b_Histograms_Boxplots.jpg)
+-->
 ---
 
 ### 5.1.3 Violin Plot
@@ -213,31 +182,83 @@ Continuous quantitative data.
 - Shape reveals multimodality and skewness  
 - Inner quartiles and median can be shown as in a boxplot
 
-#### Python Code — Violin plot (Iris dataset example)
+#### Python Code — Box and Violin plot (Iris dataset example)
 
 ```python
-# CODE 5.3
-# Violin plot for richer distribution comparison across categories
+# CODE 5.2
+# Comparing the Box and Violin plots for the Sepal length of
+# the Iris dataset grouped by plant species
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
 
-iris = sns.load_dataset("iris")
+# Load the Iris dataset
+diris = load_iris()
+fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
 
-plt.figure(figsize=(10, 5))
-sns.violinplot(data=iris, x="species", y="sepal_length", inner="box")
-plt.title("Violin Plot of Sepal Length by Species (Iris)")
-plt.xlabel("Species")
-plt.ylabel("Sepal length")
+# Boxplot with data points
+sns.boxplot(x=diris.target, y=diris.data[:, 0], ax=axs[0], width=0.6,
+            boxprops=dict(edgecolor='black'),
+            whiskerprops=dict(color='black', linestyle='-'),
+            medianprops=dict(color='black'),
+            capprops=dict(color='black', linestyle='-'))
+sns.stripplot(x=diris.target, y=diris.data[:, 0], ax=axs[0], color='black')
+axs[0].set_xticks([0, 1, 2])
+axs[0].set_xticklabels(diris.target_names)
+axs[0].set_ylabel('Sepal Length (cm)')
+axs[0].set_ylim([3.6, 8.6])
+axs[0].set_title('Boxplot with Data Points')
+
+# Violinplot with data points
+sns.violinplot(x=diris.target, y=diris.data[:, 0], ax=axs[1], inner=None)
+sns.stripplot(x=diris.target, y=diris.data[:, 0], ax=axs[1], jitter=True, color='black')
+axs[1].set_xticks([0, 1, 2])
+axs[1].set_xticklabels(diris.target_names)
+axs[1].set_ylabel('Sepal Length (cm)')
+axs[1].set_ylim([3.6, 8.6])
+axs[1].set_title('Violinplot with Data Points')
+
+# Show plot
 plt.tight_layout()
-
-plt.savefig("./Data/Fig5_3.png", dpi=300)
 plt.show()
 ```
 
-![Fig5_3 — Violin Plot](./Data/Fig5_3.png)
+![Box and Violin Plot](./Data/Figure_5_5_BoxPlot_ViolinPlot.jpg) <p>
+**Figure:** Boxplots (a) and violin plots (b) of the Iris dataset sepal length grouped by the plant species.
 
----
+#### Prompt — Box and Violin plot (Iris dataset example)
+
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **compare two complementary distribution visualizations for the same variable across multiple groups** using a well-known benchmark dataset.
+
+## High-Level Objectives
+
+1. Use a standard multivariate dataset containing **continuous measurements and categorical group labels**.
+2. Focus on a **single continuous variable** and compare its distribution across **three distinct categories**.
+3. Create a **single figure with two side-by-side panels**:
+   - A **box-and-whisker plot** to summarize each group using quartiles, dispersion, and potential outliers.
+   - A **violin plot** to represent the full distribution shape and density for each group.
+4. Overlay **individual data points** on both visualizations to reveal sample size, variability, and potential clustering within each group.
+5. Ensure both plots:
+   - Share the same vertical scale to allow direct visual comparison,
+   - Clearly label groups and measurement units,
+   - Highlight how different visualization methods emphasize different aspects of the same data.
+
+## Expected Outcome
+
+Produce a single, well-organized figure that:
+- Displays a **boxplot with data points** for the chosen variable, grouped by category.
+- Displays a **violin plot with data points** for the same variable and groups.
+- Enables students to visually compare:
+  - Summary statistics versus distribution shape,
+  - Group differences in central tendency and variability,
+  - The added value of combining summary-based and density-based visualizations in exploratory data analysis.
+
+The emphasis should be on **conceptual understanding and interpretability**, not on implementation details or low-level plotting mechanics.
+```
 
 ## 5.2 Associations
 
@@ -259,7 +280,7 @@ Continuous variables on both axes.
 #### Python Code — Scatter plot with regression line (Auto MPG example)
 
 ```python
-# CODE 5.4
+# CODE 5.3
 # Scatter plot for association between two quantitative variables
 
 import pandas as pd
@@ -278,45 +299,143 @@ plt.xlabel("weight")
 plt.ylabel("mpg")
 plt.tight_layout()
 
-plt.savefig("./Data/Fig5_4.png", dpi=300)
 plt.show()
 ```
 
 ![Fig5_4 — Scatter Plot](./Data/Fig5_4.png)
 
----
+#### Python Code — Scatter plot with regression line (Auto MPG example)
+
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **explore and communicate the association between two quantitative variables** using an appropriate visualization technique.
+
+## High-Level Objectives
+
+1. Use a real-world dataset containing **numerical measurements** for multiple variables.
+2. Select **two continuous quantitative variables** that are expected to exhibit a meaningful relationship.
+3. Create a **scatter plot** to visualize how one variable changes with respect to the other.
+4. Enhance the visualization by including a **trend indicator** that helps summarize the overall direction and strength of the relationship.
+5. Ensure the visualization clearly supports interpretation by:
+   - Labeling axes with meaningful variable names and units,
+   - Using transparency or visual cues to reduce overplotting,
+   - Including an informative title that describes the relationship being analyzed.
+
+## Expected Outcome
+
+Produce a single, clear figure that:
+- Displays a **scatter plot** representing the relationship between two quantitative variables,
+- Includes a visual indication of the **overall trend** in the data,
+- Allows students to visually assess:
+  - Direction of association (positive or negative),
+  - Strength and form of the relationship,
+  - Presence of clusters or outliers.
+
+The emphasis should be on **conceptual understanding of variable association and visual interpretation**, rather than on implementation details or low-level plotting mechanics.
+```
+
+### 5.2.2 Bubble Chart
 
 ### 5.2.2 Bubble Chart
 
 **Purpose:**  
-To visualize relationships between three or four variables (x, y, size, color).
+To visualize the relationship between **two quantitative variables**, while incorporating an additional quantitative dimension through **bubble size** (and optionally a categorical or quantitative dimension through color).
 
-#### Python Code — Bubble chart (Gapminder-style example)
+**Common type of data:**  
+- x-axis: continuous quantitative variable  
+- y-axis: continuous quantitative variable  
+- bubble size: quantitative variable representing magnitude  
+- bubble color (optional): categorical groups or quantitative intensity  
+
+**Interpretation:**  
+- Direction and strength of association between the two main variables  
+- How the third variable varies across the x–y space, as indicated by bubble size  
+- Group patterns or segmentation when color is used  
+- Presence of clusters, gaps, and outliers, including unusually large or small bubbles  
+
+#### Python Code — Bubble chart (Gapminder dataset example)
 
 ```python
-# CODE 5.5
-# Bubble chart using Plotly Express (x, y, size, color)
+# CODE 5.3
+# Bubble charts with four variables for the Gapminder and Auto MPG datasets
 
-import plotly.express as px
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-# Load dataset (Plotly built-in)
-gapminder = px.data.gapminder().query("year == 2007")
+# Load the Gapminder dataset
+dgapminder = pd.read_csv('gapminder.csv')
 
-fig = px.scatter(
-    gapminder,
-    x="gdpPercap",
-    y="lifeExp",
-    size="pop",
-    color="continent",
-    hover_name="country",
-    log_x=True,
-    title="Bubble Chart: GDP per Capita vs Life Expectancy (2007)"
-)
-fig.write_image("./Data/Fig5_5.png", scale=2)  # placeholder for the deck
-fig.show()
+# Filter out missing values in 'lifeExp', 'hdi_index', and 'co2_consumption'
+dgapminder = dgapminder.dropna(subset=['life_exp', 'hdi_index', 'co2_consump'])
+
+# Set plot features
+sns.set_style("whitegrid")
+fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, figsize=(10, 13))
+
+# Create a bubble chart for the Gapminder dataset
+sns.scatterplot(data=dgapminder, x="hdi_index", y="life_exp", hue="continent", 
+                size="co2_consump", sizes=(20, 500), alpha=0.7, ax=ax1)
+ax1.set_xlabel("HDI Index", fontsize=14, labelpad=6.0)
+ax1.set_ylabel("Life Expectancy", fontsize=14, labelpad=6.0)
+ax1.set_title("Life Expectancy vs HDI Index by Continent (Bubble size is CO2 Consumption)", fontsize=16, pad=15.0)
+ax1.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+
+# Create a bubble chart for the Auto MPG dataset
+dmpg = pd.read_csv('mpg.csv')
+sns.scatterplot(data=dmpg, x="acceleration", y="mpg", hue="cylinders", 
+                size="horsepower", sizes=(20, 500), alpha=0.7, ax=ax2)
+ax2.set_xlabel("Acceleration", fontsize=14, labelpad=6.0)
+ax2.set_ylabel("MPG", fontsize=14, labelpad=6.0)
+ax2.set_title("MPG vs Acceleration by Cylinders (Bubble size represents HP)", fontsize=16, pad=15.0)
+ax2.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+
+# Adjust the layout to add space between subplots
+plt.subplots_adjust(hspace=0.3)
+plt.show()
 ```
 
-![Fig5_5 — Bubble Chart](./Data/Fig5_5.png)
+![Fig5_5 — Bubble Chart](./Data/Figure_5_7_Bubble_Chart.jpg)
+
+#### Prompt — Bubble chart (Gapminder dataset example)
+
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze multivariate relationships using bubble charts**, where multiple variables are encoded simultaneously in a single visualization.
+
+## High-Level Objectives
+
+1. Use two real-world datasets containing **continuous and categorical variables** from different application domains.
+2. For each dataset, select **four variables** and encode them visually as follows:
+   - Two continuous variables mapped to the **x-axis** and **y-axis**,
+   - One quantitative variable represented by **bubble size**,
+   - One categorical variable represented by **color**.
+3. Create a **single figure composed of two vertically stacked bubble charts**, one for each dataset, to allow comparison across contexts.
+4. Ensure each bubble chart:
+   - Clearly communicates the relationship between the two main quantitative variables,
+   - Uses bubble size to convey an additional magnitude-related dimension,
+   - Uses color to distinguish categories or groups.
+5. Include clear axis labels, legends, and titles that explicitly explain:
+   - What variables are being compared,
+   - What bubble size and color represent,
+   - How to interpret the visual encoding.
+
+## Expected Outcome
+
+Produce a single, well-organized figure containing:
+- A **bubble chart** illustrating relationships among four variables for the first dataset,
+- A second **bubble chart** illustrating relationships among four variables for a different dataset,
+- Legends and titles that make the multivariate encoding explicit.
+
+The resulting visualizations should allow students to:
+- Explore complex multivariate relationships at a glance,
+- Compare patterns, clusters, and outliers across groups,
+- Understand how bubble charts extend scatter plots by incorporating additional dimensions.
+
+The emphasis should be on **conceptual understanding of multivariate visualization and interpretability**, not on implementation details or low-level plotting mechanics.
+```
 
 ---
 
