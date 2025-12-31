@@ -8,3 +8,7 @@ chapters:
     title: "Module 1: Introduction to AEDA"
   - file: Module2_DataDescription.md
     title: "Module 2: Data Description and Preparation"
+  - file: Module3_Descriptive_Analysis.md
+    title: "Module 3: Descriptive Analysis"
+  - file: Module4_Principles_of_Visualization.md
+    title: "Module 4: Principles of Visualization"
