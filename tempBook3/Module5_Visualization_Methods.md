@@ -1002,31 +1002,103 @@ The emphasis should be on **conceptual understanding of proportion-based visuali
 ### 5.4.3 Treemap
 
 **Purpose:**  
-To visualize hierarchical proportions, especially when there are many categories.
+To visualize **proportions** using nested rectangles, especially for **many categories** and for **hierarchical data**.
 
-#### Python Code — Treemap (Plotly)
+**Common type of data:**  
+- Categorical data with a quantitative measure (e.g., counts, sales, population)  
+- Often includes a **hierarchy** (e.g., Category → Subcategory → Item), but can also be used for a single-level list of categories
+
+**Interpretation:**  
+- Relative contribution of each category to the whole (rectangle **area** represents magnitude)  
+- Dominant categories and how the total is partitioned  
+- Within-group composition when hierarchical nesting is present  
+- Patterns of concentration (few large rectangles vs. many small ones)  
+
+#### Python Code — Treemap
 
 ```python
-# CODE 5.12
-# Treemap for hierarchical proportions
+# CODE 5.10
+# Generate the treemap for the Gapminder dataset having the countries as the 
+# rectangles, their GDP in the slice sizes, and the continents in the colors
 
+import pandas as pd
 import plotly.express as px
 
-df = px.data.gapminder().query("year == 2007")
+# Load the Gapminder dataset
+dgapminder = pd.read_csv('gapminder.csv')
 
-fig = px.treemap(
-    df,
-    path=["continent", "country"],
-    values="pop",
-    title="Treemap: Population by Continent and Country (2007)"
-)
-fig.write_image("./Data/Fig5_12.png", scale=2)
+# Calculate total GDP per continent
+gdp_per_continent = dgapminder.groupby('continent')['gdp'].sum()
+
+# Calculate the percentage of GDP by country in each continent
+gdp_perc_by_country = dgapminder.groupby(['continent','country'])['gdp'].sum()/gdp_per_continent
+
+# Set a minimum size for the rectangles
+min_size = 0.05
+
+# Filter out rectangles smaller than the minimum size
+gdp_perc_by_country_filtered = gdp_perc_by_country[gdp_perc_by_country > min_size]
+
+# Calculate the percentage of GDP by country in each continent
+gdp_perc_by_country = dgapminder.groupby(['continent','country'])['gdp'].sum()/gdp_per_continent
+
+# Reset the index for Plotly Express
+gdp_perc_by_country_filtered = gdp_perc_by_country_filtered.reset_index()
+
+# Create the treemap using Plotly Express
+fig = px.treemap(gdp_perc_by_country_filtered,
+                 path=['continent', 'country'],
+                 values='gdp',
+                 title=f'GDP by Country and Continent: Values greater than {min_size*100:.1f}%',
+                 width=1150, height=700)
+
+# Update layout and legend
+fig.update_traces(textinfo='label+percent parent')
+fig.update_layout(margin=dict(t=40, b=0, l=0, r=0), title_x=0.5, legend_title_text='Continent', uniformtext=dict(minsize=12, mode='show'))
+
+# Print the tree structure
+print(gdp_perc_by_country)
 fig.show()
 ```
 
-![Fig5_12 — Treemap](./Data/Fig5_12.png)
+![Treemap](./Data/Figure_5_15_Treemap_Gapminder.jpg)
 
----
+#### Prompt — Treemap
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze and communicate hierarchical proportions using a treemap visualization** based on a global socioeconomic dataset.
+
+## High-Level Objectives
+
+1. Use a dataset containing **countries grouped within higher-level regions (continents)** and a quantitative measure representing **economic magnitude**.
+2. Organize the data hierarchically so that:
+   - The top level represents **continents**,
+   - The nested level represents **countries** within each continent.
+3. Create a **treemap** where:
+   - Each rectangle represents a country,
+   - Rectangle size encodes the country’s **contribution to total GDP** within its continent,
+   - Color distinguishes continents.
+4. Improve readability and interpretability by:
+   - Filtering out very small contributions so the treemap focuses on the most relevant categories,
+   - Displaying labels and percentage information to clarify how each country contributes to its parent group.
+5. Ensure the visualization clearly communicates:
+   - How total GDP is distributed across continents,
+   - How GDP is partitioned among countries within each continent,
+   - Differences in concentration and dominance across regions.
+
+## Expected Outcome
+
+Produce an interactive treemap that:
+- Displays **hierarchical proportions** of GDP by continent and country,
+- Allows students to visually assess:
+  - Relative economic weight of countries within continents,
+  - Dominant contributors versus minor contributors,
+  - Patterns of concentration across regions.
+- Demonstrates how treemaps effectively summarize **complex hierarchical data** in a compact visual form.
+
+The emphasis should be on **conceptual understanding of hierarchical proportion visualization and interpretation**, not on implementation details or low-level plotting mechanics.
+```
 
 ## 5.5 Evolution and Flow
 
@@ -1035,100 +1107,245 @@ These plots show **change over time** or **movement between states**.
 ### 5.5.1 Line Chart
 
 **Purpose:**  
-To visualize trends and temporal evolution.
+To visualize **trends and temporal evolution** by showing how a value changes over an ordered sequence (most commonly time).
+
+**Common type of data:**  
+- x-axis: ordered variable (typically **time** such as date, month, year; or any ordered index)  
+- y-axis: quantitative variable (measurement, count, rate, index)  
+- Optional: multiple series (categories/groups) plotted as multiple lines
+
+**Interpretation:**  
+- Overall trend (increasing, decreasing, stable)  
+- Rate of change (steeper slope indicates faster change)  
+- Seasonality or recurring cycles (repeating patterns)  
+- Peaks, dips, and change points (sudden shifts)  
+- Differences between groups when multiple lines are shown  
 
 #### Python Code — Line chart (time series example)
 
 ```python
-# CODE 5.13
-# Line chart for time series evolution
+# CODE 5.11a
+# Create the line charts for Life Expectancy, CO2 Consumption, and 
+# HDI index vs the year for the Gapminder dataset
 
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Example time series (replace with a course dataset when available)
-df = pd.DataFrame({
-    "date": pd.date_range("2025-01-01", periods=12, freq="MS"),
-    "value": [12, 15, 14, 18, 20, 19, 22, 25, 23, 21, 24, 27]
-})
+# Load the dataset, select the target variables and group by year
+# Load the Gapminder dataset
+dgapminder = pd.read_csv('gapminder.csv')[['life_exp', 'co2_consump', 'hdi_index', 'year']]
+dby = dgapminder.groupby('year').mean()  # dby: data by year
 
-plt.figure(figsize=(10, 4))
-plt.plot(df["date"], df["value"], marker="o")
-plt.title("Line Chart: Evolution Over Time (Example)")
-plt.xlabel("Date")
-plt.ylabel("Value")
-plt.tight_layout()
+# Loop through a list of tuples and plot each variable in a separate subplot
+fig, axes = plt.subplots(ncols=3, figsize=(18,5))
+for i, var in enumerate(['life_exp', 'co2_consump', 'hdi_index']):
+    axes[i].plot(dby.index, dby[var])
+    axes[i].set_title(var.replace('_', ' ').title() + ' over Time', fontsize=16)
+    axes[i].set_xlabel('Year', fontsize=14)
+    axes[i].set_ylabel(var.replace('_', ' ').title(), fontsize=14)
+    axes[i].xaxis.set_major_locator(plt.MaxNLocator(integer=True))
+    axes[i].tick_params(axis='both', which='major', labelsize=12)
 
-plt.savefig("./Data/Fig5_13.png", dpi=300)
+# Adjust the layout to add space between subplots
+plt.subplots_adjust(wspace=0.3)
 plt.show()
 ```
 
-![Fig5_13 — Line Chart](./Data/Fig5_13.png)
+![Line Chart](./Data/Figure_5_16a_Line_Chart.jpg)
 
----
+#### Prompt — Line chart (time series example)
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **analyze temporal trends using line charts** for multiple socioeconomic indicators derived from a global dataset.
+
+## High-Level Objectives
+
+1. Use a dataset containing **time-indexed observations** of multiple quantitative indicators.
+2. Focus on **three continuous variables** that capture different aspects of global development.
+3. Aggregate the data by **year** to obtain representative values for each time point.
+4. Create a **single figure composed of three side-by-side line charts**, one for each indicator, to facilitate comparison.
+5. Ensure each line chart:
+   - Uses **time (year)** on the horizontal axis,
+   - Shows how the indicator **evolves over time** on the vertical axis,
+   - Includes clear titles, axis labels, and readable tick marks.
+
+## Expected Outcome
+
+Produce a single, well-organized figure that:
+- Displays **three line charts**, each showing the temporal evolution of a different indicator,
+- Allows students to visually assess:
+  - Long-term trends (increasing, decreasing, stable),
+  - Differences in growth patterns across indicators,
+  - Periods of acceleration, stagnation, or change.
+- Demonstrates how line charts are used to study **evolution and trends over time** in exploratory data analysis.
+
+The emphasis should be on **conceptual understanding of temporal visualization and trend interpretation**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.5.2 Sankey Chart
 
 **Purpose:**  
-To visualize flows between stages or categories (source → target).
+To visualize **flows** between stages or categories (source → target), emphasizing how quantities move or are distributed across a system.
 
-#### Python Code — Sankey chart (Plotly)
+**Common type of data:**  
+- Source category (where the flow comes from)  
+- Target category (where the flow goes to)  
+- Quantitative value representing flow magnitude (count, volume, cost, probability, etc.)  
+- Optional: multiple stages (multi-step flows) or grouped categories
+
+**Interpretation:**  
+- Main pathways and dominant transfers (thickest links)  
+- How totals split across targets (branching structure)  
+- Bottlenecks, losses, or concentration of flow in specific routes  
+- Comparison of contributions from different sources to the same target  
+
+#### Python Code — Sankey chart
 
 ```python
-# CODE 5.14
-# Sankey diagram for flow visualization
+# CODE 5.12
+# Sankey diagram with the flow of an academic career progression
 
 import plotly.graph_objects as go
 
-labels = ["Source A", "Source B", "Stage 1", "Stage 2", "Outcome X", "Outcome Y"]
-source = [0, 1, 2, 2, 3]
-target = [2, 2, 3, 4, 5]
-value  = [10, 15, 12, 13, 9]
+nodes = dict(
+    type='sankey',
+    node=dict(
+        pad=200,
+        thickness=20,
+        line=dict(color='black', width=0.5),
+        label=["Undergraduate", "M.Sc.", "Ph.D.", "Postdoc", "Faculty", "Industry"],
+        color=["#3D9970", "#FF851B", "#FFDC00", "#7FDBFF", "#FF7F99", "#D62728"]),
+    # Define the links between the nodes
+    link=dict(source=[0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 5, 5],
+        target=[1, 2, 4, 5, 2, 4, 5, 3, 4, 5, 4, 5, 4, 5, 5, 4],
+        value=[20,10,10,60,40,40,20,40,40,20,70,30,80,20,80,20]))
 
-fig = go.Figure(data=[go.Sankey(
-    node=dict(label=labels),
-    link=dict(source=source, target=target, value=value)
-)])
+# Define the layout of the Sankey diagram
+layout = dict(title="Flow of Academic Career Progression", font=dict(size=14), margin=dict(t=150))
 
-fig.update_layout(title_text="Sankey Chart (Example)", font_size=12)
-fig.write_image("./Data/Fig5_14.png", scale=2)
+# Create the figure
+fig = go.Figure(data=[nodes], layout=layout)
+
+# Show the figure
 fig.show()
 ```
 
-![Fig5_14 — Sankey Chart](./Data/Fig5_14.png)
+![Sankey Chart](./Data/Figure_5_17_Sankey_Chart.jpg)
 
----
+#### Prompt — Sankey chart
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **illustrate flows between stages using a Sankey diagram**, focusing on how individuals move through different categories in a structured progression.
+
+## High-Level Objectives
+
+1. Represent a process composed of **discrete stages or categories** connected by transitions.
+2. Model the process as a set of **source → target flows**, where each transition carries a quantitative magnitude.
+3. Create a **single Sankey diagram** in which:
+   - Each node represents a distinct stage in the process,
+   - Each link represents movement from one stage to another,
+   - Link width encodes the **relative volume or intensity** of the flow.
+4. Ensure the visualization clearly communicates:
+   - The main pathways through the system,
+   - Alternative routes and branching points,
+   - Relative importance of different transitions.
+5. Use clear labels, colors, and layout so that the overall structure of the flow can be understood at a glance.
+
+## Expected Outcome
+
+Produce a Sankey diagram that:
+- Shows how quantities move across multiple stages of a process,
+- Highlights dominant flows and secondary pathways,
+- Allows students to visually identify:
+  - Where most flow originates and where it ends,
+  - How flows split or converge across stages,
+  - Patterns of progression, diversion, or concentration.
+
+The emphasis should be on **conceptual understanding of flow visualization and system dynamics**, not on implementation details or low-level plotting mechanics.
+```
 
 ### 5.5.3 Gantt Chart
 
 **Purpose:**  
-To visualize tasks over time.
+To visualize **tasks over time**, showing when activities start, how long they last, and how they overlap within a schedule.
 
-#### Python Code — Gantt chart (Plotly)
+**Common type of data:**  
+- A list of tasks or activities (categorical labels)  
+- Start time/date and end time/date (or start + duration) for each task  
+- Optional: task grouping (phases), milestones, dependencies, or assigned resources
+
+**Interpretation:**  
+- Task duration (bar length)  
+- Timeline structure and overlap between tasks (parallel vs. sequential work)  
+- Critical periods with many concurrent tasks (workload concentration)  
+- Schedule gaps, delays, or potential bottlenecks (tasks that constrain progress)  
+
+#### Python Code — Gantt chart
 
 ```python
-# CODE 5.15
-# Gantt chart for project schedules
+# CODE 5.13
+# Gantt Chart to show the career evolution for the stages in the previous Sankey Chart
 
-import pandas as pd
 import plotly.express as px
 
-df = pd.DataFrame([
-    dict(Task="Data Collection", Start="2026-01-05", Finish="2026-01-20"),
-    dict(Task="Cleaning & Prep", Start="2026-01-21", Finish="2026-02-05"),
-    dict(Task="EDA & Viz",       Start="2026-02-06", Finish="2026-02-25"),
-    dict(Task="Report",          Start="2026-02-26", Finish="2026-03-10"),
-])
+# Define the tasks and their start/end dates
+tasks = ["Undergraduate", "M.Sc.", "Ph.D.", "Postdoc", "Faculty", "Industry"]
+start_dates = ["2022-08", "2026-08", "2027-08", "2030-08", "2032-08", "2042-08"]
+end_dates = ["2026-05", "2027-05", "2030-05", "2032-05", "2042-05", "2057-05"]
 
-fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", title="Gantt Chart (Example)")
-fig.update_yaxes(autorange="reversed")
-fig.write_image("./Data/Fig5_15.png", scale=2)
+# Create a DataFrame with the task data
+data = {'Career Stage': tasks, 'Start': start_dates, 'Finish': end_dates}
+df = pd.DataFrame(data)
+
+# Create the Gantt chart
+fig = px.timeline(df, x_start="Start", x_end="Finish", y="Career Stage")
+
+# Customize the Gantt chart appearance
+fig.update_layout(
+    title="Gantt Chart of Career Evolution", title_font=dict(size=24),
+    xaxis_title="Year", xaxis=dict(title_font=dict(size=20),tickfont=dict(size=16)),
+    yaxis_title="Career Stage", yaxis=dict(title_font=dict(size=20),tickfont=dict(size=16))
+)
+
 fig.show()
 ```
 
-![Fig5_15 — Gantt Chart](./Data/Fig5_15.png)
+![Gantt Chart](./Data/Figure_5_18_Gantt_Chart.jpg)
 
----
+#### Python Code — Gantt chart
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **represent the temporal evolution of a structured process using a Gantt chart**, focusing on how different stages unfold over time.
+
+## High-Level Objectives
+
+1. Model a process composed of **sequential stages**, where each stage occupies a specific time interval.
+2. Associate each stage with a **start date and an end date**, reflecting its duration.
+3. Create a **single Gantt chart** where:
+   - Each horizontal bar represents one stage of the process,
+   - The horizontal axis represents **time**,
+   - The vertical axis lists the stages in a meaningful order.
+4. Ensure the visualization clearly communicates:
+   - The duration of each stage,
+   - The chronological order of stages,
+   - How stages follow or overlap one another over time.
+5. Use clear titles and axis labels so that the timeline can be interpreted without additional context.
+
+## Expected Outcome
+
+Produce a Gantt chart that:
+- Displays the **time span** of each stage in the process,
+- Allows students to visually assess:
+  - Relative duration of stages,
+  - Overall length of the process,
+  - Points of transition from one stage to the next.
+- Reinforces how Gantt charts are used to visualize **time-based progression and planning** in exploratory data analysis.
+
+The emphasis should be on **conceptual understanding of temporal scheduling and progression**, not on implementation details or low-level plotting mechanics.
+```
 
 ## 5.6 Geospatial
 
