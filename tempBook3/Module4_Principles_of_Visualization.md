@@ -536,23 +536,23 @@ Effective visualizations intentionally leverage these principles to encode relat
 The figures below show the seven Gestalt principles discussed here.
 
 **1. Principle of continuity**<p>
-![Gestalt principle](./Data/Figure_4_16_GP_Continuity.jpg)
+![Gestalt principle](./Data/Figure_4_16_GP_Continuity.jpg)<p>
 **2. Principle of closure**<p>
-![Gestalt principle](./Data/Figure_4_17_GP_Closure.jpg)
+![Gestalt principle](./Data/Figure_4_17_GP_Closure.jpg)<p>
 **3. Principle of proximity**<p>
-![Gestalt principle](./Data/Figure_4_18_GP_Proximity.jpg)
+![Gestalt principle](./Data/Figure_4_18_GP_Proximity.jpg)<p>
 **4. Principle of similarity**<p>
-![Gestalt principle](./Data/Figure_4_19_GP_Similarity.jpg)
+![Gestalt principle](./Data/Figure_4_19_GP_Similarity.jpg)<p>
 **5. Principle of symmetry**<p>
-![Gestalt principle](./Data/Figure_4_20_GP_Symmetry.jpg)
+![Gestalt principle](./Data/Figure_4_20_GP_Symmetry.jpg)<p>
 **6. Principle of figure-ground**<p>
-![Gestalt principle](./Data/Figure_4_21_GP_Figure_Ground.jpg)
+![Gestalt principle](./Data/Figure_4_21_GP_Figure_Ground.jpg)<p>
 **7. Principle of common-fate**<p>
-![Gestalt principle](./Data/Figure_4_22_GP_Common_Fate.jpg)
+![Gestalt principle](./Data/Figure_4_22_GP_Common_Fate.jpg)<p>
 
 The table below summarizes the Gestalt principles and how each one of them enables us to encode relationships.without explicit anotation
 
-**Table:** Summary of the gestalt principles reviewed and their descriptions.
+**Table:** Summary of the gestalt principles reviewed and their descriptions. <p>
 | Gestalt Principle | Description |
 |-------------------|-------------|
 | Continuity | Objects that are arranged in a smooth, continuous way are more likely to be perceived as a single object, even if their pattern is interrupted. |
@@ -606,7 +606,7 @@ Tables should support comparison *only when visual alternatives are insufficient
 
 To illustrate the relevance of these design principles, consider the three versions of the same table presented in the figure below.
 
-![Design principles for tables](./Data/Table_Chapter4.png)
+![Design principles for tables](./Data/Table_Chapter4.png)<p>
 **Figure:** Three versions of a table stressing the importance of some of the guiding principles for table design.
 
 ### 4.2.2 Graphs
