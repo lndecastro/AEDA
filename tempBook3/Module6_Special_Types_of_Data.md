@@ -653,6 +653,8 @@ The emphasis should be on **exploratory understanding of text data**, not on pre
 
 ### 6.2.4 Text and Document Visualization
 
+This section focuses on the use of visual techniques to explore, summarize, and communicate patterns in textual data. Because text is inherently high-dimensional and unstructured, visualization plays a crucial role in transforming complex lexical information into interpretable visual forms. This section introduces common visualization approaches that help reveal dominant terms, frequency distributions, and structural patterns in document collections, supporting exploratory insight before more advanced semantic or modeling techniques are applied.
+
 Common text visualizations include:
 - **Word clouds** (quick salience view)
 - **Frequency distributions** (top-$k$ words, n-grams)
@@ -707,13 +709,54 @@ plt.title('Tag Cloud for IMDb Dataset', fontsize=16)
 plt.show()
 ```
 
+![Tag Cloud](./Data/Figure_6_7a_TagCloud_IMDb.jpg)
+![Frequency Distribution](./Data/Figure_6_7b_BarChart_IMDb.jpg)
 
-**Figure placeholder — Dependency parse tree (example sentence)**
+#### Prompt — Code to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
-![Dependency parse tree](./Data/Figure_6_09_Dependency_Parse_Tree.jpg)
+Your task is to **visually explore the lexical composition of a large text corpus** by highlighting the most prominent words and their relative importance.
 
+## Dataset Context
+- The dataset consists of a large collection of **movie reviews written in natural language**.
+- All documents are combined to represent the overall vocabulary usage of the corpus.
+- The goal is exploratory visualization, not sentiment classification or modeling.
 
-**Python Code — Code to generate the Dependency Parse Tree for the IMDb dataset in NLTK**
+## High-Level Objectives
+
+1. **Prepare text for visual exploration**
+   - Treat the entire corpus as a single body of text.
+   - Focus on meaningful words by excluding punctuation, numbers, and common stopwords.
+   - Normalize text to ensure consistent word representation.
+
+2. **Analyze word frequency patterns**
+   - Identify how often each word appears across the entire corpus.
+   - Use frequency information to distinguish dominant terms from less common ones.
+
+3. **Generate a Tag (Word) Cloud**
+   - Create a **tag cloud visualization** where:
+     - Word size reflects relative frequency.
+     - More frequent words appear larger and more visually prominent.
+   - Use the visualization to quickly identify recurring themes and dominant vocabulary.
+
+4. **Support exploratory insight**
+   - Enable qualitative assessment of:
+     - Core topics emphasized in the reviews,
+     - Repetition patterns in language usage,
+     - Overall lexical focus of the dataset.
+
+## Expected Outcome
+
+The resulting visualization should provide:
+- An intuitive, high-level overview of the most frequent and influential words in the corpus,
+- A visually engaging summary of lexical dominance and variation,
+- A starting point for deeper textual descriptive analysis or comparison with other corpora.
+
+The emphasis should be on **conceptual understanding and exploratory insight**, not on implementation details or low-level programming mechanics.
+```
+
+#### Python Code — Code to generate the Dependency Parse Tree for the IMDb dataset
 
 ```python
 # CODE 6.8
@@ -764,6 +807,10 @@ for idx, sentence in enumerate(sentences):
         output_path.open("w", encoding="utf-8").write(svg)
 ```
 
+![Parse Tree](./Data/Figure_6_10a_Dependency_Parse_Trees.jpg)
+![Parse Tree](./Data/Figure_6_10b_Dependency_Parse_Trees.jpg)
+
+#### Exercise 2: Generate the prompt to create the Dependency Parse Tree for the IMDb dataset.
 
 ## 6.3 Trees and Networks
 
@@ -775,7 +822,17 @@ Key concepts include:
 - **Graph:** $G=(V,E)$, with vertices (nodes) $V$ and edges $E$.
 - **Directed vs. undirected** edges; **weighted** vs. unweighted.
 - **Path, cycle, connectedness**, and **components**.
+- A **Polytree** is When a direction is added to the tree edges.
 - **Adjacency matrix** $A$, where $A_{ij}$ encodes an edge from $i$ to $j$.
+
+![Simplegraph](./Data/Figure_6_11_Simple_Graph.jpg) <br>
+**Figure:** Simple graph with nodes and edges.
+
+![Undirected weighted graph](./Data/Figure_6_12a_Florida_Cities.jpg) <br>
+**Figure:** Undirected, weighted graph.
+
+![Polytree](./Data/Figure_6_12c_Directed_Budget_Tree.jpg) <br>
+**Figure:** Weighted polytree.
 
 ### 6.3.2 Objectives of Trees and Network Exploratory Data Analysis
 
@@ -787,25 +844,35 @@ Typical objectives include:
 
 ### 6.3.3 Descriptive Analysis for Trees
 
-Tree-specific descriptive indicators include **height**, **diameter**, in-degree/out-degree distributions, node levels, and branching factors.
+A tree can be summarized using a set of structural measures that capture its size, shape, and connectivity, including:
 
+- **Number of nodes ($N$):** Total number of nodes in the tree.
+- **Number of edges ($E$):** Total number of edges connecting the nodes, where for a tree $E = N - 1$.
+- **Height:** Length of the longest path from the root node to any leaf.
+- **Degree of a node:** Number of edges incident to a node. In directed trees, this can be separated into **in-degree** (incoming edges) and **out-degree** (outgoing edges).
+- **Branching factor:** Average out-degree of the nodes, indicating how widely the tree branches.
+- **Diameter:** Length of the longest path between any two nodes in the tree.
+- **Level:** Distance of a node from the root, starting at level 0 for the root node.
 
-**Figure placeholder — Budget tree example and computed summary measures**
+These measures provide a concise descriptive characterization of the structure and complexity of tree-based data.
 
-![Budget tree measures](./Data/Figure_6_10_Budget_Tree_Descriptive_Measures.jpg)
-
-
-**Python Code — Nodes and edges that have to be loaded before running the next code (Part 1)**
+#### Python Code — Descriptive analysis of trees
 
 ```python
-# CODE 6.9a
-# Nodes and edges that have to be loaded before running the next code
+# CODE 6.9
+# Descriptive analysis of a tree representing income and expenses
+# (Merged version of CODE 6.9a and CODE 6.9b)
 
-# Add nodes (expense categories)
-nodes = ["Gross Salary", "Expenses","House","Learn","Leisure","Grocery","Utils",
-    "College","Others","Power","W&W","Rental","Maint","Savings","Invest","Retire"]
+import networkx as nx
 
-# Add edges (expense relationships) with values
+# Define nodes (expense categories)
+nodes = [
+    "Gross Salary", "Expenses", "House", "Learn", "Leisure", "Grocery", "Utils",
+    "College", "Others", "Power", "W&W", "Rental", "Maint",
+    "Savings", "Invest", "Retire"
+]
+
+# Define edges (relationships) with values
 edges = [
     ("Gross Salary", "Expenses", {'value': 5000}),
     ("Gross Salary", "Savings", {'value': 1000}),
@@ -823,76 +890,118 @@ edges = [
     ("Savings", "Invest", {'value': 400}),
     ("Savings", "Retire", {'value': 600}),
 ]
-```
 
-**Python Code — Code to perform the Descriptive Analysis of trees (Part 2)**
-
-```python
-# CODE 6.9b
-# Code to perform the Descriptive Analysis of trees
-# It requires that the nodes and edges are loaded previously
-
-import networkx as nx
-
-# Create a directed graph
+# Create directed graph (tree)
 G = nx.DiGraph()
 G.add_nodes_from(nodes)
 G.add_edges_from(edges)
 
-# Calculate and print measures
+# Descriptive measures
+
+# Number of nodes and edges
 print("Number of nodes:", G.number_of_nodes())
 print("Number of edges:", G.number_of_edges())
 
-# Calculate height of the tree (maximum depth from root)
+# Height of the tree (longest path from root)
 height = nx.dag_longest_path_length(G)
 print("Height of the tree:", height)
 
-# Calculate degree of each node
+# Degree of each node
 in_degree_dict = dict(G.in_degree())
 out_degree_dict = dict(G.out_degree())
+
 print("\nIn-Degree of each node:")
 for node in nodes:
     print(f"{node}: {in_degree_dict.get(node, 0)}")
+
 print("\nOut-Degree of each node:")
 for node in nodes:
     print(f"{node}: {out_degree_dict.get(node, 0)}")
 
-# Calculate branching factor (average out-degree)
+# Branching factor (average out-degree)
 branching_factor = G.number_of_edges() / G.number_of_nodes()
 print("\nBranching factor:", branching_factor)
 
-# Calculate and print tree diameter
+# Tree diameter (longest path between any two nodes)
 diameter = 0
 for node in nodes:
-    if G.out_degree(node) == 0:  # Only consider leaf nodes
+    if G.out_degree(node) == 0:  # Leaf nodes only
         path_lengths = nx.single_source_shortest_path_length(G.reverse(), source=node)
         max_path_length = max(path_lengths.values())
         diameter = max(diameter, max_path_length)
 print("Tree Diameter:", diameter)
 
-# Calculate level of each node (depth from the root)
+# Level (depth) of each node from the root
 root = "Gross Salary"
 level_dict = {root: 0}
+
 for node in nodes:
     if node != root:
-        parent = list(G.predecessors(node))[0]  # Assuming single parent
+        parent = list(G.predecessors(node))[0]  # assuming a single parent
         level_dict[node] = level_dict[parent] + 1
+
 print("\nLevel of each node:")
 for node in nodes:
     print(f"{node}: {level_dict[node]}")
+```
+
+#### Exercise 3: Run the code for the descriptive analysis of trees and discuss the results obtained.
+
+#### Prompt — Descriptive analysis of trees
+
+```
+You are a data visualization and analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **exploratorily analyze and visualize a hierarchical tree structure** that represents the flow of income and expenses within a simple financial system.
+
+## Data Context
+- The data describes a **tree-like structure** with a single root representing total income.
+- Nodes correspond to **financial categories** (e.g., expenses, savings, subcategories).
+- Directed links represent **hierarchical relationships and flows** between categories.
+
+## High-Level Objectives
+
+1. **Represent the hierarchical structure**
+   - Treat the data as a **directed tree** with a clear root node.
+   - Preserve parent–child relationships that define how income is allocated across categories.
+
+2. **Summarize the structure using descriptive measures**
+   - Compute and report key **tree-level statistics**, including:
+     - Total number of nodes and edges,
+     - Height of the tree (longest root-to-leaf path),
+     - Diameter (longest path between any two nodes),
+     - Branching factor as a measure of structural complexity.
+   - Compute **node-level properties**, such as:
+     - In-degree and out-degree,
+     - Depth (level) of each node relative to the root.
+
+3. **Support structural interpretation**
+   - Use the descriptive results to explain:
+     - How deeply the hierarchy is nested,
+     - Which nodes act as major aggregators or split points,
+     - How balanced or unbalanced the tree structure is.
+
+4. **Enable exploratory insight**
+   - Provide a concise summary that helps answer questions such as:
+     - How complex is the expense hierarchy?
+     - Where are most branching decisions made?
+     - How far individual categories are from the income source?
+
+## Expected Outcome
+
+The output should consist of a **clear descriptive summary of the tree structure**, highlighting:
+- Global structural properties of the hierarchy,
+- Local properties of individual nodes,
+- Insights into how income flows through the system.
+
+The emphasis should be on **conceptual understanding of tree-based descriptive analysis**, not on implementation details, algorithms, or low-level programming mechanics.
 ```
 
 ### 6.3.4 Visualizing Trees
 
 Tree visualization methods include **non-space-filling** (node-link diagrams) and **space-filling** approaches such as **treemaps** and **sunburst charts**.
 
-
-**Figure placeholder — Genealogic tree representations (Queen Elizabeth II example)**
-
-![Genealogic trees](./Data/Figure_6_11_Genealogic_Trees.jpg)
-
-
-**Python Code — Code to generate partial genealogic trees of Queen Elizabeth II**
+#### Python Code — Code to generate partial genealogic tree representation
 
 ```python
 # CODE 6.10
@@ -942,13 +1051,49 @@ plt.title("Genealogical Tree Visualization")
 plt.axis("off")
 ```
 
+![Genealogic tree](./Data/Figure_6_13_Genealogic_Trees.jpg)
 
-**Figure placeholder — Treemap visualization (Budget Tree)**
+#### Prompt — Code to generate partial genealogic tree representation
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
-![Treemap](./Data/Figure_6_12_Treemap_Budget_Tree.svg)
+Your task is to **exploratorily represent and visualize a genealogical tree** in order to illustrate hierarchical parent–child relationships within a family lineage.
 
+## Data Context
+- The data describes a **partial family genealogy** centered on a historical figure.
+- Individuals are represented as nodes, and family relationships define a **tree structure**.
+- The hierarchy spans multiple generations, from ancestors to descendants.
 
-**Python Code — Treemap example with the Budget Tree synthetic data**
+## High-Level Objectives
+
+1. **Represent genealogical hierarchy**
+   - Treat the data as a **tree rooted at a central individual**.
+   - Preserve parent–child relationships that define generational structure.
+
+2. **Produce a textual hierarchical representation**
+   - Generate a **console-style tree listing** that visually conveys depth using indentation.
+   - Ensure that deeper generations appear progressively indented to reflect lineage levels.
+
+3. **Create a visual genealogical tree**
+   - Generate a **node-link diagram** where:
+     - Each individual is represented as a labeled node.
+     - Lines connect parents to their children.
+   - Arrange nodes vertically to reflect generational depth and horizontally to separate siblings.
+
+4. **Support interpretability**
+   - Use layout, spacing, and visual grouping to make family relationships clear.
+   - Emphasize ancestry, descent, and sibling groupings through visual structure rather than textual explanation.
+
+## Expected Outcome
+
+The result should include:
+- A **clear hierarchical textual representation** of the genealogy, and
+- A **graphical family tree visualization** that intuitively communicates generational relationships.
+
+The emphasis should be on **conceptual understanding of tree visualization and hierarchical data representation**, not on implementation details, plotting mechanics, or coordinate calculations.
+```
+
+#### Python Code — Treemap example with the Budget Tree synthetic data
 
 ```python
 # CODE 6.11
@@ -981,17 +1126,12 @@ fig.update_layout(title_x=0.5)
 # Save the figure as SVG
 fig.write_image("Figure_6_14_Treemap_Budget_Tree_v2.svg", format='svg', width=1300, height=700)
 
-# Display it
 fig.show()
 ```
 
+![Treemap](./Data/Figure_6_14_Treemap_Budget_Tree.jpg)
 
-**Figure placeholder — Sunburst visualization (Budget Tree)**
-
-![Sunburst](./Data/Figure_6_13_Sunburst_Budget_Tree.svg)
-
-
-**Python Code — Sunburst example with the Budget Tree synthetic data**
+#### Python Code — Sunburst example with the Budget Tree synthetic data
 
 ```python
 # CODE 6.12
@@ -1018,21 +1158,67 @@ fig.write_image("Figure_6_15_Sunburst_Budget_Tree.svg", format='svg', width=700,
 fig.show()
 ```
 
+![Sunburst](./Data/Figure_6_15_Sunburst_Budget_Tree.jpg)
+
 ### 6.3.5 Descriptive Analysis for Networks
 
-Network descriptive analysis often includes:
-- **Number of nodes** $|V|$ and **edges** $|E|$
-- **Degree** statistics and degree distribution
-- **Density** and clustering coefficients
-- **Centrality measures** (degree, betweenness, closeness)
+The **descriptive analysis of networks** encompasses a broad spectrum of approaches, ranging from the computation of simple metrics that characterize the network’s **topological structure** to more elaborate analyses aimed at **identifying patterns and structural properties** within the network.
 
+Although networks can be seen as a generalization of trees, not all tree-based measures remain meaningful in the network context. In particular, hierarchical concepts such as **height** and **level**, which rely on the existence of a single root and a well-defined parent–child structure, generally do not apply to networks. As a result, network analysis relies on alternative measures that capture connectivity, centrality, and global structure rather than strict hierarchy.
 
-**Figure placeholder — Network summary measures and centrality examples**
+Network descriptive analysis often includes a set of quantitative measures that characterize the **size, connectivity, and structural organization** of a network:
 
-![Network descriptive analysis](./Data/Figure_6_14_Network_Descriptive_Analysis.jpg)
+- **Number of nodes** and **edges**  
+  - Number of nodes:  
+    $|V|$
+  - Number of edges:  
+    $|E|$
 
+- **Degree statistics and degree distribution**  
+  - Degree of a node $v$:  
+    $k_v = \deg(v)$
+  - Average degree:  
+    $\langle k \rangle = \frac{1}{|V|} \sum_{v \in V} k_v = \frac{2|E|}{|V|}$
+  - Degree distribution:  
+    $P(k) = \frac{\text{number of nodes with degree } k}{|V|}$
 
-**Python Code — Code to calculate Descriptive Statistics of the**
+- **Network density**  
+  - For an undirected network:  
+    $D = \frac{2|E|}{|V|(|V|-1)}$
+  - For a directed network:  
+    $D = \frac{|E|}{|V|(|V|-1)}$
+
+- **Clustering coefficient**  
+  - Local clustering coefficient of node $v$:  
+    $C_v = \frac{2e_v}{k_v(k_v - 1)}$  
+    where $e_v$ is the number of edges among the neighbors of $v$.  
+  - Average clustering coefficient:  
+    $C = \frac{1}{|V|} \sum_{v \in V} C_v$
+
+- **Centrality measures**
+  - **Degree centrality**:  
+    $C_D(v) = \frac{k_v}{|V| - 1}$
+  - **Betweenness centrality**:  
+    $C_B(v) = \sum_{s \neq v \neq t} \frac{\sigma_{st}(v)}{\sigma_{st}}$  
+    where $\sigma_{st}$ is the number of shortest paths between nodes $s$ and $t$, and  
+    $\sigma_{st}(v)$ is the number of those paths that pass through $v$.
+  - **Closeness centrality**:  
+    $C_C(v) = \frac{|V| - 1}{\sum_{u \in V,\, u \neq v} d(v,u)}$  
+    where $d(v,u)$ is the shortest-path distance between nodes $v$ and $u$.
+
+- **Average path length**  
+  $L = \frac{1}{|V|(|V|-1)} \sum_{u \neq v} d(u,v)$
+
+- **Network diameter**  
+  $\text{diameter} = \max_{u,v \in V} d(u,v)$
+
+- **Connected components**  
+  - Number of connected components in an undirected network, or  
+  - Number of strongly or weakly connected components in a directed network.
+
+Together, these measures provide a comprehensive descriptive summary of a network’s **scale, connectivity, cohesion, and structural roles of nodes**, forming the foundation for exploratory analysis before advanced modeling or inference.
+
+#### Python Code — Code to calculate Descriptive Statistics of the Zachary's Karate Club Network
 
 ```python
 # CODE 6.13
@@ -1070,6 +1256,61 @@ for node, centrality in nx.closeness_centrality(G).items():
 print("Eigenvector centrality:")
 for node, centrality in nx.eigenvector_centrality(G).items():
     print(f"Node {node}: {centrality:.4f}")
+```
+
+#### Exercise 4: Run the code for the descriptive analysis of the Zachary's Karate Club Social Network.
+
+#### Prompt — Prompt to calculate Descriptive Statistics of the Zachary's Karate Club Network
+```
+You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **perform a comprehensive descriptive analysis of a real-world social network** in order to understand its structure, connectivity, and the relative importance of its members.
+
+## Dataset Context
+- The dataset represents a **social network** where nodes correspond to individuals and edges represent social interactions.
+- The network is a classic benchmark dataset widely used to study social structure and community behavior.
+- The goal is **exploratory network characterization**, not prediction or community detection.
+
+## High-Level Objectives
+
+1. **Characterize the global structure of the network**
+   - Determine whether the network is a tree or a general graph.
+   - Assess whether the network is directed or undirected.
+   - Evaluate connectivity, including whether the network is fully connected and how many connected components it contains.
+   - Quantify overall size and density using node and edge counts.
+
+2. **Analyze cohesion and distance properties**
+   - Compute summary measures that describe how tightly connected the network is, such as:
+     - Average clustering coefficient,
+     - Average shortest path length.
+   - Use these measures to assess the balance between local clustering and global reachability.
+
+3. **Examine degree-related properties**
+   - Identify minimum, maximum, and average node degree.
+   - Evaluate assortativity to understand whether nodes tend to connect to others with similar degree.
+
+4. **Assess node importance using centrality measures**
+   - Compute and report multiple **centrality metrics** for each node, including:
+     - Degree centrality,
+     - Betweenness centrality,
+     - Closeness centrality,
+     - Eigenvector centrality.
+   - Use these measures to highlight influential, intermediary, or well-connected individuals in the network.
+
+5. **Support exploratory insight**
+   - Provide numerical summaries that help answer questions such as:
+     - How centralized is the network?
+     - Are there dominant or highly influential nodes?
+     - How evenly distributed are social connections?
+
+## Expected Outcome
+
+The output should consist of a **detailed descriptive summary of the social network**, including:
+- Global structural properties,
+- Measures of cohesion and connectivity,
+- Node-level centrality values highlighting structural roles.
+
+The emphasis should be on **conceptual understanding of social network structure and descriptive network analysis**, not on implementation details or low-level programming mechanics.
 ```
 
 ### 6.3.6 Visualizing Networks
