@@ -167,7 +167,10 @@ The emphasis should be on **exploratory insight and interpretability**, not on i
 #### Moving average (rolling mean)
 A **moving average** smooths short-term fluctuations by averaging a window of size $w$:
 
-$\hat{x}_t = \frac{1}{w}\sum_{i=0}^{w-1} x_{t-i}$
+$\hat{x}_t = \frac{1}{w}\sum_{i=0}^{w-1} x_{t-i}$ <p>
+$SMA_{t} = \frac{1}{w} \sum_{i=0}^{w-1} x_{t-i}$
+
+where $SMA_t$ is the smoothed value of the time series at time $t$, obtained after applying the moving average, $x_t$ is the **original observed value** of the time series at time $t$, $x_{t-i}$ represents past observations, with $i$ indicating how many time steps before $t$ the value was recorded, $w$ is the window size, that is, the number of consecutive observations included in the moving average, $\sum_{i=0}^{w-1} x_{t-i}$ denotes the sum of the last $w$ observations up to time $t$, and $\frac{1}{w}$ is the normalization factor that computes the average of the selected observations.
 
 Larger windows produce smoother curves but can blur short-term changes.
 
@@ -1317,18 +1320,7 @@ The emphasis should be on **conceptual understanding of social network structure
 
 Network visualization depends strongly on **layout choice** (how nodes are placed). Common layouts include spring/force-directed, circular, spectral, and random layouts. Another complementary representation is the **adjacency matrix heatmap**.
 
-
-**Figure placeholder — Network layouts (Zachary's Karate Club)**
-
-![Network layouts](./Data/Figure_6_15_Network_Layouts_Karate_Club.jpg)
-
-
-**Figure placeholder — Adjacency matrix heatmap (Zachary's Karate Club)**
-
-![Adjacency heatmap](./Data/Figure_6_16_Adjacency_Matrix_Heatmap.jpg)
-
-
-**Python Code — Code to Visualize the Zachary's Karate Club Social Network in different layouts**
+#### Python Code — Code to Visualize the Zachary's Karate Club Social Network in different layouts
 
 ```python
 # CODE 6.14
@@ -1370,7 +1362,17 @@ pos_custom.update(custom_positions)
 nx.draw_networkx(G, pos_custom, node_color='lightblue', font_size=8, edge_color='gray', ax=cstm)
 cstm.set_title("Custom Spring Layout", fontsize=16)
 
-# Save and display the networks
-plt.savefig("Figure_6_16b_Network_Layouts.svg", format="svg", dpi=1500, bbox_inches='tight')
 plt.show()
 ```
+
+![Network layouts](./Data/Figure_6_16a_Network_Layouts.jpg)
+![Network layouts](./Data/Figure_6_16b_Network_Layouts.jpg)
+
+#### Prompt — Code to Visualize the Zachary's Karate Club Social Network in different layouts
+
+
+**Figure placeholder — Adjacency matrix heatmap (Zachary's Karate Club)**
+
+![Adjacency heatmap](./Data/Figure_6_16_Adjacency_Matrix_Heatmap.jpg)
+
+
