@@ -14,3 +14,7 @@ chapters:
     title: "Module 4: Principles of Visualization"
   - file: Module5_Visualization_Methods.md
     title: "Module 5: Data Visualization Methods"
+  - file: Module6_Special_Types_of_Data.md
+    title: "Module 6: Special Types of Data"
+  - file: Module7_Storytelling_Dashboards.md
+    title: "Module 7: Data Storytelling and Dashboard Design"
