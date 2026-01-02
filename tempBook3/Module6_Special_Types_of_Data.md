@@ -1,6 +1,8 @@
 # 6 — Special Types of Data
 
-This module extends exploratory data analysis to **special data types** that require dedicated representation and methods: **time series**, **text and documents**, and **trees/graphs/networks**.
+Modern data analysis often extends beyond traditional tabular datasets and requires methods capable of handling data with additional structure and complexity. **Special types of data**, such as time series, text and document collections, and trees and networks, introduce characteristics like temporal ordering, linguistic semantics, and relational dependencies that fundamentally affect how data should be explored, summarized, and visualized.
+
+In Exploratory Data Analysis these data types require adapted descriptive measures and visualization strategies, since standard summary statistics and charts may fail to capture key structural properties. This module introduces exploratory techniques tailored to time series, text data, and relational structures, equipping students with the tools needed to analyze complex data effectively and to prepare for more advanced modeling, storytelling, and decision-support applications.
 
 ## Learning outcomes
 
@@ -167,10 +169,9 @@ The emphasis should be on **exploratory insight and interpretability**, not on i
 #### Moving average (rolling mean)
 A **moving average** smooths short-term fluctuations by averaging a window of size $w$:
 
-$\hat{x}_t = \frac{1}{w}\sum_{i=0}^{w-1} x_{t-i}$ <p>
 $SMA_{t} = \frac{1}{w} \sum_{i=0}^{w-1} x_{t-i}$
 
-where $SMA_t$ is the smoothed value of the time series at time $t$, obtained after applying the moving average, $x_t$ is the **original observed value** of the time series at time $t$, $x_{t-i}$ represents past observations, with $i$ indicating how many time steps before $t$ the value was recorded, $w$ is the window size, that is, the number of consecutive observations included in the moving average, $\sum_{i=0}^{w-1} x_{t-i}$ denotes the sum of the last $w$ observations up to time $t$, and $\frac{1}{w}$ is the normalization factor that computes the average of the selected observations.
+where $SMA_t$ is the smoothed value of the time series at time $t$, obtained after applying the moving average, $x_t$ is the original observed value of the time series at time $t$, $x_{t-i}$ represents past observations, with $i$ indicating how many time steps before $t$ the value was recorded, $w$ is the window size, that is, the number of consecutive observations included in the moving average, $\sum_{i=0}^{w-1} x_{t-i}$ denotes the sum of the last $w$ observations up to time $t$, and $\frac{1}{w}$ is the normalization factor that computes the average of the selected observations.
 
 Larger windows produce smoother curves but can blur short-term changes.
 
@@ -362,7 +363,7 @@ Text and document data are often **unstructured** or **semi-structured**. EDA fo
 ### 6.2.1 Objectives of Text and Document Exploratory Data Analysis
 
 Typical objectives include:
-- Identify **themes/topics** and frequently occurring terms.
+- Identify themes/topics and frequently occurring terms.
 - Compare language patterns across subsets (e.g., positive vs. negative reviews).
 - Assess corpus properties (vocabulary size, sparsity, stop-word prevalence).
 - Support downstream tasks such as classification, clustering, or retrieval.
@@ -374,6 +375,75 @@ One way to analyze text computationally is to transform it into structured repre
 - **Bag-of-words / document-term matrix (DTM)**
 - **TF–IDF** weighting
 - **N-grams** and co-occurrence structures
+
+Text and document data are inherently unstructured and must be transformed into a **structured numerical representation** before descriptive analysis and visualization can be performed. A common approach is to represent a collection of documents as a set of **feature vectors**, where each document is mapped into a fixed-dimensional space defined by the vocabulary extracted from the corpus.
+
+Formally, consider a corpus with $N$ documents and a vocabulary of $m$ distinct terms (tokens). Each document $d_i$ is represented by a feature vector $\mathbf{w}_i \in \mathbb{R}^m$, where each component corresponds to a specific term in the vocabulary:
+
+| Document | $t_1$ | $t_2$ | $t_3$ | $\cdots$ | $t_m$ |
+|--------|------|------|------|---------|------|
+| $d_1$ | $w_{11}$ | $w_{12}$ | $w_{13}$ | $\cdots$ | $w_{1m}$ |
+| $d_2$ | $w_{21}$ | $w_{22}$ | $w_{23}$ | $\cdots$ | $w_{2m}$ |
+| $\vdots$ | $\vdots$ | $\vdots$ | $\vdots$ | $\ddots$ | $\vdots$ |
+| $d_N$ | $w_{N1}$ | $w_{N2}$ | $w_{N3}$ | $\cdots$ | $w_{Nm}$ |
+
+where, $w_{ij}$ represents the **weight** associated with term $t_j$ in document $d_i$. Depending on how this weight is defined, different lexical representations can be obtained, each emphasizing distinct characteristics of the text.
+
+#### Binary Representation
+
+In the **binary representation**, the weight indicates only the presence or absence of a term in a document:
+
+$w_{ij} =$ <br>
+1, if $t_j$ appears in document $d_i$ <br>
+0, otherwise
+
+This representation ignores term frequency and is useful when the mere occurrence of a term is more relevant than how often it appears.
+
+#### Absolute Frequency (Term Count)
+
+In the **absolute frequency** representation, the weight corresponds to the number of times a term appears in a document:
+
+$w_{ij} = \text{tf}(t_j, d_i)$
+
+where $\text{tf}(t_j, d_i)$ denotes the term frequency of $t_j$ in document $d_i$. This representation captures within-document importance but tends to favor longer documents.
+
+#### Relative (Normalized) Frequency
+
+To reduce the influence of document length, term frequencies can be **normalized** by the total number of terms in the document:
+
+$w_{ij} = \frac{\text{tf}(t_j, d_i)}{\sum_{k=1}^{m} \text{tf}(t_k, d_i)}$
+
+This representation reflects the relative importance of a term within a document and allows fairer comparisons across documents of different sizes.
+
+#### TF–IDF (Term Frequency–Inverse Document Frequency)
+
+The **TF–IDF representation** assigns weights that balance local importance within a document and global rarity across the corpus:
+
+$w_{ij} = \text{TF}(t_j, d_i) \cdot \log\left(\frac{N}{\text{DF}(t_j)}\right)$
+
+where $\text{TF}(t_j, d_i)$ is the term frequency of $t_j$ in document $d_i$, $\text{DF}(t_j)$ is the number of documents containing term $t_j$, and $N$ is the total number of documents in the corpus.
+
+TF–IDF emphasizes terms that are frequent in a specific document but uncommon across the corpus, making it particularly effective for exploratory text analysis, document comparison, and information retrieval.
+
+Together, these representations transform unstructured text into structured numerical data, enabling descriptive statistics, visualization, and further exploratory analysis of text and document collections.
+
+#### N-grams
+
+In addition to single-word terms (**unigrams**), text can be structured using **n-grams**, which are contiguous sequences of $n$ tokens. N-grams allow the representation to capture **local word order and short contextual patterns** that are not visible when using individual tokens alone.
+
+- **Unigrams ($n = 1$):** single tokens (e.g., *data*, *analysis*)
+- **Bigrams ($n = 2$):** pairs of consecutive tokens (e.g., *data analysis*)
+- **Trigrams ($n = 3$):** sequences of three consecutive tokens (e.g., *exploratory data analysis*)
+
+When n-grams are used, each n-gram becomes a feature in the vocabulary, and its corresponding weight $w_{ij}$ can be defined using any of the previously described schemes:
+
+$w_{ij} = \text{TF}(\text{ngram}_j, d_i)$
+
+or
+
+$w_{ij} = \text{TFIDF}(\text{ngram}_j, d_i)$
+
+N-gram representations often provide richer descriptive power by capturing phrases, expressions, and short semantic units commonly used in text.
 
 #### Python Code — Structure texts using Lexical Representations (Part 1)
 
@@ -608,7 +678,7 @@ Sentence Count: 65,258 <br>
 Average Sentence Length: 23.369119494927826 <br>
 Number of Stop words : 595,438 <br>
 
-#### Prompt — Code to generate simple descriptive statistics for text data
+#### Prompt — Prompt to generate simple descriptive statistics for text data
 ```
 You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
@@ -715,7 +785,7 @@ plt.show()
 ![Tag Cloud](./Data/Figure_6_7a_TagCloud_IMDb.jpg)
 ![Frequency Distribution](./Data/Figure_6_7b_BarChart_IMDb.jpg)
 
-#### Prompt — Code to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus
+#### Prompt — Prompt to generate a Tag Cloud and a Frequency Distribution of the words in the IMDb corpus
 ```
 You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
@@ -825,7 +895,7 @@ Key concepts include:
 - **Graph:** $G=(V,E)$, with vertices (nodes) $V$ and edges $E$.
 - **Directed vs. undirected** edges; **weighted** vs. unweighted.
 - **Path, cycle, connectedness**, and **components**.
-- A **Polytree** is When a direction is added to the tree edges.
+- A **Polytree** is when a direction is added to the tree edges.
 - **Adjacency matrix** $A$, where $A_{ij}$ encodes an edge from $i$ to $j$.
 
 ![Simplegraph](./Data/Figure_6_11_Simple_Graph.jpg) <br>
@@ -1056,7 +1126,7 @@ plt.axis("off")
 
 ![Genealogic tree](./Data/Figure_6_13_Genealogic_Trees.jpg)
 
-#### Prompt — Code to generate partial genealogic tree representation
+#### Prompt — Prompt to generate partial genealogic tree representation
 ```
 You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
@@ -1318,7 +1388,11 @@ The emphasis should be on **conceptual understanding of social network structure
 
 ### 6.3.6 Visualizing Networks
 
-Network visualization depends strongly on **layout choice** (how nodes are placed). Common layouts include spring/force-directed, circular, spectral, and random layouts. Another complementary representation is the **adjacency matrix heatmap**.
+Network visualization plays a central role in **exploratory analysis of relational data**, enabling analysts to visually inspect connectivity patterns, structural roles of nodes, and global organization of the network. Unlike tabular data, networks emphasize relationships rather than individual attributes, making visualization an essential tool for understanding their structure.
+
+Common network visualizations rely on **node–link diagrams**, where nodes represent entities and edges represent relationships. The effectiveness of these diagrams depends heavily on the **layout algorithm** used, as different layouts can highlight different aspects of the network, such as clustering, centrality, or hierarchical organization. Force-directed layouts, for example, tend to emphasize community structure, while circular or shell layouts impose geometric constraints that support comparison and symmetry.
+
+Visual encoding choices, such as node size, color, and edge thickness, can be used to represent descriptive measures like degree, centrality, or edge weight. However, network visualizations can quickly become cluttered as the number of nodes and edges increases. As a result, effective visualization requires careful layout selection, selective encoding, and, when necessary, abstraction or filtering to preserve interpretability while revealing meaningful structural patterns.
 
 #### Python Code — Code to Visualize the Zachary's Karate Club Social Network in different layouts
 
@@ -1368,11 +1442,70 @@ plt.show()
 ![Network layouts](./Data/Figure_6_16a_Network_Layouts.jpg)
 ![Network layouts](./Data/Figure_6_16b_Network_Layouts.jpg)
 
-#### Prompt — Code to Visualize the Zachary's Karate Club Social Network in different layouts
+#### Prompt — Prompt to Visualize the Zachary's Karate Club Social Network in different layouts
+```
+You are a data visualization assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
 
+Your task is to **visually explore and compare different network layout strategies** using a well-known social network dataset, the Zachary's Karate CLub Social Network, in order to understand how layout choice influences interpretation of network structure.
 
-**Figure placeholder — Adjacency matrix heatmap (Zachary's Karate Club)**
+## Dataset Context
+- The dataset represents a **social network**, where nodes correspond to individuals and edges represent social relationships.
+- The network is commonly used as a benchmark example for studying network structure and visualization.
+- The goal is exploratory visualization rather than community detection or modeling.
 
-![Adjacency heatmap](./Data/Figure_6_16_Adjacency_Matrix_Heatmap.jpg)
+## High-Level Objectives
 
+1. **Visualize the same network using multiple layouts**
+   - Generate several visual representations of the same social network.
+   - Ensure that node identities and connections remain consistent across all visualizations.
+
+2. **Compare layout strategies**
+   - Use different layout paradigms, such as:
+     - Force-directed layouts that emphasize relational structure,
+     - Geometric layouts that impose regular spatial organization,
+     - Shell-based or customized layouts that highlight specific structural roles or positions.
+   - Observe how each layout affects perceived clustering, centrality, and connectivity.
+
+3. **Organize visual comparison**
+   - Arrange network visualizations in a clear, multi-panel format.
+   - Provide descriptive titles for each layout to support side-by-side comparison.
+
+4. **Support exploratory insight**
+   - Use layout differences to reason about:
+     - Which nodes appear more central or peripheral,
+     - How clusters or communities visually emerge,
+     - The strengths and limitations of each layout for communication and analysis.
+
+## Expected Outcome
+
+The result should consist of a **set of network visualizations**, each showing the same social network under a different layout strategy. Together, these plots should illustrate how visualization choices can emphasize or obscure structural properties of networks.
+
+The emphasis should be on **conceptual understanding of network visualization and layout selection**, not on implementation details, algorithms, or plotting mechanics.
+```
+
+Another effective way to visualize a network is through its **adjacency matrix**. For the Zachary’s Karate Club data, the adjacency matrix represents the strength or frequency of interactions between pairs of individuals, with higher values indicating stronger connections. This matrix-based representation provides a structured alternative to node–link diagrams, especially for highlighting patterns of connectivity.
+
+![Network with edge weights](./Data/Figure_6_17a_Edge_Weights.jpg)<p>
+**Figure:** Zachary’s Karate Club graph with the edge weights between each pair of nodes.
+
+When visualized as a **heatmap**, the adjacency matrix reveals important structural information about the network. Color intensity is used to emphasize connection strength, with darker colors representing stronger interactions and lighter colors indicating weaker or absent connections. In the heatmap of the Karate Club network, two distinct clusters of strong connections become apparent—one associated with the first group of nodes and another with the last—reflecting the underlying community structure of the network.
+
+![Adjacency heatmap](./Data/Figure_6_17b_Adjacency_Matrix.jpg)<p>
+**Figure:** Adjacency matrix heatmap of the Zachary’s Karate Club social network data.
+
+## Reflection
+
+- How do the structural characteristics of time series, text, and network data challenge the assumptions of traditional exploratory data analysis?
+- Why is it important to account for temporal dependence when analyzing and visualizing time series data?
+- How does the need for text structuring influence the types of insights that can be extracted from document collections?
+- In what ways do networks shift the analytical focus from individual attributes to relationships, and how does this affect visualization choices?
+- What risks arise when complex data types are forced into purely tabular representations without considering their underlying structure?
+
+## Further Reading
+
+Students are encouraged to consult the bibliography listed in the course syllabus, particularly:
+
+- De Castro, L. N. (2026). *Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design*. CRC Press.
+- Ward, M., Grinstein, G. G., & Keim, D. (2015). *Interactive Data Visualization*. CRC Press.
+- Wilke, C. O. (2019). *Fundamentals of Data Visualization*. O’Reilly Media.
 
