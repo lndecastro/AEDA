@@ -119,6 +119,15 @@ As you begin this program, consider the following questions:
 
 Revisiting these questions throughout the course will help anchor your learning and guide your analytical practice.
 
+## About the Instructor – Dr. Leandro Nunes de Castro
+
+- Professor in the **Department of Computing and Software Engineering**, U.A. Whitaker College of Engineering, FGCU.
+- Ph.D. in Computer Engineering with 30 years of experience in **Artificial Intelligence, Data Science, and Natural Computing**.
+- Director of the **Dendritic Institute for Artificial Intelligence and Data Science** at FGCU.
+- Author of various AI and Data Science books and papers, and recognized among the **Top 2% most influential researchers in Computer Science worldwide**.
+- Experienced entrepreneur, researcher, and educator with a focus on applying AI for innovation, business, and societal impact.
+- Active mentor and collaborator with international academic and industry partners.
+
 ## Further Reading
 
 Students wishing to deepen their understanding of the topics introduced in this program are encouraged to consult the references listed in the course syllabus bibliography, including:
