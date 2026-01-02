@@ -214,9 +214,10 @@ To illustrate, the wireframe presented in the figure below describes the layout 
 ![Dashboard Wireframe](./Data/Figure_7_5_Wireframe.jpg) <p>
 **Figure:** Wireframe with the dashboad layout for the Superstore Sales dataset.
 
-The figure below shows the final dashboard built using Power BI by Microsoft. 
+The figure below shows the final dashboard built using PowerBI by Microsoft. 
 
-![Final Dashboard](./Data/Figure_7_6a_Dashboard.jpg)
+![Final Dashboard](./Data/Figure_7_6a_Dashboard.jpg) <p>
+**Figure:** Dashboad for the Superstore Sales dataset created with PowerBI by Microsoft.
 
 ## Reflection
 
