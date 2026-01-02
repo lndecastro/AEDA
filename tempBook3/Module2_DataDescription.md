@@ -49,9 +49,9 @@ Mathematically, a dataset can be represented as a matrix:
 
 $S = {x_i \mid i = 1, \ldots, N},$
 
-where each object \(x_i\) is an \(m\)-dimensional vector given by
+where each object $x_i$ is an $m$-dimensional vector given by
 
-$\mathbf{x^i} = \big[ x_j^i \big]_{j = 1, \ldots, m}.\$
+$\mathbf{x^i} = \big[ x_j^i \big]_{j = 1, \ldots, m}$
 
 where:
 - $N$ is the number of objects
