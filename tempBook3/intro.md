@@ -139,3 +139,7 @@ Students wishing to deepen their understanding of the topics introduced in this 
 - **Wilke, C. O. (2019).** *Fundamentals of Data Visualization*. O’Reilly Media.
 
 These readings provide complementary perspectives on exploratory data analysis, visualization principles, data storytelling, and the analytical foundations that support modern data science and artificial intelligence.
+
+## 🧾 Acknowledgements
+
+Developed by **Dr. Leandro Nunes de Castro**©️, with support from large language models such as ChatGPT, Claude, Gemini, Perplexity, Gamma.ai, Napkin, and CoPilot, following ethical and pedagogical review. All rights reserved. 
