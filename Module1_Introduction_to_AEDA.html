@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations &#8212; Advanced Exploratory Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Module1_Introduction_to_AEDA';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2 — Data Description and Preparation" href="Module2_DataDescription.html" />
+    <link rel="prev" title="Welcome to Advanced Exploratory Data Analysis (AEDA)" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dendritic_logo.png" class="logo__image only-light" alt="Advanced Exploratory Data Analysis - Home"/>
+    <script>document.write(`<img src="_static/dendritic_logo.png" class="logo__image only-dark" alt="Advanced Exploratory Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Advanced Exploratory Data Analysis (AEDA)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Module 1: Introduction to AEDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module2_DataDescription.html">Module 2: Data Description and Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module3_Descriptive_Analysis.html">Module 3: Descriptive Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module4_Principles_of_Visualization.html">Module 4: Principles of Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module5_Visualization_Methods.html">Module 5: Data Visualization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module6_Special_Types_of_Data.html">Module 6: Special Types of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module7_Storytelling_Dashboards.html">Module 7: Data Storytelling and Dashboard Design</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA/edit/master/docs/Module1_Introduction_to_AEDA.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Module1_Introduction_to_AEDA.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-ideas-conceptual-notes">1.1 Core Ideas (Conceptual Notes)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-aeda-is-and-is-not">What AEDA is (and is not)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-science-workflow-and-where-aeda-fits">The Data Science Workflow and Where AEDA Fits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#careers-in-data-science-roles-responsibilities-high-level">Careers in data science: roles &amp; responsibilities (high-level)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-history-of-ai-why-it-belongs-in-an-aeda-course">A brief history of AI (why it belongs in an AEDA course)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#genai-foundations-practical-framing-for-aeda">GenAI Foundations (Practical Framing for AEDA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">1.2 Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-aeda-history-concepts-analytical-process-flow-and-genai-foundations">
+<h1>1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations<a class="headerlink" href="#introduction-to-aeda-history-concepts-analytical-process-flow-and-genai-foundations" title="Link to this heading">#</a></h1>
+<p><strong>Advanced Exploratory Data Analysis (AEDA)</strong> is the foundation for any data-driven solution, whether the goal is insight generation, decision support, or automation. This opening module introduces the historical, conceptual, and analytical context of AEDA, situating it within the broader data science and artificial intelligence ecosystem.</p>
+<p>Students will explore how data analysis evolved alongside advances in computation and AI, where AEDA fits in the analytical workflow, and why understanding data through descriptive analysis and visualization is a prerequisite for effective modeling, storytelling, and dashboard design. The module also establishes how Generative AI can be used responsibly as a co-pilot in exploratory analysis, supporting — but never replacing — statistical reasoning, visualization literacy, and human judgment.</p>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>By the end of this module, students should be able to:</p>
+<ol class="arabic simple">
+<li><p>Explain what AEDA is and distinguish it from related concepts such as data analytics, data mining, and machine learning.</p></li>
+<li><p>Describe the <strong>data science / analytics workflow</strong> as an end-to-end process and locate where AEDA fits.</p></li>
+<li><p>Identify common <strong>careers/roles</strong> in data science and connect them to core knowledge/skills.</p></li>
+<li><p>Summarize major milestones in the history of AI and explain why <strong>data availability + compute + algorithms</strong> change what is possible.</p></li>
+<li><p>Explain at a high level what <strong>prompt engineering</strong>, <strong>context engineering</strong>, <strong>foundational models</strong>, and <strong>GenAI ecosystems</strong> mean in the context of doing AEDA.</p></li>
+</ol>
+</section>
+<section id="core-ideas-conceptual-notes">
+<h2>1.1 Core Ideas (Conceptual Notes)<a class="headerlink" href="#core-ideas-conceptual-notes" title="Link to this heading">#</a></h2>
+<section id="what-aeda-is-and-is-not">
+<h3>What AEDA is (and is not)<a class="headerlink" href="#what-aeda-is-and-is-not" title="Link to this heading">#</a></h3>
+<p>Exploratory Data Analysis (EDA) encompasses a broad set of techniques focused on manipulating, summarizing, and visualizing data without performing formal modeling or statistical inference.
+The primary purpose of EDA is to develop a deep understanding of the data itself, its structure, behavior, and key patterns, by means of descriptive operations and visual representations.
+As the initial phase of the analytical workflow, EDA plays a critical role in shaping subsequent decisions related to modeling, inference, and advanced analytics, often determining which methods are appropriate and which variables are most informative.</p>
+<p>In essence, the main objectives of EDA are to:</p>
+<ul class="simple">
+<li><p>Understand the overall structure and distribution of the data.</p></li>
+<li><p>Summarize the main characteristics of variables using descriptive measures.</p></li>
+<li><p>Extract meaningful insights and indicators from raw data.</p></li>
+<li><p>Assess variable relevance and support feature selection.</p></li>
+<li><p>Explore and visualize relationships among variables.</p></li>
+<li><p>Detect anomalies, outliers, or unusual patterns.</p></li>
+<li><p>Prepare the data for the application or selection of learning-based methods.</p></li>
+</ul>
+</section>
+<section id="the-data-science-workflow-and-where-aeda-fits">
+<h3>The Data Science Workflow and Where AEDA Fits<a class="headerlink" href="#the-data-science-workflow-and-where-aeda-fits" title="Link to this heading">#</a></h3>
+<p>AEDA sits in the portion of the workflow where we <strong>explore, summarize, clean, and visualize</strong> data to understand it before building downstream solutions. The course program explicitly positions AEDA before specialized analytics.<br />
+The book reinforces that EDA becomes critical for making data suitable for modeling and for transforming raw data into insights that can inform AI solutions.</p>
+<p><img alt="The Data Science Workflow" src="_images/DSWorkflow.png" /></p>
+</section>
+<section id="careers-in-data-science-roles-responsibilities-high-level">
+<h3>Careers in data science: roles &amp; responsibilities (high-level)<a class="headerlink" href="#careers-in-data-science-roles-responsibilities-high-level" title="Link to this heading">#</a></h3>
+<p>Examples of roles discussed include: <strong>Business Analyst, Data Scientist, Data Analyst, Data Engineer</strong>, and related leadership/architecture roles.<br />
+One useful framing is:</p>
+<ul class="simple">
+<li><p>Data Scientist: identifies suitable data, designs/applies algorithms, analyzes results, and bridges business ↔ analytics.</p></li>
+<li><p>Data Analyst: extracts data, applies tools for insights/visualization/KPIs, consolidates into reports/dashboards.</p></li>
+<li><p>Data Engineer: manages ETL (extract-transform-load), pipelines, and transformations that enable analysis.</p></li>
+</ul>
+<p><img alt="Data Science Careers" src="_images/DSCareers.png" /></p>
+</section>
+<section id="a-brief-history-of-ai-why-it-belongs-in-an-aeda-course">
+<h3>A brief history of AI (why it belongs in an AEDA course)<a class="headerlink" href="#a-brief-history-of-ai-why-it-belongs-in-an-aeda-course" title="Link to this heading">#</a></h3>
+<p>A brief history of Artificial Intelligence is essential in an Advanced Exploratory Data Analysis (AEDA) course because the evolution of AI is tightly coupled with the availability, quality, and understanding of data. Many of the early successes and failures of AI can be traced not only to algorithmic limitations, but also to insufficient data, inadequate data preparation, and poor understanding of data structure and variability. Modern AI breakthroughs—particularly those based on statistical learning and deep learning—became possible only when large volumes of data could be collected, explored, cleaned, summarized, and visualized effectively. AEDA provides the analytical foundation that enables these advances by revealing patterns, distributions, relationships, and anomalies in data, guiding appropriate model selection and interpretation. Understanding the historical trajectory of AI helps students recognize why exploratory analysis is a prerequisite for reliable, ethical, and effective AI systems, rather than a secondary or optional step in the analytical workflow.</p>
+<p><img alt="AI History" src="_images/AIHistory.png" /></p>
+</section>
+<section id="genai-foundations-practical-framing-for-aeda">
+<h3>GenAI Foundations (Practical Framing for AEDA)<a class="headerlink" href="#genai-foundations-practical-framing-for-aeda" title="Link to this heading">#</a></h3>
+<p>To use AI instrumentally in education, instructors must understand:</p>
+<p><strong>Prompt Engineering</strong></p>
+<ul class="simple">
+<li><p>Prompts = instructions to the model</p></li>
+<li><p>Structured prompting leads to predictable, high‑quality outputs</p></li>
+<li><p>Prompt patterns (e.g., instructional, role, chain-of-thought, few-shot)</p></li>
+<li><p><strong>Anatomy of a Prompt</strong>: Instruction, Context, Input Data, Output Format</p></li>
+<li><p><strong>Meta-prompt</strong>: prompts used to create, structure or refine other prompts</p></li>
+</ul>
+<p><strong>Context Engineering</strong></p>
+<ul class="simple">
+<li><p>Designing the whole environment around the prompt</p></li>
+<li><p>Roles, audience, tone, documents, constraints</p></li>
+<li><p>Retrieval-augmented workflows</p></li>
+<li><p>Essential for building AI Workspaces and Personalized Assistants</p></li>
+</ul>
+<p><strong>Foundational Models &amp; LLM Ecosystems</strong></p>
+<ul class="simple">
+<li><p>Multimodal LLMs, such as, ChatGPT, Claude, Gemini, Perplexity, Copilot, Grok</p></li>
+<li><p>Understanding tool ecosystems determines what is possible in teaching</p></li>
+<li><p>Strengths, limitations, and best-fit teaching use cases</p></li>
+</ul>
+<p>You are strongly encouraged to have a look at our <strong>AI Literacy</strong> program, which will guide you through the basics of Prompt and Context Engineering, and also foundational models and LLM ecosystems. These will form the foundation necessary for a good understanding and development of AEDA.</p>
+<blockquote>
+<div><p>In this course, GenAI is treated as a <strong>co-pilot for exploratory work</strong>, not a replacement for statistical reasoning and visualization literacy.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="reflection">
+<h2>1.2 Reflection<a class="headerlink" href="#reflection" title="Link to this heading">#</a></h2>
+<p>Understanding the historical evolution of Artificial Intelligence provides important perspective for students of Advanced Exploratory Data Analysis. Many of the successes and failures in AI history were driven not only by algorithmic limitations, but also by constraints related to data availability, data quality, computational power, and analytical understanding. Reflecting on this history reinforces a central message of this course: reliable insights and effective AI systems depend on rigorous exploratory analysis. As you progress through AEDA, consider how descriptive statistics, visualization, and data characterization shape modeling decisions, expose hidden assumptions, and support ethical and responsible use of AI. Also reflect on the role of Generative AI as an analytical co-pilot—powerful when guided by sound data reasoning, but limited without proper context and human judgment.</p>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Students wishing to deepen their understanding of the topics introduced in this module are encouraged to consult the references listed in the course syllabus bibliography, including:</p>
+<ul class="simple">
+<li><p><strong>De Castro, L. N. (2026).</strong> <em>Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design</em>. CRC Press.</p></li>
+<li><p><strong>Triola, M. F. (2017).</strong> <em>Elementary Statistics</em> (13th ed.). Pearson.</p></li>
+<li><p><strong>Knaflic, C. N. (2015).</strong> <em>Storytelling with Data: A Data Visualization Guide for Business Professionals</em>. Wiley.</p></li>
+<li><p><strong>Ward, M., Grinstein, G. G., &amp; Keim, D. (2015).</strong> <em>Interactive Data Visualization: Foundations, Techniques, and Applications</em> (2nd ed.). CRC Press.</p></li>
+<li><p><strong>Wilke, C. O. (2019).</strong> <em>Fundamentals of Data Visualization</em>. O’Reilly Media.</p></li>
+</ul>
+<p>These readings provide complementary perspectives on exploratory data analysis, visualization principles, data storytelling, and the analytical foundations that support modern data science and artificial intelligence.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome to Advanced Exploratory Data Analysis (AEDA)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Module2_DataDescription.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2 — Data Description and Preparation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-ideas-conceptual-notes">1.1 Core Ideas (Conceptual Notes)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-aeda-is-and-is-not">What AEDA is (and is not)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-data-science-workflow-and-where-aeda-fits">The Data Science Workflow and Where AEDA Fits</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#careers-in-data-science-roles-responsibilities-high-level">Careers in data science: roles &amp; responsibilities (high-level)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-brief-history-of-ai-why-it-belongs-in-an-aeda-course">A brief history of AI (why it belongs in an AEDA course)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#genai-foundations-practical-framing-for-aeda">GenAI Foundations (Practical Framing for AEDA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">1.2 Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leandro Nunes de Castro, Ph.D.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1557 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Module 3 — Descriptive Analysis &#8212; Advanced Exploratory Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Module3_Descriptive_Analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4 — Principles of Data Visualization" href="Module4_Principles_of_Visualization.html" />
+    <link rel="prev" title="2 — Data Description and Preparation" href="Module2_DataDescription.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dendritic_logo.png" class="logo__image only-light" alt="Advanced Exploratory Data Analysis - Home"/>
+    <script>document.write(`<img src="_static/dendritic_logo.png" class="logo__image only-dark" alt="Advanced Exploratory Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Advanced Exploratory Data Analysis (AEDA)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Module1_Introduction_to_AEDA.html">Module 1: Introduction to AEDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module2_DataDescription.html">Module 2: Data Description and Preparation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Module 3: Descriptive Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module4_Principles_of_Visualization.html">Module 4: Principles of Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module5_Visualization_Methods.html">Module 5: Data Visualization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module6_Special_Types_of_Data.html">Module 6: Special Types of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module7_Storytelling_Dashboards.html">Module 7: Data Storytelling and Dashboard Design</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA/edit/master/docs/Module3_Descriptive_Analysis.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Module3_Descriptive_Analysis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module 3 — Descriptive Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">3.1 Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code">Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-descriptive-analysis-of-the-shape-variable-mammographic-dataset">Prompt — Descriptive Analysis of the <em>Shape</em> Variable (Mammographic Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-frequency-distribution-frequency-table-and-histogram-forest-fires-dataset">Prompt — Frequency Distribution, Frequency Table, and Histogram (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-of-distributions">3.1.1 Shapes of Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-plot-distributions-with-different-shapes-forest-fires-dataset">Prompt — Plot Distributions with Different Shapes (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables">3.1.2 Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-contingency-tables-for-the-mammographic-mass-dataset">Prompt — Contingency Tables for the Mammographic Mass Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-measures">3.2 Summary Measures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-tendency-measures">3.2.1 Central Tendency Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-central-tendency-measures-for-numeric-and-categorical-variables-forest-fires-dataset">Prompt — Central Tendency Measures for Numeric and Categorical Variables (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-central-tendency-measures">3.2.2 Comparing the Central Tendency Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-measures">3.2.3 Variability Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-variability-measures-for-a-numeric-variable-forest-fires-dataset">Prompt — Variability Measures for a Numeric Variable (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-variability-measures">3.2.4 Comparing the Variability Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-position-measures">3.2.5 Relative Position Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-describe-method-from-pandas">3.2.6 The <code class="docutils literal notranslate"><span class="pre">describe()</span></code> Method from Pandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-shape">3.2.7 Measures of Shape</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-skewness-and-skewed-distributions-right-skewed-vs-left-skewed">Prompt — Skewness and Skewed Distributions (Right-Skewed vs. Left-Skewed)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-kurtosis-and-distribution-shapes-mesokurtic-platykurtic-and-leptokurtic">Prompt — Kurtosis and Distribution Shapes (Mesokurtic, Platykurtic, and Leptokurtic)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-normal-distribution">3.3 The Normal Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association">3.4 Measures of Association</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">3.4.1 Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">3.4.2 Correlation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-correlation-measures">3.4.3 Comparing the Correlation Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">3.5 Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="module-3-descriptive-analysis">
+<h1>Module 3 — Descriptive Analysis<a class="headerlink" href="#module-3-descriptive-analysis" title="Link to this heading">#</a></h1>
+<p>Descriptive analysis is part of the core of Exploratory Data Analysis (EDA). Its purpose is to <strong>summarize, organize, and characterize datasets</strong> using numerical measures and some visual representations, without making inferences beyond the observed data.</p>
+<p>In this module, students learn how to describe data distributions, compute summary statistics, analyze variability and relative position, explore associations between variables, and model simple linear relationships.</p>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>By the end of this module, students will be able to:</p>
+<ol class="arabic simple">
+<li><p>Describe and interpret data distributions.</p></li>
+<li><p>Compute and compare central tendency and variability measures.</p></li>
+<li><p>Analyze relative position and distribution shape.</p></li>
+<li><p>Understand and apply the normal distribution.</p></li>
+<li><p>Quantify associations between variables.</p></li>
+<li><p>Build and interpret simple linear regression models.</p></li>
+<li><p>Use computational tools (e.g., Pandas) to summarize datasets.</p></li>
+</ol>
+</section>
+<section id="distributions">
+<h2>3.1 Distributions<a class="headerlink" href="#distributions" title="Link to this heading">#</a></h2>
+<p>A <strong>distribution</strong> describes how values of a variable are spread across their range.</p>
+<p>Key questions include:</p>
+<ul class="simple">
+<li><p>Where are values concentrated?</p></li>
+<li><p>How spread out are they?</p></li>
+<li><p>Are there extreme or unusual values?</p></li>
+<li><p>Is the distribution symmetric or skewed?</p></li>
+</ul>
+<p>Distributions can be explored numerically and visually (e.g., frequency tables, histograms).</p>
+<p>To illustrate, consider the mammographic dataset.
+Variable ‘Shape’ can assume the values ‘Irregular’, ‘Round’, ‘Oval’, ‘Lobular’, and there are also missing values represented by a question mark ‘?’.</p>
+<section id="python-code">
+<h3>Python Code<a class="headerlink" href="#python-code" title="Link to this heading">#</a></h3>
+<p>The code snippet and table below show the frequency of variable ‘Shape’ with the absolute frequency (count), relative frequency, and cumulative frequency of each of its possible values, including the missing values, and a pie chart with its relative frequency.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.1</span>
+<span class="c1"># Determining the frequency distribution, frequency table and pie chart</span>
+<span class="c1"># of variable &#39;Shape&#39; in the Mammographic dataset</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="c1"># fetch dataset (https://archive.ics.uci.edu/dataset/161/mammographic+mass)</span>
+<span class="n">dmammo</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">161</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>
+
+<span class="n">SShape</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dmammo</span><span class="p">[</span><span class="s1">&#39;Shape&#39;</span><span class="p">])</span>
+<span class="n">ftable</span> <span class="o">=</span> <span class="n">SShape</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">dropna</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1"># Generate the frequency table</span>
+<span class="n">rftable</span> <span class="o">=</span> <span class="n">ftable</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">SShape</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># Relative frequency</span>
+<span class="n">cftable</span> <span class="o">=</span> <span class="n">ftable</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">SShape</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># Cumulative frequency</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Frequency&quot;</span><span class="p">:</span> <span class="n">ftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> 
+    <span class="s2">&quot;Relative Frequency&quot;</span><span class="p">:</span> <span class="n">rftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> 
+    <span class="s2">&quot;Cumulative Frequency&quot;</span><span class="p">:</span> <span class="n">cftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">()})</span>
+
+<span class="n">placeholders</span> <span class="o">=</span> <span class="p">{</span><span class="mf">1.0</span><span class="p">:</span><span class="s1">&#39;Round&#39;</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">:</span><span class="s1">&#39;Oval&#39;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">:</span><span class="s1">&#39;Lobular&#39;</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">:</span><span class="s1">&#39;Irregular&#39;</span><span class="p">}</span>
+<span class="n">ftable</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">ftable</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">placeholders</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">figftable</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># Using a color palette with different levels of the same color</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ftable</span><span class="p">)</span><span class="o">*</span> <span class="mi">3</span><span class="p">)[::</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="c1"># Plotting the pie chart with the new color palette</span>
+<span class="n">figftable</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+    <span class="n">ftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> <span class="n">labels</span><span class="o">=</span><span class="n">ftable</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> 
+    <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.2f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Variable ‘Shape’ in the mammographic dataset" src="_images/Fig3_1.png" /> <p>
+<strong>Figure:</strong> Frequency table and pie chart of variable ‘Shape’ in the mammographic dataset.</p>
+</section>
+<section id="prompt-descriptive-analysis-of-the-shape-variable-mammographic-dataset">
+<h3>Prompt — Descriptive Analysis of the <em>Shape</em> Variable (Mammographic Dataset)<a class="headerlink" href="#prompt-descriptive-analysis-of-the-shape-variable-mammographic-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Mammographic Mass dataset** from the UCI Machine Learning Repository, perform a **descriptive analysis of the categorical variable `Shape`**.
+
+#### Tasks
+
+1. Load the Mammographic Mass dataset in its original form.
+2. Treat the variable `Shape` as a categorical variable and **include missing values** in the analysis.
+3. Compute the following descriptive measures:
+   - Absolute frequency of each category  
+   - Relative frequency (percentage of total observations)  
+   - Cumulative relative frequency (percentage)
+4. Organize the results into a **frequency table** with the following columns:
+   - Frequency  
+   - Relative Frequency (%)  
+   - Cumulative Frequency (%)
+5. Convert the numerical codes of the `Shape` variable into semantic labels using the mapping:
+   - `1` → Round  
+   - `2` → Oval  
+   - `3` → Lobular  
+   - `4` → Irregular  
+   - Missing or undefined values → `?`
+6. Create a **pie chart** to visualize the distribution of the `Shape` categories:
+   - One slice per category  
+   - Percentages displayed with two decimal places  
+   - A single-hue color palette with varying intensities
+7. Save the visualization as a **high-resolution SVG vector file** suitable for publication.
+
+#### Output
+
+- A frequency table summarizing the distribution of `Shape`
+- A pie chart visualization of the category proportions
+- A brief written interpretation describing what the distribution reveals about the `Shape` variable
+
+Ensure that all results follow standard **descriptive statistics** and **exploratory data analysis** conventions.
+</pre></div>
+</div>
+<p>To illustrate how to build the frequency table of numeric variables (quantitative data), consider variable temperature (‘temp’) of the Forest Fires dataset.</p>
+</section>
+<section id="id1">
+<h3>Python Code<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Code 3.2 presents a script to calculate and print the frequency table for a numeric variable (quantitative data) using the method Series() in Pandas. The script allows setting the number of bins (nbins), the inferior and superior limits of the histogram, and then builds and plots the dataframe with the bins and their respective frequencies.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.2</span>
+<span class="c1"># Determining the frequency distribution, frequency table and histogram</span>
+<span class="c1"># of continuous variables in the Forest Fires dataset</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="c1"># fetch dataset (https://archive.ics.uci.edu/ml/datasets/forest+fires)</span>
+<span class="n">dforest</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">162</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>
+
+<span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;temp&quot;</span>  <span class="c1"># Choose the target variable</span>
+<span class="n">SShape</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> 
+<span class="n">nbins</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">inflimit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">suplimit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">SShape</span><span class="p">)</span>
+<span class="n">ampl</span> <span class="o">=</span> <span class="p">(</span><span class="n">suplimit</span> <span class="o">-</span> <span class="n">inflimit</span><span class="p">)</span> <span class="o">/</span> <span class="n">nbins</span>
+
+<span class="c1"># Define the range of the variable and bin size</span>
+<span class="n">fbins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">suplimit</span> <span class="o">+</span> <span class="n">ampl</span><span class="p">,</span> <span class="n">ampl</span><span class="p">)</span>
+
+<span class="c1"># The pandas.cut function groups data into bins and counts frequency</span>
+<span class="n">ftable</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">SShape</span><span class="p">,</span> <span class="n">fbins</span><span class="p">)</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>  <span class="c1"># Absolute frequency</span>
+<span class="n">rftable</span> <span class="o">=</span> <span class="n">ftable</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">SShape</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># Relative frequency</span>
+<span class="n">cftable</span> <span class="o">=</span> <span class="n">ftable</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">SShape</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>  <span class="c1"># Cumulative frequency</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Bins&quot;</span><span class="p">:</span> <span class="n">ftable</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                   <span class="s2">&quot;Frequency&quot;</span><span class="p">:</span> <span class="n">ftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                   <span class="s2">&quot;Relative Frequency&quot;</span><span class="p">:</span> <span class="n">rftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span>
+                   <span class="s2">&quot;Cumulative Frequency&quot;</span><span class="p">:</span> <span class="n">cftable</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fbins</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dforest</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">var</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">fbins</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Histogram for variable temp" src="_images/Fig3_2.png" /> <p>
+<strong>Figure:</strong> Histogram for the variable ‘temp’ of the Forest Fires dataset.</p>
+</section>
+<section id="prompt-frequency-distribution-frequency-table-and-histogram-forest-fires-dataset">
+<h3>Prompt — Frequency Distribution, Frequency Table, and Histogram (Forest Fires Dataset)<a class="headerlink" href="#prompt-frequency-distribution-frequency-table-and-histogram-forest-fires-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository, generate the **frequency distribution**, **frequency table**, and **histogram** for a continuous variable (default: `temp`) following the exact logic below.
+
+#### Tasks
+
+1. Load the **Forest Fires dataset** in its original form.
+2. Select a continuous target variable named **`temp`** (use `temp` unless otherwise specified).
+3. Create a frequency distribution using **equal-width bins** with the following settings:
+   - Number of bins: `nbins = 10`
+   - Lower limit: `inflimit = 0`
+   - Upper limit: `suplimit = max(temp)`
+4. Use binning (equivalent to `pandas.cut`) to compute:
+   - Absolute frequency per bin  
+   - Relative frequency per bin (percentage of total observations)  
+   - Cumulative relative frequency (percentage)
+5. Build and display a **frequency table** with the columns:
+   - `Bins` (interval labels)
+   - `Frequency`
+   - `Relative Frequency`
+   - `Cumulative Frequency`
+6. Generate a **histogram** of the chosen variable using the same bin edges (`fbins`) and:
+   - Display the x-axis ticks at the bin edges
+   - Overlay a **KDE curve** (kernel density estimate)
+7. Output:
+   - The frequency table
+   - The histogram with KDE overlay
+   - A brief interpretation describing the distribution (concentration, spread, skewness, and any unusual patterns)
+</pre></div>
+</div>
+</section>
+<section id="shapes-of-distributions">
+<h3>3.1.1 Shapes of Distributions<a class="headerlink" href="#shapes-of-distributions" title="Link to this heading">#</a></h3>
+<p>Common distribution shapes include:</p>
+<ul class="simple">
+<li><p><strong>Unimodal</strong>: one peak</p></li>
+<li><p><strong>Bimodal</strong>: two peaks</p></li>
+<li><p><strong>Multimodal</strong>: more than two peaks</p></li>
+<li><p><strong>Symmetric</strong>: balanced around the center</p></li>
+<li><p><strong>Right-skewed (positive skew)</strong>: long tail to the right</p></li>
+<li><p><strong>Left-skewed (negative skew)</strong>: long tail to the left</p></li>
+<li><p><strong>Uniform</strong>: values evenly distributed</p></li>
+</ul>
+<p>Understanding shape helps guide the choice of summary statistics and models.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.3</span>
+<span class="c1"># Plot distributions with different shapes</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="c1"># fetch dataset (https://archive.ics.uci.edu/ml/datasets/forest+fires)</span>
+<span class="n">dforest</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">162</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>
+
+<span class="c1"># Set up the x-labels for each Plot Distribution</span>
+<span class="n">x_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="s2">&quot;day&quot;</span><span class="p">,</span> <span class="s2">&quot;FFMC&quot;</span><span class="p">,</span> <span class="s2">&quot;DMC&quot;</span><span class="p">,</span> <span class="s2">&quot;DC&quot;</span><span class="p">,</span> <span class="s2">&quot;ISI&quot;</span><span class="p">,</span> <span class="s2">&quot;RH&quot;</span><span class="p">,</span> <span class="s2">&quot;wind&quot;</span><span class="p">]</span>
+
+<span class="c1"># Set up sub-plots layout</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x_label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x_labels</span><span class="p">):</span>
+    <span class="c1"># Flatten the axes array for easy iteration</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dforest</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_label</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Histograms" src="_images/Figure_3_2_Histograms.jpg" /></p>
+</section>
+<section id="prompt-plot-distributions-with-different-shapes-forest-fires-dataset">
+<h3>Prompt — Plot Distributions with Different Shapes (Forest Fires Dataset)<a class="headerlink" href="#prompt-plot-distributions-with-different-shapes-forest-fires-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, generate a single multi-panel figure that visualizes **distributions with different shapes** for selected variables.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. Define the following list of variables to be analyzed, preserving this exact order:
+
+   [&quot;month&quot;, &quot;day&quot;, &quot;FFMC&quot;, &quot;DMC&quot;, &quot;DC&quot;, &quot;ISI&quot;, &quot;RH&quot;, &quot;wind&quot;]
+
+3. Create a figure composed of **4 rows and 2 columns of subplots**, with an overall figure size close to **(13, 18)** and a layout that prevents overlapping elements.
+4. For each variable in the list:
+   - Select the corresponding subplot
+   - Plot a **histogram** of the variable
+   - Use an **automatic binning strategy** equivalent to `bins=&quot;auto&quot;`
+   - Overlay a **kernel density estimate (KDE)** curve on top of the histogram
+   - Label the x-axis with the variable name
+5. Ensure that all eight subplots are displayed within a single figure and share a consistent visual style.
+
+#### Output
+
+- A single multi-panel figure containing histograms with KDE overlays for all specified variables
+- A short written interpretation describing how the distribution shapes differ across variables (e.g., skewness, spread, modality)
+</pre></div>
+</div>
+</section>
+<section id="contingency-tables">
+<h3>3.1.2 Contingency Tables<a class="headerlink" href="#contingency-tables" title="Link to this heading">#</a></h3>
+<p>A <strong>contingency table</strong> (or cross-tabulation) summarizes the relationship between two categorical variables.</p>
+<ul class="simple">
+<li><p>Rows represent categories of one variable</p></li>
+<li><p>Columns represent categories of another variable</p></li>
+<li><p>Cell values represent frequencies or proportions</p></li>
+</ul>
+<p>Contingency tables are fundamental for analyzing categorical associations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.4</span>
+<span class="c1"># Generate Contingency Tables for the Mammographic Dataset</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="c1"># fetch dataset (https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass)</span>
+<span class="n">dmammo</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">161</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>
+
+<span class="c1"># Remove rows with missing values</span>
+<span class="n">dmammo</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Print the contingency tables</span>
+<span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Shape&quot;</span><span class="p">,</span> <span class="s2">&quot;Margin&quot;</span><span class="p">,</span> <span class="s2">&quot;Density&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**Contingency Tables**&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">var</span><span class="p">:</span>
+    <span class="n">CT</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">dmammo</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dmammo</span><span class="p">[</span><span class="s2">&quot;Severity&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variables&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s2">&quot;and Severity:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">CT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Contingency Table" src="_images/Code3_4_Output.png" /></p>
+</section>
+<section id="prompt-contingency-tables-for-the-mammographic-mass-dataset">
+<h3>Prompt — Contingency Tables for the Mammographic Mass Dataset<a class="headerlink" href="#prompt-contingency-tables-for-the-mammographic-mass-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Mammographic Mass dataset** from the UCI Machine Learning Repository in its original form, generate **contingency tables** to analyze the relationship between selected categorical variables and the target variable **`Severity`**.
+
+#### Tasks
+
+1. Load the Mammographic Mass dataset in its original form.
+2. Remove all rows containing **missing values** so that the analysis is performed only on complete cases.
+3. Define the following list of explanatory variables:
+
+   [&quot;Shape&quot;, &quot;Margin&quot;, &quot;Density&quot;]
+
+4. For each variable in the list:
+   - Construct a **contingency table** (cross-tabulation) between the selected variable and the variable **`Severity`**
+   - Use the selected variable as rows and `Severity` as columns
+   - Count the absolute frequencies of observations in each cell
+5. Display each contingency table clearly, indicating the pair of variables being analyzed.
+
+#### Output
+
+- A set of contingency tables showing the joint frequency distributions between:
+  - `Shape` and `Severity`
+  - `Margin` and `Severity`
+  - `Density` and `Severity`
+
+Ensure that the contingency tables are computed using standard cross-tabulation logic (equivalent to `pandas.crosstab`) and follow established **exploratory data analysis** conventions.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="summary-measures">
+<h2>3.2 Summary Measures<a class="headerlink" href="#summary-measures" title="Link to this heading">#</a></h2>
+<p>Summary measures provide <strong>numerical descriptions</strong> of datasets, capturing central tendency, dispersion, position, and shape.</p>
+<section id="central-tendency-measures">
+<h3>3.2.1 Central Tendency Measures<a class="headerlink" href="#central-tendency-measures" title="Link to this heading">#</a></h3>
+<p>Central tendency describes the <strong>typical value</strong> of a variable.</p>
+<ul class="simple">
+<li><p><strong>Mean</strong>:
+<span class="math notranslate nohighlight">\(\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i\)</span></p></li>
+<li><p><strong>Median</strong>: middle value of the ordered data</p></li>
+<li><p><strong>Mode</strong>: most frequent value</p></li>
+<li><p><strong>Midpoint</strong>:
+<span class="math notranslate nohighlight">\(\text{Midpoint} = \frac{x_{\min} + x_{\max}}{2}\)</span></p></li>
+<li><p><strong>Trimmed mean</strong>: mean after removing extreme values</p></li>
+<li><p><strong>Weighted mean</strong>:
+<span class="math notranslate nohighlight">\(\bar{x}_w = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i}\)</span></p></li>
+</ul>
+<p>The code snippet below contains the script to calculate the mean, median, and midpoint of numeric variables ‘FFMC’ and ‘temp’, and the mode of the nominal variables ‘month’ and ‘day’ of the Forest Fires dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.5</span>
+<span class="c1"># Calculating the mean and mode one by one using the Statistics library</span>
+<span class="c1"># Numeric variables</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;**Forest Fires Dataset**&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*Numeric Variable FFMC*&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean of variable FFMC: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;FFMC&#39;</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median of variable FFMC: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;FFMC&#39;</span><span class="p">])))</span>
+<span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;FFMC&#39;</span><span class="p">])</span><span class="o">+</span><span class="nb">min</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;FFMC&#39;</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Midpoint of variable FFMC: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*Numeric Variable temp*&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean of variable temp: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Median of variable temp: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">])))</span>
+<span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">])</span><span class="o">+</span><span class="nb">min</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]))</span><span class="o">/</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Midpoint of variable temp: </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">midpoint</span><span class="p">))</span>
+
+<span class="c1"># Nominal variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">*Categorical Variables*&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mode of nominal variable month: </span><span class="si">{v1}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mode of nominal variable day: </span><span class="si">{v1}</span><span class="s1">&#39;</span>
+      <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v1</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">])))</span>
+</pre></div>
+</div>
+<p><img alt="Central Tendency Measures" src="_images/Code3_5_Output.png" /></p>
+</section>
+<section id="prompt-central-tendency-measures-for-numeric-and-categorical-variables-forest-fires-dataset">
+<h3>Prompt — Central Tendency Measures for Numeric and Categorical Variables (Forest Fires Dataset)<a class="headerlink" href="#prompt-central-tendency-measures-for-numeric-and-categorical-variables-forest-fires-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, compute and report **central tendency measures** for selected numeric and categorical variables, following the exact logic described below.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. For the **numeric variable `FFMC`**:
+   - Compute the **mean**
+   - Compute the **median**
+   - Compute the **midpoint**
+   - Report all values rounded to **two decimal places**
+3. For the **numeric variable `temp`**:
+   - Compute the **mean**
+   - Compute the **median**
+   - Compute the **midpoint**
+   - Report all values rounded to **two decimal places**
+4. For the **categorical (nominal) variables**:
+   - Determine the **mode** of the variable `month`
+   - Determine the **mode** of the variable `day`
+5. Present the results in a clear, labeled textual format that distinguishes:
+   - Numeric variables
+   - Categorical variables
+
+#### Output
+
+- Mean, median, and midpoint for:
+  - `FFMC`
+  - `temp`
+- Mode for:
+  - `month`
+  - `day`
+
+Ensure that all computations follow standard definitions of **central tendency measures** and that the presentation mirrors a step-by-step descriptive analysis suitable for an AEDA course.
+</pre></div>
+</div>
+</section>
+<section id="comparing-the-central-tendency-measures">
+<h3>3.2.2 Comparing the Central Tendency Measures<a class="headerlink" href="#comparing-the-central-tendency-measures" title="Link to this heading">#</a></h3>
+<p>Comparing mean, median, and mode provides insight into:</p>
+<ul class="simple">
+<li><p>Distribution symmetry</p></li>
+<li><p>Presence of skewness</p></li>
+<li><p>Influence of outliers</p></li>
+</ul>
+<p>For example:</p>
+<ul class="simple">
+<li><p>Symmetric distributions: mean ≈ median ≈ mode</p></li>
+<li><p>Right-skewed distributions: mean &gt; median</p></li>
+<li><p>Left-skewed distributions: mean &lt; median</p></li>
+</ul>
+<p><strong>Table:</strong> Comparison of the different central tendency measures. <p></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Measure</p></th>
+<th class="head"><p>Sensitivity to Outliers</p></th>
+<th class="head"><p>Computation</p></th>
+<th class="head"><p>Existence</p></th>
+<th class="head"><p>When to Use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mean</p></td>
+<td><p>High</p></td>
+<td><p>All values</p></td>
+<td><p>Always</p></td>
+<td><p>Normal distributions; variation measures are needed; there are no extreme values</p></td>
+</tr>
+<tr class="row-odd"><td><p>Median</p></td>
+<td><p>No</p></td>
+<td><p>All values</p></td>
+<td><p>Always</p></td>
+<td><p>Skewed distributions; there are extreme values</p></td>
+</tr>
+<tr class="row-even"><td><p>Mode</p></td>
+<td><p>No</p></td>
+<td><p>Some values</p></td>
+<td><p>Not always or multiple</p></td>
+<td><p>Categorical data; when the most frequent value is of interest</p></td>
+</tr>
+<tr class="row-odd"><td><p>Midpoint</p></td>
+<td><p>High</p></td>
+<td><p>Extreme values</p></td>
+<td><p>Always</p></td>
+<td><p>When the middle point of the range is desired</p></td>
+</tr>
+<tr class="row-even"><td><p>Weighted Mean</p></td>
+<td><p>High</p></td>
+<td><p>All values</p></td>
+<td><p>Always</p></td>
+<td><p>When different values have different importance in the average</p></td>
+</tr>
+<tr class="row-odd"><td><p>Geometric Mean</p></td>
+<td><p>Low</p></td>
+<td><p>All values</p></td>
+<td><p>Always</p></td>
+<td><p>Skewed distributions; extreme values; average rates of change or growth over time (percentages or ratios)</p></td>
+</tr>
+<tr class="row-even"><td><p>Harmonic Mean</p></td>
+<td><p>Low</p></td>
+<td><p>All values</p></td>
+<td><p>Always</p></td>
+<td><p>Extreme values present; averaging rates, ratios, or proportions</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trimmed Mean</p></td>
+<td><p>No</p></td>
+<td><p>Some values</p></td>
+<td><p>Always</p></td>
+<td><p>Extreme values present; skewed distributions</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="variability-measures">
+<h3>3.2.3 Variability Measures<a class="headerlink" href="#variability-measures" title="Link to this heading">#</a></h3>
+<p>Variability measures quantify <strong>how spread out</strong> the data is.</p>
+<ul class="simple">
+<li><p><strong>Range</strong>:
+<span class="math notranslate nohighlight">\(R = x_{\max} - x_{\min}\)</span></p></li>
+<li><p><strong>Interquartile range (IQR)</strong>:
+<span class="math notranslate nohighlight">\(IQR = Q_3 - Q_1\)</span></p></li>
+<li><p><strong>Variance</strong>:
+<span class="math notranslate nohighlight">\(s^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})^2\)</span></p></li>
+<li><p><strong>Standard deviation</strong>:
+<span class="math notranslate nohighlight">\(s = \sqrt{s^2}\)</span></p></li>
+<li><p><strong>Coefficient of variation</strong>:
+<span class="math notranslate nohighlight">\(CV = \frac{s}{\bar{x}}\)</span></p></li>
+</ul>
+<p>The code snippet below presents a script to calculate the variability measures and applies it to the ‘FFMC’ var-iable of the Forest Fires dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.9</span>
+<span class="c1"># Calculate the variability measures range (Eq. 3.9),</span>
+<span class="c1"># IQR (Eq. 3.10), sIQR (Eq. 3.11), variance (Eq. 3.12),</span>
+<span class="c1"># std (Eq. 3.14), and CV (Eq. 3.16) using Numpy</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ucimlrepo</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_ucirepo</span>
+
+<span class="c1"># fetch dataset</span>
+<span class="c1"># https://archive.ics.uci.edu/ml/datasets/forest+fires</span>
+<span class="n">dforest</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">162</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">][</span><span class="s2">&quot;original&quot;</span><span class="p">]</span>
+
+<span class="n">var</span> <span class="o">=</span> <span class="s2">&quot;FFMC&quot;</span>
+<span class="n">drange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+<span class="n">Q1</span><span class="p">,</span> <span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">],</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">75</span><span class="p">])</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+<span class="n">sIQR</span> <span class="o">=</span> <span class="n">IQR</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="n">dvar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+<span class="n">dstd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span>
+<span class="n">CV</span> <span class="o">=</span> <span class="n">dstd</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dforest</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;*Variability Measures*&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Range of variable FFMC: </span><span class="si">{</span><span class="n">drange</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IQR of variable FFMC: </span><span class="si">{</span><span class="n">IQR</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sIQR of variable FFMC: sIQR</span><span class="si">{</span><span class="n">sIQR</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance of variable FFMC: </span><span class="si">{</span><span class="n">dvar</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard deviation of variable FFMC: </span><span class="si">{</span><span class="n">dstd</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variation coefficient of variable FFMC: </span><span class="si">{</span><span class="n">CV</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Variability Measures" src="_images/Code3_9_Output.png" /></p>
+</section>
+<section id="prompt-variability-measures-for-a-numeric-variable-forest-fires-dataset">
+<h3>Prompt — Variability Measures for a Numeric Variable (Forest Fires Dataset)<a class="headerlink" href="#prompt-variability-measures-for-a-numeric-variable-forest-fires-dataset" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Using the **Forest Fires dataset** from the UCI Machine Learning Repository in its original form, compute and report a set of **variability measures** for a selected numeric variable, following the exact logic described below.
+
+#### Tasks
+
+1. Load the Forest Fires dataset in its original form.
+2. Select the numeric variable **`FFMC`** as the target variable.
+3. Compute the following variability measures using standard numerical definitions (equivalent to NumPy-based calculations):
+   - **Range**:
+   - **Interquartile Range (IQR)**:
+   - **Semi-Interquartile Range (sIQR)**:
+   - **Variance**:
+   - **Standard Deviation**:
+   - **Coefficient of Variation (CV)**:
+4. Report all numerical results rounded to **two decimal places**.
+5. Present the results in a clearly labeled, step-by-step textual format that distinguishes each variability measure.
+
+#### Output
+
+- Range of `FFMC`
+- IQR of `FFMC`
+- sIQR of `FFMC`
+- Variance of `FFMC`
+- Standard deviation of `FFMC`
+- Coefficient of variation of `FFMC`
+
+Ensure that all computations follow standard **descriptive statistics** definitions and are consistent with numerical implementations commonly used in exploratory data analysis.
+</pre></div>
+</div>
+</section>
+<section id="comparing-the-variability-measures">
+<h3>3.2.4 Comparing the Variability Measures<a class="headerlink" href="#comparing-the-variability-measures" title="Link to this heading">#</a></h3>
+<p>Different variability measures respond differently to outliers:</p>
+<ul class="simple">
+<li><p>Range is highly sensitive to extremes</p></li>
+<li><p>IQR is robust to outliers</p></li>
+<li><p>Variance and standard deviation emphasize large deviations</p></li>
+<li><p>CV enables comparison across variables with different scales</p></li>
+</ul>
+<p><strong>Table:</strong> Comparison of the different variability measures. <p></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Measure</p></th>
+<th class="head"><p>Sensitivity to Outliers</p></th>
+<th class="head"><p>Computation</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Range</p></td>
+<td><p>Yes</p></td>
+<td><p>Extreme values</p></td>
+<td><p>Sensitive to extreme values and does not take into account the data distribution</p></td>
+</tr>
+<tr class="row-odd"><td><p>IQR</p></td>
+<td><p>No</p></td>
+<td><p>Some values</p></td>
+<td><p>Not sensitive to extreme values and is suitable for skewed data</p></td>
+</tr>
+<tr class="row-even"><td><p>sIQR</p></td>
+<td><p>No</p></td>
+<td><p>Some values</p></td>
+<td><p>Not sensitive to extreme values and is suitable for skewed data</p></td>
+</tr>
+<tr class="row-odd"><td><p>Variance</p></td>
+<td><p>Yes</p></td>
+<td><p>All values</p></td>
+<td><p>Sensitive to extreme values and measured in squared units of the variable</p></td>
+</tr>
+<tr class="row-even"><td><p>Standard Deviation</p></td>
+<td><p>Yes</p></td>
+<td><p>All values</p></td>
+<td><p>Sensitive to extreme values and measured in the same unit as the variable</p></td>
+</tr>
+<tr class="row-odd"><td><p>Coefficient of Variation</p></td>
+<td><p>Yes</p></td>
+<td><p>All values</p></td>
+<td><p>Sensitive to extreme values and suitable for data with a mean close to zero</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="relative-position-measures">
+<h3>3.2.5 Relative Position Measures<a class="headerlink" href="#relative-position-measures" title="Link to this heading">#</a></h3>
+<p>Relative position indicates how a value compares to others.</p>
+<ul class="simple">
+<li><p><strong>Z-score</strong>:
+<span class="math notranslate nohighlight">\(z_i = \frac{x_i - \bar{x}}{s}\)</span></p></li>
+<li><p><strong>Quantiles</strong>:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(Q_1\)</span>: 25th percentile</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q_2\)</span>: 50th percentile (median)</p></li>
+<li><p><span class="math notranslate nohighlight">\(Q_3\)</span>: 75th percentile</p></li>
+</ul>
+</li>
+</ul>
+<p>Z-scores express distance from the mean in standard deviation units.</p>
+</section>
+<section id="the-describe-method-from-pandas">
+<h3>3.2.6 The <code class="docutils literal notranslate"><span class="pre">describe()</span></code> Method from Pandas<a class="headerlink" href="#the-describe-method-from-pandas" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">describe()</span></code> method in Pandas provides a quick summary including:</p>
+<ul class="simple">
+<li><p>Count</p></li>
+<li><p>Mean</p></li>
+<li><p>Standard deviation</p></li>
+<li><p>Minimum and maximum</p></li>
+<li><p>Quartiles</p></li>
+</ul>
+<p>This method is a practical computational counterpart to descriptive statistics.</p>
+</section>
+<section id="measures-of-shape">
+<h3>3.2.7 Measures of Shape<a class="headerlink" href="#measures-of-shape" title="Link to this heading">#</a></h3>
+<p>Shape measures describe the <strong>form of a distribution</strong>.</p>
+<ul class="simple">
+<li><p><strong>Skewness</strong>: degree and direction of asymmetry</p>
+<ul>
+<li><p>Positive skew: right tail longer</p></li>
+<li><p>Negative skew: left tail longer</p></li>
+</ul>
+</li>
+<li><p><strong>Kurtosis</strong>: degree of peakedness or tail heaviness</p></li>
+</ul>
+<p>Shape measures help diagnose distribution behavior beyond central tendency and variability.</p>
+<p>The code snippet below was used to generate the data, calculate the central tendency measures and the <strong>skewness</strong> using the Fischer-Pearson and the First Skewness coefficients, and plot the results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 3.11 - Skewness and Skewed Distributions</span>
+<span class="c1"># Comparing right-skewed and left-skewed distributions</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">skew</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Generate random data</span>
+<span class="n">data_right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>  <span class="c1"># Right-skewed</span>
+<span class="n">data_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>   <span class="c1"># Left-skewed</span>
+
+<span class="c1"># Calculate statistics for both distributions</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Right-Skewed&quot;</span><span class="p">,</span> <span class="n">data_right</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;Left-Skewed&quot;</span><span class="p">,</span> <span class="n">data_left</span><span class="p">)]</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> Distribution:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Mean, median, and midpoint: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">median</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">midpoint</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Skewness (Fischer-Pearson Coefficient): </span><span class="si">{</span><span class="n">skew</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Skewness (First Skewness Coefficient): </span><span class="si">{</span><span class="p">(</span><span class="n">mean</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">midpoint</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create side-by-side plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">datasets</span><span class="p">):</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">median</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">midpoint</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+    
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">median</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Median&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">midpoint</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Midpoint&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> Distribution&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="Skewness" src="_images/Code3_11_Output.png" /></p>
+</section>
+<section id="prompt-skewness-and-skewed-distributions-right-skewed-vs-left-skewed">
+<h3>Prompt — Skewness and Skewed Distributions (Right-Skewed vs. Left-Skewed)<a class="headerlink" href="#prompt-skewness-and-skewed-distributions-right-skewed-vs-left-skewed" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **simulate, analyze, and compare right-skewed and left-skewed distributions**, reproducing both the **numerical analysis** and the **visual comparison** described below.
+
+#### Tasks
+
+1. Generate two synthetic datasets of equal size:
+   - A **right-skewed distribution** generated from a Beta distribution with parameters $a = 1$, $b = 5$
+   - A **left-skewed distribution** generated from a Beta distribution with parameters $a = 5$, $b = 1$
+   - Use a sample size of **1000 observations** for each dataset.
+
+2. For **each distribution**, compute the following statistics:
+   - **Mean**
+   - **Median**
+   - **Midpoint**
+   - **Skewness (Fisher–Pearson coefficient)** using a standard skewness definition
+   - **Skewness (First skewness coefficient)** 
+
+3. Display the numerical results for each distribution in a clear, labeled textual format, including:
+   - Mean, median, and midpoint
+   - Both skewness coefficients
+
+4. Create a **side-by-side visualization** consisting of **two subplots (1 row × 2 columns)**:
+   - One subplot for the right-skewed distribution
+   - One subplot for the left-skewed distribution
+
+5. For each subplot:
+   - Plot a **histogram** using an automatic binning strategy
+   - Overlay a **kernel density estimate (KDE)** curve
+   - Draw vertical reference lines for:
+     - Mean (dashed line)
+     - Median (solid line)
+     - Midpoint (dotted line)
+   - Include a legend and an informative title indicating the distribution type
+
+6. Ensure the layout is clean, well-labeled, and suitable for instructional use.
+
+#### Output
+
+- Numerical summaries for both right-skewed and left-skewed distributions, including central tendency measures and skewness coefficients
+- A single figure with two side-by-side plots comparing the shapes of the distributions
+
+Ensure that all computations and visualizations follow standard **descriptive statistics** and **exploratory data analysis** conventions and clearly illustrate the concept of skewness.
+</pre></div>
+</div>
+<p>The code below describes how to generate data distributions to explore different levels of <strong>kurtosis</strong>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># CODE 12</span>
+<span class="c1"># Kurtosis: mesokurtic, platykurtic and leptokurtic distributions</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">laplace</span><span class="p">,</span> <span class="n">semicircular</span><span class="p">,</span> <span class="n">kurtosis</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Set up sub-plots layout</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
+
+<span class="c1"># Store names and kurtosis values for printing</span>
+<span class="n">kurtosis_info</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Normal distribution (Mesokurtic)</span>
+<span class="n">dnorm</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">knorm</span> <span class="o">=</span> <span class="n">kurtosis</span><span class="p">(</span><span class="n">dnorm</span><span class="p">)</span>
+<span class="n">kurtosis_info</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Normal&quot;</span><span class="p">,</span> <span class="n">knorm</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dnorm</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="c1"># ax1.set_title(f&quot;Normal Distribution - Kurtosis: {knorm:.2f}&quot;)</span>
+
+<span class="c1"># Uniform distribution (Platykurtic)</span>
+<span class="n">dunif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">kunif</span> <span class="o">=</span> <span class="n">kurtosis</span><span class="p">(</span><span class="n">dunif</span><span class="p">)</span>
+<span class="n">kurtosis_info</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Uniform&quot;</span><span class="p">,</span> <span class="n">kunif</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dunif</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="c1"># ax2.set_title(f&quot;Uniform Distribution - Kurtosis: {kunif:.2f}&quot;)</span>
+
+<span class="c1"># Laplace distribution (Leptokurtic)</span>
+<span class="n">dlap</span> <span class="o">=</span> <span class="n">laplace</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">klap</span> <span class="o">=</span> <span class="n">kurtosis</span><span class="p">(</span><span class="n">dlap</span><span class="p">)</span>
+<span class="n">kurtosis_info</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Laplace&quot;</span><span class="p">,</span> <span class="n">klap</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dlap</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax3</span><span class="p">)</span>
+<span class="c1"># ax3.set_title(f&quot;Laplace Distribution - Kurtosis: {klap:.2f}&quot;)</span>
+
+<span class="c1"># Wigner semicircle distribution</span>
+<span class="n">dwigner</span> <span class="o">=</span> <span class="n">semicircular</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">kwigner</span> <span class="o">=</span> <span class="n">kurtosis</span><span class="p">(</span><span class="n">dwigner</span><span class="p">)</span>
+<span class="n">kurtosis_info</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s2">&quot;Wigner Semicircle&quot;</span><span class="p">,</span> <span class="n">kwigner</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">dwigner</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax4</span><span class="p">)</span>
+<span class="c1"># ax4.set_title(f&quot;Wigner Semicircle Distribution - Kurtosis: {kwigner:.2f}&quot;)</span>
+
+<span class="c1"># Hide axis labels and ticks</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="c1"># Print summary to console</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Kurtosis Summary:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kurtosis_info</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">k</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="Kurtosis" src="_images/Figure_3_6_Kurtosis.jpg" /></p>
+</section>
+<section id="prompt-kurtosis-and-distribution-shapes-mesokurtic-platykurtic-and-leptokurtic">
+<h3>Prompt — Kurtosis and Distribution Shapes (Mesokurtic, Platykurtic, and Leptokurtic)<a class="headerlink" href="#prompt-kurtosis-and-distribution-shapes-mesokurtic-platykurtic-and-leptokurtic" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>You are a data analysis assistant supporting an **Advanced Exploratory Data Analysis (AEDA)** course.
+
+Your task is to **simulate, analyze, and visually compare distributions with different kurtosis characteristics**, reproducing both the **numerical analysis** and the **multi-panel visualization** described below.
+
+#### Tasks
+
+1. Generate four synthetic datasets, each with **10,000 observations**, corresponding to different distribution types:
+   - **Normal distribution** (mesokurtic)
+   - **Uniform distribution** (platykurtic)
+   - **Laplace distribution** (leptokurtic)
+   - **Wigner semicircle distribution**
+
+2. For each distribution:
+   - Compute the **kurtosis** using the standard excess kurtosis definition
+   - Store the distribution name and its kurtosis value for reporting
+
+3. Create a **2 × 2 grid of subplots** with an overall figure size close to **(13, 13)** and a layout that avoids overlap between plots.
+
+4. In each subplot:
+   - Plot a **histogram** using an automatic binning strategy
+   - Overlay a **kernel density estimate (KDE)** curve
+   - Do not display axis labels, tick marks, or grid lines
+   - Each subplot should correspond to one of the four distributions
+
+5. Ensure all four plots share a consistent visual style and are suitable for instructional comparison of kurtosis effects.
+
+6. After generating the plots, print a **console-style summary** listing:
+   - The name of each distribution
+   - Its corresponding kurtosis value, rounded to **two decimal places**
+
+#### Output
+
+- A single figure with four subplots illustrating:
+  - Mesokurtic behavior (normal distribution)
+  - Platykurtic behavior (uniform distribution)
+  - Leptokurtic behavior (Laplace distribution)
+  - A comparison case using the Wigner semicircle distribution
+- A textual summary reporting the kurtosis values for each distribution
+
+Ensure that the numerical computations and visualizations follow standard **descriptive statistics** and **exploratory data analysis** conventions and clearly illustrate differences in kurtosis.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="the-normal-distribution">
+<h2>3.3 The Normal Distribution<a class="headerlink" href="#the-normal-distribution" title="Link to this heading">#</a></h2>
+<p>The <strong>normal distribution</strong> is a symmetric, bell-shaped distribution defined by its mean <span class="math notranslate nohighlight">\(\mu\)</span> and standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span>.</p>
+<p>Probability density function:
+<span class="math notranslate nohighlight">\(f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x - \mu)^2}{2\sigma^2}}\)</span></p>
+<p>Key properties:</p>
+<ul class="simple">
+<li><p>Mean = median = mode</p></li>
+<li><p>Approximately 68%, 95%, and 99.7% of data fall within 1, 2, and 3 standard deviations</p></li>
+</ul>
+<p>The normal distribution is central to statistical reasoning and modeling.</p>
+<p><img alt="Normal Distribution" src="_images/Figure_3_7ab_Normal_Distributions.jpg" /></p>
+</section>
+<section id="measures-of-association">
+<h2>3.4 Measures of Association<a class="headerlink" href="#measures-of-association" title="Link to this heading">#</a></h2>
+<p>Association measures quantify <strong>relationships between variables</strong>.</p>
+<section id="covariance">
+<h3>3.4.1 Covariance<a class="headerlink" href="#covariance" title="Link to this heading">#</a></h3>
+<p>Covariance measures joint variability:
+<span class="math notranslate nohighlight">\(\text{cov}(X, Y) = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \bar{x})(y_i - \bar{y})\)</span></p>
+<ul class="simple">
+<li><p>Positive covariance: variables increase or decrease together</p></li>
+<li><p>Negative covariance: one increases as the other decreases, or vice-versa</p></li>
+<li><p>Magnitude depends on scale</p></li>
+</ul>
+</section>
+<section id="correlation">
+<h3>3.4.2 Correlation<a class="headerlink" href="#correlation" title="Link to this heading">#</a></h3>
+<p>Correlation standardizes covariance:</p>
+<ul class="simple">
+<li><p><strong>Pearson correlation coefficient</strong>:
+<span class="math notranslate nohighlight">\(r = \frac{\text{cov}(X, Y)}{s_x s_y}\)</span></p></li>
+</ul>
+<p>Properties:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(-1 \le r \le 1\)</span></p></li>
+<li><p>Direction indicates sign</p></li>
+<li><p>Magnitude indicates strength</p></li>
+</ul>
+</section>
+<section id="comparing-the-correlation-measures">
+<h3>3.4.3 Comparing the Correlation Measures<a class="headerlink" href="#comparing-the-correlation-measures" title="Link to this heading">#</a></h3>
+<p>Different correlation measures address different assumptions:</p>
+<ul class="simple">
+<li><p>Pearson: linear relationships, continuous variables</p></li>
+<li><p>Spearman: monotonic relationships, rank-based</p></li>
+<li><p>Kendall: ordinal associations</p></li>
+</ul>
+<p>Choice depends on data type and relationship structure.</p>
+<p><strong>Table:</strong> Comparison of different correlation measures. <p></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>Measure</p></th>
+<th class="head"><p>Parametric</p></th>
+<th class="head"><p>Range</p></th>
+<th class="head"><p>Types of Variables</p></th>
+<th class="head"><p>When to Use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p>PCC</p></td>
+<td><p>Yes</p></td>
+<td><p>[-1, 1]</p></td>
+<td><p>Continuous</p></td>
+<td><p>Normally distributed data; linearly related variables; interval or ratio scale variables</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p>SRCC</p></td>
+<td><p>No</p></td>
+<td><p>[-1, 1]</p></td>
+<td><p>Ordinal or Continuous</p></td>
+<td><p>Monotonic but not necessarily linear relationships; variables not normally distributed</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p>KRCC</p></td>
+<td><p>No</p></td>
+<td><p>[-1, 1]</p></td>
+<td><p>Ordinal</p></td>
+<td><p>When distances between variables cannot be measured; ranked variables not necessarily normal</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="linear-regression">
+<h2>3.5 Linear Regression<a class="headerlink" href="#linear-regression" title="Link to this heading">#</a></h2>
+<p>Linear regression models the relationship between a dependent variable <span class="math notranslate nohighlight">\(y\)</span> and an independent variable <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(y = \beta_0 + \beta_1 x + \varepsilon\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span> is the intercept</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1\)</span> is the slope</p></li>
+<li><p><span class="math notranslate nohighlight">\(\varepsilon\)</span> is the error term</p></li>
+</ul>
+<p>Linear regression supports:</p>
+<ul class="simple">
+<li><p>Trend analysis</p></li>
+<li><p>Prediction</p></li>
+<li><p>Interpretation of associations</p></li>
+</ul>
+<p>The figure below shows scatterplots with the respective linear regressors included. Note that the regressors are the lines that better approximate the data distributions and their slope indicates the type of correlation between the variables.</p>
+<p><img alt="Linear Regression" src="_images/Figure_3_9_Scatterplot_Regression.jpg" /></p>
+</section>
+<section id="reflection">
+<h2>Reflection<a class="headerlink" href="#reflection" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How do descriptive statistics guide modeling decisions?</p></li>
+<li><p>When do summary measures fail to capture important structure?</p></li>
+<li><p>How do association measures support exploratory insights?</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Refer to the course syllabus bibliography, particularly:</p>
+<p><strong>De Castro, L. N. (2026). <em>Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design</em>. CRC Press.</strong></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Module2_DataDescription.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2 — Data Description and Preparation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Module4_Principles_of_Visualization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">4 — Principles of Data Visualization</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distributions">3.1 Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code">Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-descriptive-analysis-of-the-shape-variable-mammographic-dataset">Prompt — Descriptive Analysis of the <em>Shape</em> Variable (Mammographic Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-frequency-distribution-frequency-table-and-histogram-forest-fires-dataset">Prompt — Frequency Distribution, Frequency Table, and Histogram (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapes-of-distributions">3.1.1 Shapes of Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-plot-distributions-with-different-shapes-forest-fires-dataset">Prompt — Plot Distributions with Different Shapes (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables">3.1.2 Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-contingency-tables-for-the-mammographic-mass-dataset">Prompt — Contingency Tables for the Mammographic Mass Dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-measures">3.2 Summary Measures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-tendency-measures">3.2.1 Central Tendency Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-central-tendency-measures-for-numeric-and-categorical-variables-forest-fires-dataset">Prompt — Central Tendency Measures for Numeric and Categorical Variables (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-central-tendency-measures">3.2.2 Comparing the Central Tendency Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variability-measures">3.2.3 Variability Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-variability-measures-for-a-numeric-variable-forest-fires-dataset">Prompt — Variability Measures for a Numeric Variable (Forest Fires Dataset)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-variability-measures">3.2.4 Comparing the Variability Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-position-measures">3.2.5 Relative Position Measures</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-describe-method-from-pandas">3.2.6 The <code class="docutils literal notranslate"><span class="pre">describe()</span></code> Method from Pandas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-shape">3.2.7 Measures of Shape</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-skewness-and-skewed-distributions-right-skewed-vs-left-skewed">Prompt — Skewness and Skewed Distributions (Right-Skewed vs. Left-Skewed)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-kurtosis-and-distribution-shapes-mesokurtic-platykurtic-and-leptokurtic">Prompt — Kurtosis and Distribution Shapes (Mesokurtic, Platykurtic, and Leptokurtic)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-normal-distribution">3.3 The Normal Distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association">3.4 Measures of Association</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">3.4.1 Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation">3.4.2 Correlation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-the-correlation-measures">3.4.3 Comparing the Correlation Measures</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression">3.5 Linear Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leandro Nunes de Castro, Ph.D.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

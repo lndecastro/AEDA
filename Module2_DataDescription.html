@@ -1,0 +1,884 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2 — Data Description and Preparation &#8212; Advanced Exploratory Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Module2_DataDescription';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Module 3 — Descriptive Analysis" href="Module3_Descriptive_Analysis.html" />
+    <link rel="prev" title="1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations" href="Module1_Introduction_to_AEDA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dendritic_logo.png" class="logo__image only-light" alt="Advanced Exploratory Data Analysis - Home"/>
+    <script>document.write(`<img src="_static/dendritic_logo.png" class="logo__image only-dark" alt="Advanced Exploratory Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Advanced Exploratory Data Analysis (AEDA)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Module1_Introduction_to_AEDA.html">Module 1: Introduction to AEDA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Module 2: Data Description and Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module3_Descriptive_Analysis.html">Module 3: Descriptive Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module4_Principles_of_Visualization.html">Module 4: Principles of Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module5_Visualization_Methods.html">Module 5: Data Visualization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module6_Special_Types_of_Data.html">Module 6: Special Types of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module7_Storytelling_Dashboards.html">Module 7: Data Storytelling and Dashboard Design</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA/edit/master/docs/Module2_DataDescription.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Module2_DataDescription.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2 — Data Description and Preparation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-and-mathematical-representations">2.1 Tabular and Mathematical Representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-information-knowledge">Data, Information, Knowledge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-representation">Tabular Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-representation">Mathematical Representation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-dictionary">2.2 Data Dictionary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-data-dictionaries-matter">Why Data Dictionaries Matter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifying-data">2.3 Classifying Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure">2.3.1 Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nature">2.3.2 Nature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type">2.3.3 Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-variability">2.3.4 Time Variability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality">2.3.5 Dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ownership">2.3.6 Ownership</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-used-in-the-course">2.4 Datasets Used in the Course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">2.5 Data Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">2.5.1 Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-values">2.5.2 Missing Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">2.5.3 Normalization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-description-and-preparation">
+<h1>2 — Data Description and Preparation<a class="headerlink" href="#data-description-and-preparation" title="Link to this heading">#</a></h1>
+<p>Before any meaningful exploratory analysis, visualization, or AI-supported insight generation can occur, data must be <strong>understood, described, and prepared</strong>. This module introduces the conceptual and practical foundations required to transform raw data into analyzable data.</p>
+<p>This module builds directly on Module 1 by moving from the analytical process flow to the first operational stage of AEDA: understanding what the data is, how it is structured, and how it should be prepared for analysis.</p>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>By the end of this module, students will be able to:</p>
+<ol class="arabic simple">
+<li><p>Represent datasets using tabular and mathematical forms.</p></li>
+<li><p>Interpret and construct data dictionaries.</p></li>
+<li><p>Classify data according to structure, nature, type, time variability, dimensionality, and ownership.</p></li>
+<li><p>Recognize benchmark datasets commonly used in exploratory data analysis.</p></li>
+<li><p>Identify common data quality problems in raw datasets.</p></li>
+<li><p>Apply fundamental data preparation techniques such as sampling, missing-value handling, and normalization.</p></li>
+</ol>
+</section>
+<section id="tabular-and-mathematical-representations">
+<h2>2.1 Tabular and Mathematical Representations<a class="headerlink" href="#tabular-and-mathematical-representations" title="Link to this heading">#</a></h2>
+<section id="data-information-knowledge">
+<h3>Data, Information, Knowledge<a class="headerlink" href="#data-information-knowledge" title="Link to this heading">#</a></h3>
+<p><strong>Data</strong> can be understood as any element that can be stored, transferred, processed, or transformed to convey meaning, including numbers, words, images, sounds, and graphs. From a computational perspective, anything that can be digitally stored or manipulated qualifies as data. On its own, data has no inherent meaning; it becomes <strong>information</strong> only when placed within a context. When this information is interpreted, analyzed, and applied to support decisions or generate insights, it evolves into <strong>knowledge</strong>.</p>
+<p><img alt="Data, Information, Knowledge" src="_images/DIKnowledge.png" /> <p>
+<strong>Figure:</strong> From data to information to knowledge.</p>
+</section>
+<section id="tabular-representation">
+<h3>Tabular Representation<a class="headerlink" href="#tabular-representation" title="Link to this heading">#</a></h3>
+<p>The <strong>tabular representation</strong> is the most common way to organize data in exploratory data analysis.</p>
+<ul class="simple">
+<li><p>Rows represent objects, instances, patterns, records, or observations.</p></li>
+<li><p>Columns represent variables, attributes, or features.</p></li>
+<li><p>Each cell contains the value of a variable for a given object.</p></li>
+</ul>
+<p>Tabular data structures are the foundation of spreadsheets, relational databases, BI tools, and data science libraries.</p>
+<p><strong>Table:</strong> First four objects of the Car Evaluation Dataset available at UCI.<p></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Car ID</p></th>
+<th class="head"><p>Buying</p></th>
+<th class="head"><p>Maintenance</p></th>
+<th class="head"><p>Doors</p></th>
+<th class="head"><p>Persons</p></th>
+<th class="head"><p>Lug_boot</p></th>
+<th class="head"><p>Safety</p></th>
+<th class="head"><p>Class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>vhigh</p></td>
+<td><p>vhigh</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>small</p></td>
+<td><p>low</p></td>
+<td><p>unacc</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>vhigh</p></td>
+<td><p>vhigh</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>small</p></td>
+<td><p>med</p></td>
+<td><p>unacc</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>vhigh</p></td>
+<td><p>vhigh</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>small</p></td>
+<td><p>high</p></td>
+<td><p>unacc</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>vhigh</p></td>
+<td><p>vhigh</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>med</p></td>
+<td><p>low</p></td>
+<td><p>unacc</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="mathematical-representation">
+<h3>Mathematical Representation<a class="headerlink" href="#mathematical-representation" title="Link to this heading">#</a></h3>
+<p>Mathematically, a dataset can be represented as a matrix:</p>
+<p><span class="math notranslate nohighlight">\(S = {x_i \mid i = 1, \ldots, N},\)</span></p>
+<p>where each object <span class="math notranslate nohighlight">\(x_i\)</span> is an <span class="math notranslate nohighlight">\(m\)</span>-dimensional vector given by</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{x^i} = \big[ x_j^i \big]_{j = 1, \ldots, m}\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span> is the number of objects</p></li>
+<li><p><span class="math notranslate nohighlight">\(m\)</span> is the number of variables</p></li>
+</ul>
+<p>This representation supports statistical analysis, linear algebra operations, optimization, and machine learning algorithms.</p>
+<p><img alt="Graph for Variables" src="_images/Figure_2_1_Graph_for_variables.jpg" /> <p>
+<strong>Figure:</strong> Graph for variables ‘safety’ vs ‘lug_boot’ of the four objects in the previous table.</p>
+</section>
+</section>
+<section id="data-dictionary">
+<h2>2.2 Data Dictionary<a class="headerlink" href="#data-dictionary" title="Link to this heading">#</a></h2>
+<p>A <strong>data dictionary</strong> provides a structured description of a dataset’s variables and their semantics. Typical elements include:</p>
+<ul class="simple">
+<li><p>Variable name</p></li>
+<li><p>Description and meaning</p></li>
+<li><p>Data type</p></li>
+<li><p>Valid values or ranges</p></li>
+<li><p>Units of measurement</p></li>
+<li><p>Missing-value indicators</p></li>
+</ul>
+<section id="why-data-dictionaries-matter">
+<h3>Why Data Dictionaries Matter<a class="headerlink" href="#why-data-dictionaries-matter" title="Link to this heading">#</a></h3>
+<p>Data dictionaries:</p>
+<ul class="simple">
+<li><p>Reduce ambiguity and misinterpretation</p></li>
+<li><p>Improve reproducibility</p></li>
+<li><p>Support collaboration across teams</p></li>
+<li><p>Provide essential context for automated analysis and AI-assisted workflows</p></li>
+</ul>
+<p><strong>Table:</strong> Example of a simple data dictionary for the Car Evaluation Dataset.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable name</p></th>
+<th class="head"><p>Definition (meaning)</p></th>
+<th class="head"><p>Domain</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Car ID</p></td>
+<td><p>ID number of each car in the dataset</p></td>
+<td><p>Integer number</p></td>
+</tr>
+<tr class="row-odd"><td><p>Buying</p></td>
+<td><p>Buying price</p></td>
+<td><p>{v-high, high, med, low}</p></td>
+</tr>
+<tr class="row-even"><td><p>Maintenance</p></td>
+<td><p>Price of the maintenance</p></td>
+<td><p>{v-high, high, med, low}</p></td>
+</tr>
+<tr class="row-odd"><td><p>Doors</p></td>
+<td><p>Number of doors</p></td>
+<td><p>{2, 3, 4, 5-more}</p></td>
+</tr>
+<tr class="row-even"><td><p>Persons</p></td>
+<td><p>Number of persons accommodated</p></td>
+<td><p>{2, 4, more}</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lug-boot</p></td>
+<td><p>Trunk size</p></td>
+<td><p>{small, med, big}</p></td>
+</tr>
+<tr class="row-even"><td><p>Safety</p></td>
+<td><p>Level of safety</p></td>
+<td><p>{low, med, high}</p></td>
+</tr>
+<tr class="row-odd"><td><p>Class</p></td>
+<td><p>Car acceptability</p></td>
+<td><p>{unacc, acc, good, vgood}</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="classifying-data">
+<h2>2.3 Classifying Data<a class="headerlink" href="#classifying-data" title="Link to this heading">#</a></h2>
+<p>Data can be classified along multiple dimensions. These classifications guide analytical decisions, visualization choices, and preparation strategies.</p>
+<p><img alt="Data Characteristics and Classification" src="_images/DCClassification.png" /> <p>
+<strong>Figure:</strong> Different forms of classifying data.</p>
+<section id="structure">
+<h3>2.3.1 Structure<a class="headerlink" href="#structure" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Structured data</strong>: Fixed schema (tables, spreadsheets, relational databases)</p></li>
+<li><p><strong>Semi-structured data</strong>: Flexible schema with metadata (JSON, XML)</p></li>
+<li><p><strong>Unstructured data</strong>: No predefined structure (text, images, audio, video)</p></li>
+</ul>
+</section>
+<section id="nature">
+<h3>2.3.2 Nature<a class="headerlink" href="#nature" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Quantitative data</strong>: Numerical measurements</p></li>
+<li><p><strong>Qualitative data</strong>: Descriptive or categorical attributes</p></li>
+</ul>
+</section>
+<section id="type">
+<h3>2.3.3 Type<a class="headerlink" href="#type" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Numerical data</strong>: Discrete or continuous values</p></li>
+<li><p><strong>Categorical data</strong>: Nominal or ordinal categories</p></li>
+</ul>
+</section>
+<section id="time-variability">
+<h3>2.3.4 Time Variability<a class="headerlink" href="#time-variability" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Invariant (static) data</strong>: Values do not change over time</p></li>
+<li><p><strong>Time-varying data</strong>: Values evolve across time</p></li>
+</ul>
+</section>
+<section id="dimensionality">
+<h3>2.3.5 Dimensionality<a class="headerlink" href="#dimensionality" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Unidimensional data</strong>: One variable of interest</p></li>
+<li><p><strong>Multidimensional data</strong>: Multiple variables analyzed jointly</p></li>
+</ul>
+</section>
+<section id="ownership">
+<h3>2.3.6 Ownership<a class="headerlink" href="#ownership" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Public data</strong>: Freely available datasets</p></li>
+<li><p><strong>Private data</strong>: Restricted or proprietary datasets</p></li>
+</ul>
+</section>
+</section>
+<section id="datasets-used-in-the-course">
+<h2>2.4 Datasets Used in the Course<a class="headerlink" href="#datasets-used-in-the-course" title="Link to this heading">#</a></h2>
+<p>The following datasets are used throughout the course to illustrate AEDA concepts:</p>
+<ul class="simple">
+<li><p>Mammographic Dataset (<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass">https://archive.ics.uci.edu/ml/datasets/Mammographic+Mass</a>)</p></li>
+<li><p>Forest Fires Dataset (<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/forest+fires">https://archive.ics.uci.edu/ml/datasets/forest+fires</a>)</p></li>
+<li><p>Iris Dataset of Fisher (<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/iris">https://archive.ics.uci.edu/ml/datasets/iris</a>)</p></li>
+<li><p>Auto MPG Dataset (<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/auto+mpg">https://archive.ics.uci.edu/ml/datasets/auto+mpg</a>)</p></li>
+<li><p>Gapminder Dataset (<a class="reference external" href="https://www.kaggle.com/datasets/albertovidalrod/gapminder-dataset">https://www.kaggle.com/datasets/albertovidalrod/gapminder-dataset</a>)</p></li>
+<li><p>NaturalEarth Low Resolution Dataset</p></li>
+<li><p>Daily Delhi Climate Train Dataset (<a class="reference external" href="https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data">https://www.kaggle.com/datasets/sumanthvrao/daily-climate-time-series-data</a>)</p></li>
+<li><p>IMDb Movie Reviews Dataset (<a class="reference external" href="https://www.imdb.com/">https://www.imdb.com/</a>)</p></li>
+<li><p>Zachary’s Karate Club Dataset (<a class="reference external" href="https://networkrepository.com/ucidata-zachary.php">https://networkrepository.com/ucidata-zachary.php</a>)</p></li>
+</ul>
+<p>These datasets span different domains, data types, and analytical challenges.</p>
+</section>
+<section id="data-preparation">
+<h2>2.5 Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading">#</a></h2>
+<section id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h3>
+<p><strong>Raw data</strong> is data in its original form, collected directly from sources such as sensors, surveys, databases, or logs. Raw data is rarely suitable for immediate analysis.</p>
+<p>Common problems include:</p>
+<ul class="simple">
+<li><p><em>Data overload</em>: Occurs when the dataset contains an excessive number of observations or variables, making analysis computationally expensive and cognitively difficult without proper reduction techniques.</p></li>
+<li><p><em>Missing values</em>: Arise when some data entries are absent, which can bias results or prevent certain analyses if not properly handled.</p></li>
+<li><p><em>Inconsistencies</em>: Happen when data contains contradictions, format mismatches, or violations of expected rules and domains.</p></li>
+<li><p><em>Noise</em>: Refers to random errors or variations in the data that obscure underlying patterns and signals.</p></li>
+</ul>
+<p>Data preparation addresses these issues and ensures data quality and usability.</p>
+</section>
+<section id="sampling">
+<h3>2.5.1 Sampling<a class="headerlink" href="#sampling" title="Link to this heading">#</a></h3>
+<p>Sampling reduces data volume while preserving representativeness.</p>
+<p>Common sampling strategies include:</p>
+<ul class="simple">
+<li><p><em>Random sampling with replacement</em>: Each object is selected randomly and may be chosen more than once, ensuring independence between selections.</p></li>
+<li><p><em>Random sampling without replacement</em>: Each object is selected randomly but can be chosen only once, preserving uniqueness within the sample.</p></li>
+<li><p><em>Systematic sampling</em>: Objects are selected at regular intervals from an ordered dataset after a random starting point.</p></li>
+<li><p><em>Group sampling</em>: Entire predefined groups of objects are selected instead of individual objects.</p></li>
+<li><p><em>Stratified sampling</em>: The dataset is divided into homogeneous subgroups (strata), and samples are drawn from each stratum to ensure representative coverage.</p></li>
+</ul>
+<p>Sampling is essential for scalability and efficient exploratory analysis.</p>
+</section>
+<section id="missing-values">
+<h3>2.5.2 Missing Values<a class="headerlink" href="#missing-values" title="Link to this heading">#</a></h3>
+<p>Missing data may result from sensor failures, human error, or integration issues.</p>
+<p>Common strategies include:</p>
+<ul class="simple">
+<li><p><em>Removing affected objects</em>: Eliminates records with missing values, which simplifies analysis but may reduce sample size or introduce bias.</p></li>
+<li><p><em>Manual imputation</em>: Replaces missing values based on expert knowledge or external information.</p></li>
+<li><p><em>Global constant substitution</em>: Fills missing values with a fixed constant (e.g., zero or “unknown”) to preserve dataset size.</p></li>
+<li><p><em>Hot-deck imputation</em>: Replaces missing values with observed values from similar objects within the dataset.</p></li>
+<li><p><em>Central tendency imputation (mean, median, mode)</em>: Substitutes missing values using a typical value of the variable to maintain overall distribution.</p></li>
+<li><p><em>Class-conditional imputation</em>: Imputes missing values using statistics computed within the same class or group, preserving class-specific patterns.</p></li>
+</ul>
+<p>The choice of strategy depends on data type, context, and analytical goals.</p>
+</section>
+<section id="normalization">
+<h3>2.5.3 Normalization<a class="headerlink" href="#normalization" title="Link to this heading">#</a></h3>
+<p>Normalization transforms numerical variables to a common scale.</p>
+<p>Common techniques include:</p>
+<ul class="simple">
+<li><p><em>Min–max normalization</em>: Rescales values to a fixed interval, typically [0,1], by linearly transforming them based on their minimum and maximum. <p>
+<span class="math notranslate nohighlight">\(x_i' = \frac{x_i - \min(x)}{\max(x) - \min(x)}(nmax - nmin) + nmin, \quad i = 1, \ldots, N\)</span> <p>
+where <span class="math notranslate nohighlight">\(x_i\)</span> is the original value, <span class="math notranslate nohighlight">\(x_i'\)</span> is the normalized value, and <span class="math notranslate nohighlight">\(\min(x)\)</span> and <span class="math notranslate nohighlight">\(\max(x)\)</span> are the minimum and maximum values of the variable.</p></li>
+<li><p><em>Z-score standardization</em>: Transforms values so they have zero mean and unit variance, expressing each value in terms of standard deviations from the mean. <p>
+<span class="math notranslate nohighlight">\(z_i = \frac{x_i - \bar{x}}{s}, \quad i = 1, \ldots, N\)</span> <p>
+where <span class="math notranslate nohighlight">\(x_i\)</span> is the original value, <span class="math notranslate nohighlight">\(\bar{x}\)</span> is the mean of the variable, and <span class="math notranslate nohighlight">\(s\)</span> is the standard deviation.</p></li>
+<li><p><em>Scaling by maximum value</em>: Normalizes data by dividing each value by the maximum observed value, constraining the range relative to the largest magnitude. <p>
+<span class="math notranslate nohighlight">\(x_i' = \frac{x_i}{\max(x)}, \quad i = 1, \ldots, N\)</span> <p>
+where <span class="math notranslate nohighlight">\(x_i\)</span> is the original value, <span class="math notranslate nohighlight">\(x_i'\)</span> is the scaled value, and <span class="math notranslate nohighlight">\(\max(x)\)</span> is the maximum observed value of the variable.</p></li>
+</ul>
+<p>Normalization improves interpretability, visualization, and the performance of distance-based and learning-based methods.</p>
+</section>
+</section>
+<section id="reflection">
+<h2>Reflection<a class="headerlink" href="#reflection" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>How does data classification influence analytical and visualization choices?</p></li>
+<li><p>What risks arise from inadequate data preparation?</p></li>
+<li><p>How does data preparation support responsible and effective AI-assisted analysis?</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Refer to the course syllabus bibliography, particularly:</p>
+<p><strong>De Castro, L. N. (2026). <em>Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design</em>. CRC Press.</strong></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Module1_Introduction_to_AEDA.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Module3_Descriptive_Analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Module 3 — Descriptive Analysis</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-and-mathematical-representations">2.1 Tabular and Mathematical Representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-information-knowledge">Data, Information, Knowledge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabular-representation">Tabular Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-representation">Mathematical Representation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-dictionary">2.2 Data Dictionary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-data-dictionaries-matter">Why Data Dictionaries Matter</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifying-data">2.3 Classifying Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#structure">2.3.1 Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nature">2.3.2 Nature</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#type">2.3.3 Type</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-variability">2.3.4 Time Variability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality">2.3.5 Dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ownership">2.3.6 Ownership</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datasets-used-in-the-course">2.4 Datasets Used in the Course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preparation">2.5 Data Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">2.5.1 Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-values">2.5.2 Missing Values</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization">2.5.3 Normalization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leandro Nunes de Castro, Ph.D.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

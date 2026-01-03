@@ -1,0 +1,799 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7 — Data Storytelling and Dashboard Design &#8212; Advanced Exploratory Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Module7_Storytelling_Dashboards';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="6 — Special Types of Data" href="Module6_Special_Types_of_Data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dendritic_logo.png" class="logo__image only-light" alt="Advanced Exploratory Data Analysis - Home"/>
+    <script>document.write(`<img src="_static/dendritic_logo.png" class="logo__image only-dark" alt="Advanced Exploratory Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Advanced Exploratory Data Analysis (AEDA)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Module1_Introduction_to_AEDA.html">Module 1: Introduction to AEDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module2_DataDescription.html">Module 2: Data Description and Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module3_Descriptive_Analysis.html">Module 3: Descriptive Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module4_Principles_of_Visualization.html">Module 4: Principles of Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module5_Visualization_Methods.html">Module 5: Data Visualization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module6_Special_Types_of_Data.html">Module 6: Special Types of Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Module 7: Data Storytelling and Dashboard Design</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA/edit/master/docs/Module7_Storytelling_Dashboards.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Module7_Storytelling_Dashboards.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>7 — Data Storytelling and Dashboard Design</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storytelling">7.1 Data Storytelling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-audience-and-purpose">7.1.1 Define the Audience and Purpose</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-the-key-message-and-depth">7.1.2 Identify the Key Message and Depth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-the-exploratory-data-analysis">7.1.3 Perform the Exploratory Data Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-a-compelling-narrative">7.1.4 Prepare a Compelling Narrative</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-design">7.2 Dashboard Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-appropriate-visualizations">7.2.1 Selecting Appropriate Visualizations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-the-dashboard-layout">7.2.2 Designing the Dashboard Layout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-color-scheme">7.2.3 Choosing a Color Scheme</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-interactivity">7.2.4 Applying Interactivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#security-and-access-control">7.2.5 Security and Access Control</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-and-iterate">7.2.6 Test and Iterate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-superstore-sales-dataset">7.3 Case Study: Superstore Sales Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.3.1 Data Storytelling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.3.2 Dashboard Design</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-storytelling-and-dashboard-design">
+<h1>7 — Data Storytelling and Dashboard Design<a class="headerlink" href="#data-storytelling-and-dashboard-design" title="Link to this heading">#</a></h1>
+<p>This module integrates <strong>exploratory data analysis, visualization principles, and communication</strong> to transform analytical results into meaningful insights for decision-making. Data storytelling focuses on crafting a coherent narrative grounded in evidence, while dashboard design emphasizes interactive, visual summaries that support monitoring, exploration, and action.</p>
+<p>Together, these components represent the culmination of Advanced Exploratory Data Analysis (AEDA): moving from data understanding to <strong>insight communication and decision support</strong>.</p>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>By the end of this module, students will be able to:</p>
+<ol class="arabic simple">
+<li><p>Define audience, purpose, and context for data-driven communication.</p></li>
+<li><p>Identify key analytical messages and appropriate levels of detail.</p></li>
+<li><p>Structure data stories that combine narrative, evidence, and visualization.</p></li>
+<li><p>Design dashboards that align visual encodings, layout, and interaction with analytical goals.</p></li>
+<li><p>Apply best practices for usability, accessibility, and security in dashboards.</p></li>
+<li><p>Develop an end-to-end data storytelling and dashboard solution using a real dataset.</p></li>
+</ol>
+</section>
+<section id="data-storytelling">
+<h2>7.1 Data Storytelling<a class="headerlink" href="#data-storytelling" title="Link to this heading">#</a></h2>
+<p><strong>Data storytelling</strong> is the practice of communicating insights derived from data through a structured narrative supported by appropriate visualizations. It combines three core elements:</p>
+<ul class="simple">
+<li><p><strong>Data</strong>: reliable, well-analyzed evidence.</p></li>
+<li><p><strong>Narrative</strong>: a logical structure that guides interpretation.</p></li>
+<li><p><strong>Visualization</strong>: visual encodings that reduce cognitive load and emphasize meaning.</p></li>
+</ul>
+<p>Effective data storytelling does not aim to show <em>everything</em> in the data, but rather to highlight what matters for a given audience and purpose.</p>
+<p><img alt="Data Storytelling" src="_images/DStorytelling.png" /><p>
+<strong>Figure:</strong> Relationship among data, narrative and visuals for the storytelling design process.</p>
+<section id="define-the-audience-and-purpose">
+<h3>7.1.1 Define the Audience and Purpose<a class="headerlink" href="#define-the-audience-and-purpose" title="Link to this heading">#</a></h3>
+<p>The first step in data storytelling is to clearly define:</p>
+<ul class="simple">
+<li><p><strong>Audience</strong>: executives, managers, analysts, domain experts, or the general public.</p></li>
+<li><p><strong>Purpose</strong>: inform, explain, persuade, monitor, or support decision-making.</p></li>
+</ul>
+<p>Audience characteristics determine:</p>
+<ul class="simple">
+<li><p>Level of technical detail</p></li>
+<li><p>Choice of metrics and visualizations</p></li>
+<li><p>Language, tone, and framing</p></li>
+</ul>
+<p>A visualization that works for analysts may overwhelm decision-makers; conversely, oversimplification can obscure critical nuance for technical audiences.</p>
+<p><img alt="Data Storytelling Process Flow" src="_images/DSProcessFlow.png" /> <p>
+<strong>Figure:</strong> Data storytelling process flow.</p>
+</section>
+<section id="identify-the-key-message-and-depth">
+<h3>7.1.2 Identify the Key Message and Depth<a class="headerlink" href="#identify-the-key-message-and-depth" title="Link to this heading">#</a></h3>
+<p>A data story should revolve around a <strong>small number of key messages</strong> derived from exploratory analysis.</p>
+<p>Key questions include:</p>
+<ul class="simple">
+<li><p>What is the most important insight?</p></li>
+<li><p>What evidence supports it?</p></li>
+<li><p>How much detail is necessary for this audience?</p></li>
+</ul>
+<p>Depth should be adjusted by layering information:</p>
+<ul class="simple">
+<li><p>High-level summary for quick understanding</p></li>
+<li><p>Supporting views for deeper exploration</p></li>
+<li><p>Access to raw or detailed data when needed</p></li>
+</ul>
+</section>
+<section id="perform-the-exploratory-data-analysis">
+<h3>7.1.3 Perform the Exploratory Data Analysis<a class="headerlink" href="#perform-the-exploratory-data-analysis" title="Link to this heading">#</a></h3>
+<p>Robust data storytelling is grounded in <strong>rigorous exploratory data analysis</strong>. Prior to narrative construction, the analyst should:</p>
+<ul class="simple">
+<li><p>Understand distributions, variability, and outliers</p></li>
+<li><p>Identify associations and trends</p></li>
+<li><p>Detect anomalies or unexpected patterns</p></li>
+<li><p>Validate data quality and assumptions</p></li>
+</ul>
+<p>EDA ensures that the story is <strong>evidence-based</strong>, not anecdotal, and helps prevent misleading conclusions.</p>
+</section>
+<section id="prepare-a-compelling-narrative">
+<h3>7.1.4 Prepare a Compelling Narrative<a class="headerlink" href="#prepare-a-compelling-narrative" title="Link to this heading">#</a></h3>
+<p>A compelling data narrative typically follows a logical structure, such as:</p>
+<ol class="arabic simple">
+<li><p><strong>Context</strong>: why the problem matters</p></li>
+<li><p><strong>Question</strong>: what is being investigated</p></li>
+<li><p><strong>Evidence</strong>: key findings supported by data and visuals</p></li>
+<li><p><strong>Insight</strong>: interpretation of results</p></li>
+<li><p><strong>Implications</strong>: recommended actions or decisions</p></li>
+</ol>
+<p>Narratives should be concise, focused, and aligned with the analytical goal. Visualizations should be integrated naturally into the story, reinforcing—rather than distracting from—the message.</p>
+<p>The table below brings together the four core principles of storytelling design: defining the audience and purpose, identifying the central message and appropriate level of detail, conducting the exploratory data analysis, and crafting a compelling narrative. Once these elements are established, the analyst is prepared to proceed with the planning and design of the dashboard.</p>
+<p><strong>Table:</strong> Matrix with the four storytelling design principles.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Audience and Purpose</strong></p></th>
+<th class="head"><p><strong>Exploratory Analysis</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>• Specific group or individuals: demographics, interests, and knowledge level.<br>• Clarify the objectives through the narrative.</p></td>
+<td><p>• What questions do you want to answer with the data?<br>• What kind of relationships exist in the data?<br>• What are the best techniques for displaying the variables and their relationships?</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Key Message and Depth</strong></p></td>
+<td><p><strong>Compelling Narrative</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>• Central theme or insight: clear, concise, and relevant.<br>• Depth: level of detail, context, and supporting data.</p></td>
+<td><p>• Persuasive and impactful presentation.<br>• Guide the audience through the insights and information.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="dashboard-design">
+<h2>7.2 Dashboard Design<a class="headerlink" href="#dashboard-design" title="Link to this heading">#</a></h2>
+<p>A <strong>dashboard</strong> is an interactive visual interface that consolidates key indicators, trends, and patterns into a single view. Dashboards are widely used for <strong>monitoring performance, supporting decisions, crafting stories, and enabling exploratory analysis</strong>.</p>
+<p>Unlike static reports, dashboards emphasize:</p>
+<ul class="simple">
+<li><p>Interactivity</p></li>
+<li><p>Real-time or near–real-time updates</p></li>
+<li><p>User-driven exploration</p></li>
+</ul>
+<p>The figure below summarizes the main steps  involved in the process of designing dashboards.</p>
+<p><img alt="Dashboard Design Process Flow" src="_images/DDProcessFlow.png" />
+<strong>Figure:</strong> Dashboard design process flow.</p>
+<section id="selecting-appropriate-visualizations">
+<h3>7.2.1 Selecting Appropriate Visualizations<a class="headerlink" href="#selecting-appropriate-visualizations" title="Link to this heading">#</a></h3>
+<p>Visualization choices in dashboards should follow the same principles discussed in earlier modules:</p>
+<ul class="simple">
+<li><p>Match visualization type to data type and analytical goal</p></li>
+<li><p>Prefer simple, familiar charts for frequent monitoring</p></li>
+<li><p>Avoid unnecessary decoration or chart variety</p></li>
+</ul>
+<p>Common dashboard elements include:</p>
+<ul class="simple">
+<li><p>KPIs and summary metrics</p></li>
+<li><p>Time series for trends</p></li>
+<li><p>Bar charts for comparisons</p></li>
+<li><p>Maps for spatial patterns</p></li>
+</ul>
+</section>
+<section id="designing-the-dashboard-layout">
+<h3>7.2.2 Designing the Dashboard Layout<a class="headerlink" href="#designing-the-dashboard-layout" title="Link to this heading">#</a></h3>
+<p>Layout strongly influences usability and comprehension. Effective layouts:</p>
+<ul class="simple">
+<li><p>Follow a clear visual hierarchy (most important elements first)</p></li>
+<li><p>Use consistent alignment and spacing</p></li>
+<li><p>Group related elements logically</p></li>
+<li><p>Minimize scrolling when possible</p></li>
+</ul>
+<p>A common strategy is a <strong>top-down layout</strong>, where high-level KPIs appear at the top and detailed views appear below.</p>
+</section>
+<section id="choosing-a-color-scheme">
+<h3>7.2.3 Choosing a Color Scheme<a class="headerlink" href="#choosing-a-color-scheme" title="Link to this heading">#</a></h3>
+<p>Color should be used intentionally and sparingly. Good practices include:</p>
+<ul class="simple">
+<li><p>Use color to encode meaning, not decoration</p></li>
+<li><p>Maintain consistency across views</p></li>
+<li><p>Ensure sufficient contrast for readability</p></li>
+<li><p>Consider color-blind–safe palettes</p></li>
+</ul>
+<p>Neutral colors are often preferable for backgrounds, while accent colors can highlight critical values, changes, or exceptions.</p>
+</section>
+<section id="applying-interactivity">
+<h3>7.2.4 Applying Interactivity<a class="headerlink" href="#applying-interactivity" title="Link to this heading">#</a></h3>
+<p>Interactivity allows users to explore data dynamically. Common interactive features include:</p>
+<ul class="simple">
+<li><p>Filters and slicers</p></li>
+<li><p>Drill-down and drill-through actions</p></li>
+<li><p>Tooltips with additional context</p></li>
+<li><p>Linked views (brushing and highlighting)</p></li>
+</ul>
+<p>Interactivity should enhance insight, not overwhelm the user. Each interactive element should have a clear purpose.</p>
+</section>
+<section id="security-and-access-control">
+<h3>7.2.5 Security and Access Control<a class="headerlink" href="#security-and-access-control" title="Link to this heading">#</a></h3>
+<p>Dashboards often expose sensitive or strategic information. Key considerations include:</p>
+<ul class="simple">
+<li><p>Role-based access control</p></li>
+<li><p>Data anonymization when appropriate</p></li>
+<li><p>Secure authentication and authorization</p></li>
+<li><p>Compliance with organizational and legal requirements</p></li>
+</ul>
+<p>Security should be addressed early in the design process, not as an afterthought.</p>
+</section>
+<section id="test-and-iterate">
+<h3>7.2.6 Test and Iterate<a class="headerlink" href="#test-and-iterate" title="Link to this heading">#</a></h3>
+<p>Dashboard design is inherently iterative. Testing should involve:</p>
+<ul class="simple">
+<li><p>Real users from the target audience</p></li>
+<li><p>Representative tasks and scenarios</p></li>
+<li><p>Feedback on clarity, usability, and usefulness</p></li>
+</ul>
+<p>Continuous iteration ensures that dashboards remain aligned with evolving data, goals, and user needs.</p>
+</section>
+</section>
+<section id="case-study-superstore-sales-dataset">
+<h2>7.3 Case Study: Superstore Sales Dataset<a class="headerlink" href="#case-study-superstore-sales-dataset" title="Link to this heading">#</a></h2>
+<p>This case study integrates <strong>data storytelling and dashboard design</strong> using the Superstore Sales dataset, a widely used benchmark in business analytics.</p>
+<p>The dataset typically includes:</p>
+<ul class="simple">
+<li><p>Orders, customers, products, and categories</p></li>
+<li><p>Sales, profit, discounts, and quantities</p></li>
+<li><p>Temporal and geographic dimensions</p></li>
+</ul>
+<section id="id1">
+<h3>7.3.1 Data Storytelling<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>The storytelling process begins by defining the business questions, such as:</p>
+<ul class="simple">
+<li><p>How are sales and profits evolving over time?</p></li>
+<li><p>Which regions and categories drive performance?</p></li>
+<li><p>Where are losses occurring?</p></li>
+</ul>
+<p>Exploratory analysis is used to identify trends, patterns, and anomalies, which are then synthesized into a coherent narrative tailored to decision-makers.</p>
+</section>
+<section id="id2">
+<h3>7.3.2 Dashboard Design<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>The dashboard design phase translates the story into an interactive interface, typically including:</p>
+<ul class="simple">
+<li><p>High-level KPIs (total sales, profit, margin)</p></li>
+<li><p>Time series views for trends</p></li>
+<li><p>Comparative views by region, category, and segment</p></li>
+<li><p>Filters for time, geography, and product attributes</p></li>
+</ul>
+<p>The final dashboard serves both as a <strong>communication artifact</strong> and a <strong>decision-support tool</strong>, allowing users to monitor performance and explore underlying drivers.</p>
+<p>To illustrate, the wireframe presented in the figure below describes the layout to be used to build the dashboard.</p>
+<p><img alt="Dashboard Wireframe" src="_images/Figure_7_5_Wireframe.jpg" /> <p>
+<strong>Figure:</strong> Wireframe with the dashboad layout for the Superstore Sales dataset.</p>
+<p>The figure below shows the final dashboard built using PowerBI by Microsoft.</p>
+<p><img alt="Final Dashboard" src="_images/Figure_7_6a_Dashboard.jpg" /> <p>
+<strong>Figure:</strong> Dashboad for the Superstore Sales dataset created with PowerBI by Microsoft.</p>
+</section>
+</section>
+<section id="reflection">
+<h2>Reflection<a class="headerlink" href="#reflection" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Who is the intended audience for your data story, and how does this influence visualization and narrative choices?</p></li>
+<li><p>How do you balance simplicity and completeness when communicating insights?</p></li>
+<li><p>In what ways can interactivity strengthen—or weaken—a data story?</p></li>
+<li><p>How does dashboard design differ when the goal is monitoring versus exploration?</p></li>
+<li><p>What ethical or security considerations arise when sharing analytical dashboards?</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Students are encouraged to consult the bibliography listed in the course syllabus, particularly:</p>
+<ul class="simple">
+<li><p><strong>De Castro, L. N. (2026).</strong> <em>Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design</em>. CRC Press.</p></li>
+<li><p><strong>Knaflic, C. N. (2015).</strong> <em>Storytelling with Data: A Data Visualization Guide for Business Professionals</em>. Wiley.</p></li>
+<li><p><strong>Ward, M., Grinstein, G. G., &amp; Keim, D. (2015).</strong> <em>Interactive Data Visualization</em>. CRC Press.</p></li>
+<li><p><strong>Wilke, C. O. (2019).</strong> <em>Fundamentals of Data Visualization</em>. O’Reilly Media.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Module6_Special_Types_of_Data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">6 — Special Types of Data</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-storytelling">7.1 Data Storytelling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-the-audience-and-purpose">7.1.1 Define the Audience and Purpose</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#identify-the-key-message-and-depth">7.1.2 Identify the Key Message and Depth</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perform-the-exploratory-data-analysis">7.1.3 Perform the Exploratory Data Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-a-compelling-narrative">7.1.4 Prepare a Compelling Narrative</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard-design">7.2 Dashboard Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-appropriate-visualizations">7.2.1 Selecting Appropriate Visualizations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#designing-the-dashboard-layout">7.2.2 Designing the Dashboard Layout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-a-color-scheme">7.2.3 Choosing a Color Scheme</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applying-interactivity">7.2.4 Applying Interactivity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#security-and-access-control">7.2.5 Security and Access Control</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-and-iterate">7.2.6 Test and Iterate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#case-study-superstore-sales-dataset">7.3 Case Study: Superstore Sales Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">7.3.1 Data Storytelling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.3.2 Dashboard Design</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leandro Nunes de Castro, Ph.D.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

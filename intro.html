@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Welcome to Advanced Exploratory Data Analysis (AEDA) &#8212; Advanced Exploratory Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations" href="Module1_Introduction_to_AEDA.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/dendritic_logo.png" class="logo__image only-light" alt="Advanced Exploratory Data Analysis - Home"/>
+    <script>document.write(`<img src="_static/dendritic_logo.png" class="logo__image only-dark" alt="Advanced Exploratory Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Welcome to Advanced Exploratory Data Analysis (AEDA)
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Module1_Introduction_to_AEDA.html">Module 1: Introduction to AEDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module2_DataDescription.html">Module 2: Data Description and Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module3_Descriptive_Analysis.html">Module 3: Descriptive Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module4_Principles_of_Visualization.html">Module 4: Principles of Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module5_Visualization_Methods.html">Module 5: Data Visualization Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module6_Special_Types_of_Data.html">Module 6: Special Types of Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Module7_Storytelling_Dashboards.html">Module 7: Data Storytelling and Dashboard Design</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lndecastro/AEDA/edit/master/docs/intro.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Welcome to Advanced Exploratory Data Analysis (AEDA)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-program-is-about">What This Program Is About</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#professional-orientation-bi-and-data-analyst-careers-learning-objectives">Professional Orientation: BI and Data Analyst Careers (Learning Objectives)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-philosophy-and-approach">Learning Philosophy and Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-generative-ai-in-this-course">The Role of Generative AI in This Course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-this-book">How to Use This Book</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-roadmap-at-a-glance">Program Roadmap at a Glance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-instructor-dr-leandro-nunes-de-castro">About the Instructor – Dr. Leandro Nunes de Castro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">🧾 Acknowledgements</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-advanced-exploratory-data-analysis-aeda">
+<h1>Welcome to Advanced Exploratory Data Analysis (AEDA)<a class="headerlink" href="#welcome-to-advanced-exploratory-data-analysis-aeda" title="Link to this heading">#</a></h1>
+<p>This program is designed to develop the analytical mindset, technical foundation, and communication skills required to transform raw data into meaningful insights that support understanding, monitoring, and decision-making.</p>
+<p>Exploratory Data Analysis is not a preliminary or auxiliary activity. It is a <strong>core analytical discipline</strong> that determines how data is understood, how questions are framed, how results are interpreted, and how insights are communicated. Poor exploratory analysis leads to fragile conclusions, misleading visualizations, ineffective dashboards and inferences, regardless of how advanced the downstream tools may be.</p>
+<p>This course emphasizes <strong>thinking with data</strong>, not merely processing it.</p>
+<section id="what-this-program-is-about">
+<h2>What This Program Is About<a class="headerlink" href="#what-this-program-is-about" title="Link to this heading">#</a></h2>
+<p>Advanced Exploratory Data Analysis focuses on:</p>
+<ul class="simple">
+<li><p>Understanding the structure, behavior, and limitations of data</p></li>
+<li><p>Summarizing data through descriptive measures</p></li>
+<li><p>Revealing patterns, relationships, and anomalies</p></li>
+<li><p>Designing effective visual representations</p></li>
+<li><p>Communicating insights through storytelling and dashboards</p></li>
+</ul>
+<p>Rather than emphasizing predictive modeling or inference, AEDA concentrates on <strong>descriptive reasoning, visual cognition, and analytical judgment</strong>, the foundations upon which reliable analytics and decision support systems are built.</p>
+<p>This program prepares students to work confidently with unfamiliar datasets, ask the right analytical questions, and produce insights that are both technically sound and communicable to diverse audiences.</p>
+</section>
+<section id="professional-orientation-bi-and-data-analyst-careers-learning-objectives">
+<h2>Professional Orientation: BI and Data Analyst Careers (Learning Objectives)<a class="headerlink" href="#professional-orientation-bi-and-data-analyst-careers-learning-objectives" title="Link to this heading">#</a></h2>
+<p>This program is explicitly designed to support <strong>Business Intelligence (BI) Analysts and Data Analysts</strong>, providing the conceptual foundation and practical tools required for these roles.</p>
+<p>Graduates of this program will be prepared to:</p>
+<ul class="simple">
+<li><p>Understand the different terminologies in data science and the main available careers;</p></li>
+<li><p>Understand the data science workflow;</p></li>
+<li><p>Understand the basic structure of different sets of data;</p></li>
+<li><p>Understand and characterize different sets of data;</p></li>
+<li><p>Visualize different types of data in various ways;</p></li>
+<li><p>Design key performance indicators and dashboards;</p></li>
+<li><p>Understand how to use GenAI to perform exploratory data analysis.</p></li>
+</ul>
+<p>While the tools and platforms used by organizations evolve, the analytical competencies developed in this course (data understanding, visual reasoning, and interpretive clarity) remain stable and transferable across industries and technologies.</p>
+</section>
+<section id="learning-philosophy-and-approach">
+<h2>Learning Philosophy and Approach<a class="headerlink" href="#learning-philosophy-and-approach" title="Link to this heading">#</a></h2>
+<p>This course adopts a <strong>project-based and inquiry-driven approach</strong> to learning. The emphasis is not on memorizing formulas or reproducing predefined outputs, but on developing the ability to reason analytically about data.</p>
+<p>Key principles guiding this program include:</p>
+<ul class="simple">
+<li><p><strong>Understanding before automation</strong><br />
+Tools can accelerate analysis, but they cannot replace analytical judgment.</p></li>
+<li><p><strong>Visualization as reasoning, not decoration</strong><br />
+Visualizations are analytical instruments, not presentation artifacts.</p></li>
+<li><p><strong>Interpretation over execution</strong><br />
+Producing a chart or statistic is insufficient without understanding what it means, and what it does not mean.</p></li>
+<li><p><strong>Iteration and reflection</strong><br />
+Exploratory analysis is inherently iterative. Insights emerge through cycles of questioning, visualization, and refinement.</p></li>
+</ul>
+<p>Throughout the course, students are encouraged to justify analytical choices, critique visualizations, and reflect on how design decisions influence interpretation.</p>
+<p><img alt="Learning Philosophy" src="_images/Learning_Philosophy.png" /> <p>
+<strong>Figure:</strong> Key principles guiding the program.</p>
+</section>
+<section id="the-role-of-generative-ai-in-this-course">
+<h2>The Role of Generative AI in This Course<a class="headerlink" href="#the-role-of-generative-ai-in-this-course" title="Link to this heading">#</a></h2>
+<p>Generative AI tools may be used in this program as <strong>analytical co-pilots</strong> that support exploratory work. When used responsibly, they can assist with:</p>
+<ul class="simple">
+<li><p>Structuring exploratory questions</p></li>
+<li><p>Drafting code, visualization or analysis</p></li>
+<li><p>Generating alternative analytical perspectives</p></li>
+<li><p>Supporting documentation and narrative construction</p></li>
+</ul>
+<p>However, Generative AI does not replace:</p>
+<ul class="simple">
+<li><p>Statistical reasoning</p></li>
+<li><p>Visualization literacy</p></li>
+<li><p>Domain understanding</p></li>
+<li><p>Human judgment</p></li>
+</ul>
+<p>In this course, AI is treated as a <strong>supporting instrument</strong>, not an authority. Analytical responsibility always remains with the analyst.</p>
+</section>
+<section id="how-to-use-this-book">
+<h2>How to Use This Book<a class="headerlink" href="#how-to-use-this-book" title="Link to this heading">#</a></h2>
+<p>This Jupyter Book is organized as a <strong>progressive analytical journey</strong>. Each module builds on concepts and skills introduced earlier.</p>
+<p>You are encouraged to:</p>
+<ul class="simple">
+<li><p>Read concept sections carefully before engaging with code or figures</p></li>
+<li><p>Study visualizations as analytical arguments, not illustrations</p></li>
+<li><p>Use code examples as reference implementations, not templates to copy blindly</p></li>
+<li><p>Reflect on interpretation questions before moving forward</p></li>
+</ul>
+<p>The goal is not to move quickly through content, but to develop durable analytical understanding.</p>
+</section>
+<section id="program-roadmap-at-a-glance">
+<h2>Program Roadmap at a Glance<a class="headerlink" href="#program-roadmap-at-a-glance" title="Link to this heading">#</a></h2>
+<p>The program follows a structured progression:</p>
+<ol class="arabic simple">
+<li><p>Foundations of exploratory analysis and analytical thinking</p></li>
+<li><p>Data description, classification, and preparation</p></li>
+<li><p>Descriptive statistical analysis and summary measures</p></li>
+<li><p>Principles of visual perception and visualization design</p></li>
+<li><p>Data visualization methods for different analytical goals</p></li>
+<li><p>Exploratory analysis of special types of data</p></li>
+<li><p>Data storytelling and dashboard design</p></li>
+<li><p>A final project integrating analysis, visualization, and communication</p></li>
+</ol>
+<p>By the end of the program, students will have experienced the full exploratory pipeline—from raw data to communicable insight.</p>
+<p><img alt="Program Roadmap" src="_images/PRoadmap.png" /> <p>
+<strong>Figure:</strong> Program roadmap.</p>
+</section>
+<section id="reflection">
+<h2>Reflection<a class="headerlink" href="#reflection" title="Link to this heading">#</a></h2>
+<p>As you begin this program, consider the following questions:</p>
+<ul class="simple">
+<li><p>Why is understanding data often more important than modeling it?</p></li>
+<li><p>How can visualizations both clarify and mislead?</p></li>
+<li><p>What responsibilities do analysts have when communicating insights?</p></li>
+<li><p>When does analytical automation help—and when does it hinder understanding?</p></li>
+</ul>
+<p>Revisiting these questions throughout the course will help anchor your learning and guide your analytical practice.</p>
+</section>
+<section id="about-the-instructor-dr-leandro-nunes-de-castro">
+<h2>About the Instructor – Dr. Leandro Nunes de Castro<a class="headerlink" href="#about-the-instructor-dr-leandro-nunes-de-castro" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Professor in the <strong>Department of Computing and Software Engineering</strong>, U.A. Whitaker College of Engineering, FGCU.</p></li>
+<li><p>Ph.D. in Computer Engineering with 30 years of experience in <strong>Artificial Intelligence, Data Science, and Natural Computing</strong>.</p></li>
+<li><p>Director of the <strong>Dendritic Institute for Artificial Intelligence and Data Science</strong> at FGCU.</p></li>
+<li><p>Author of various AI and Data Science books and papers, and recognized among the <strong>Top 2% most influential researchers in Computer Science worldwide</strong>.</p></li>
+<li><p>Experienced entrepreneur, researcher, and educator with a focus on applying AI for innovation, business, and societal impact.</p></li>
+<li><p>Active mentor and collaborator with international academic and industry partners.</p></li>
+</ul>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>Students wishing to deepen their understanding of the topics introduced in this program are encouraged to consult the references listed in the course syllabus bibliography, including:</p>
+<ul class="simple">
+<li><p><strong>De Castro, L. N. (2026).</strong> <em>Exploratory Data Analysis: Descriptive Analysis, Visualization, and Dashboard Design</em>. CRC Press.</p></li>
+<li><p><strong>Triola, M. F. (2017).</strong> <em>Elementary Statistics</em> (13th ed.). Pearson.</p></li>
+<li><p><strong>Knaflic, C. N. (2015).</strong> <em>Storytelling with Data: A Data Visualization Guide for Business Professionals</em>. Wiley.</p></li>
+<li><p><strong>Ward, M., Grinstein, G. G., &amp; Keim, D. (2015).</strong> <em>Interactive Data Visualization: Foundations, Techniques, and Applications</em> (2nd ed.). CRC Press.</p></li>
+<li><p><strong>Wilke, C. O. (2019).</strong> <em>Fundamentals of Data Visualization</em>. O’Reilly Media.</p></li>
+</ul>
+<p>These readings provide complementary perspectives on exploratory data analysis, visualization principles, data storytelling, and the analytical foundations that support modern data science and artificial intelligence.</p>
+</section>
+<section id="acknowledgements">
+<h2>🧾 Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading">#</a></h2>
+<p>Developed by <strong>Dr. Leandro Nunes de Castro</strong>©️, with support from large language models such as ChatGPT, Claude, Gemini, Perplexity, <a class="reference external" href="http://Gamma.ai">Gamma.ai</a>, Napkin, and CoPilot, following ethical and pedagogical review. All rights reserved.</p>
+</section>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="Module1_Introduction_to_AEDA.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">1 — Introduction to AEDA: History, Concepts, Analytical Process Flow, and GenAI Foundations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-this-program-is-about">What This Program Is About</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#professional-orientation-bi-and-data-analyst-careers-learning-objectives">Professional Orientation: BI and Data Analyst Careers (Learning Objectives)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-philosophy-and-approach">Learning Philosophy and Approach</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-generative-ai-in-this-course">The Role of Generative AI in This Course</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-use-this-book">How to Use This Book</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#program-roadmap-at-a-glance">Program Roadmap at a Glance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reflection">Reflection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#about-the-instructor-dr-leandro-nunes-de-castro">About the Instructor – Dr. Leandro Nunes de Castro</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">🧾 Acknowledgements</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Leandro Nunes de Castro, Ph.D.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
